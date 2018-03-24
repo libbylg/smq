@@ -6,6 +6,14 @@
 #define SMQ_FULL_MAPPING_NAME_LEN_MAX           (256)       ///<    映射内存全名最大长度
 
 
+/// 角色
+///@{
+#define SMQ_ROLE_MIN                            (SMQ_ROLE_MASTER)
+#define SMQ_ROLE_MAX                            (SMQ_ROLE_VIEWER)
+#define SMQ_ROLE_COUNT                          ((SMQ_ROLE_MAX - SMQ_ROLE_MIN) - 1)
+///@}
+
+
 #define SMQ_LOG_CACHE_LEN_MAX                   (256)       ///<    日志缓冲区的大小
 
 

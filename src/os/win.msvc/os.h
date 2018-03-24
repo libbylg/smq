@@ -25,6 +25,7 @@ SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t*
 SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 
+
 typedef struct
 {
     HANDLE      handle;

@@ -118,8 +118,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_va
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc);
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_init(smq_char* name, smq_uint32 role, smq_uint32 size, smq_inst* inst);
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_finit(smq_char* name, smq_uint32 size, smq_inst* inst);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_uint32 size, smq_inst* inst);
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);
 
