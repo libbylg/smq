@@ -1,11 +1,13 @@
 #ifndef __os_H_
 #define __os_H_
 
-#include "smq.h"
+#include <SDKDDKVer.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
+#include "smq.h"
 #include "smq_limit.h"
 
-#include "windows.h"
 
 #define SMQ_TLS __declspec(thread)
 
@@ -21,7 +23,7 @@ typedef struct
     HANDLE      handle;     ///<    共享内存对象的内核句柄
 }smq_shm_t;
 
-SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t* shm);
+SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t** shm);
 SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 

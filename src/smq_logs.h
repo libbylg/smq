@@ -25,7 +25,7 @@ typedef struct
     smq_char*   desc[SMQ_LOCALE_COUNT];
 }smq_log_t;
 
-SMQ_EXTERN  smq_log_t smq_logs[SMQ_LOG_COUNT];
+extern  smq_log_t smq_logs[SMQ_LOG_COUNT];
 
 SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uint32 id, smq_char* format, ...);
 

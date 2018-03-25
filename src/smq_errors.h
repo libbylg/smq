@@ -1,6 +1,7 @@
 #ifndef __smq_errors_H_
 #define __smq_errors_H_
 
+#include "smq.h"
 #include "smq_limit.h"
 
 enum    smq_error_naming
@@ -23,6 +24,6 @@ typedef struct
     smq_char*   desc[SMQ_LOCALE_COUNT];
 }smq_error_t;
 
-SMQ_EXTERN  smq_error_t smq_errors[SMQ_ERR_COUNT];
+extern  smq_error_t smq_errors[SMQ_ERR_COUNT];
 
 #endif

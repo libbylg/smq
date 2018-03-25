@@ -13,6 +13,6 @@ typedef struct
     smq_uint32          queue_size;
 }smq_params_t;
 
-SMQ_EXTERN  smq_params_t    smq_params;
+extern  smq_params_t    smq_params;
 
 #endif//__smp_params_H_

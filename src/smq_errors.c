@@ -1,7 +1,7 @@
 #include "smq_errors.h"
 
 
-SMQ_EXTERN  smq_error_t smq_errors[SMQ_ERR_COUNT] = 
+extern  smq_error_t smq_errors[SMQ_ERR_COUNT] = 
 {
 #define SMQ_ERR(name,id,cn,en)  {name, {sizeof(en), sizeof(cn)}, {en, cn}},
 #define SMQ_LOG(name,id,cn,en)

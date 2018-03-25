@@ -1,9 +1,8 @@
 #include "smq_logs.h"
-#include "smq_limit.h"
 #include "smq_os.h"
 
 
-SMQ_EXTERN  smq_log_t smq_logs[SMQ_LOG_COUNT] = 
+extern  smq_log_t smq_logs[SMQ_LOG_COUNT] = 
 {
 #define SMQ_ERR(name,id,cn,en)
 #define SMQ_LOG(name,id,cn,en)  {name, {sizeof(en), sizeof(cn)}, {en, cn}},

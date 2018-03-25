@@ -2,7 +2,8 @@
 #define __smq_libc_H_
 
 
-#include <stdlib.h>
+//#include <stdlib.h>
+#include <malloc.h>
 #define smq_malloc      malloc
 #define smq_free        free
 

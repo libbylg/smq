@@ -4,9 +4,9 @@
 
 /// 定义了通用的断言宏
 #if defined(DEBUG)
-#define SMQ_ASSERT(expr,message)    assert
+#define SMQ_ASSERT(expr,m)    //assert(expr)
 #else
-#define SMQ_ASSERT(expr,message)
+#define SMQ_ASSERT(expr,m)
 #endif
 
 

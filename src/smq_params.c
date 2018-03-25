@@ -1,12 +1,10 @@
 #include "smq_params.h"
-
 #include "smq_limit.h"
-//#include "smq_limit.h"
 #include "smq_libc.h"
 
 smq_int32   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
 
-SMQ_EXTERN  smq_params_t    smq_params = 
+extern  smq_params_t    smq_params = 
 {
     SMQ_LOG_LEVEL_DEF,
     NULL,

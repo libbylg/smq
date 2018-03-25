@@ -2,6 +2,15 @@
 #define _smq_
 
 
+
+/// 定义了外部引用宏
+#if  defined(__cplusplus)
+#define SMQ_EXTERN  extern  "C"
+#else
+#define SMQ_EXTERN  extern
+#endif
+
+
 /// 定义了符号导入和导出宏
 #if   defined(WIN32) || defined(WIN64)
 #ifdef SMQ_EXPORTS
@@ -11,14 +20,6 @@
 #endif
 #elif defined(__linux)
 #define SMQ_API
-#endif
-
-
-/// 定义了外部引用宏
-#if  defined(__cplusplus)
-#define SMQ_EXTERN  extern  "C"
-#else
-#define SMQ_EXTERN  extern
 #endif
 
 

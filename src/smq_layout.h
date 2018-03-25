@@ -1,7 +1,13 @@
 #ifndef __smq_layout_H_
 #define __smq_layout_H_
-#include "smq_alignpush.h"
 
+#include "smq.h"
+#include "smq_limit.h"
+
+
+
+
+#include "smq_alignpush.h"
 typedef struct  
 {
     smq_uint16  check_sum;              ///<    整个entry的校验和

@@ -22,6 +22,9 @@
     <ClCompile Include="src\smq_params.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\smq_utils.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\smq.h">
@@ -62,6 +65,15 @@
     </ClInclude>
     <ClInclude Include="src\os\win.msvc\os.h">
       <Filter>src\os\win.msvc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\smq_utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\smq_alignpop.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\smq_alignpush.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\os\win.msvc\os.c.inc">
       <Filter>src\os\win.msvc</Filter>
