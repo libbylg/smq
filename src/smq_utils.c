@@ -1,6 +1,6 @@
 #include "smq_utils.h"
 
-SMQ_EXTERN  smq_uint16 SMQ_CALL checksum(smq_void* data, smq_uint32 size)
+SMQ_EXTERN  smq_uint16 SMQ_CALL smq_checksum(smq_uint8* data, smq_uint32 size)
 { 
     register smq_uint16* buffer = (smq_uint16*)data;
     smq_uint32  cksum  = 0;
@@ -22,4 +22,6 @@ SMQ_EXTERN  smq_uint16 SMQ_CALL checksum(smq_void* data, smq_uint32 size)
     }
     
     return (smq_uint16) (~cksum); 
-} 
+}
+
+

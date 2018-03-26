@@ -78,6 +78,9 @@
     <ClInclude Include="src\os\win.msvc\os.c.inc">
       <Filter>src\os\win.msvc</Filter>
     </ClInclude>
+    <ClInclude Include="src\smq_options.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">

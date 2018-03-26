@@ -35,3 +35,4 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uin
 #define SMQ_DEBUG(id,format,...)    
 
 #endif
+

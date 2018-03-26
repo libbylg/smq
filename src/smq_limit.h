@@ -3,7 +3,12 @@
 
 #include "smq.h"
 
+
+
+
 #define SMQ_FULL_MAPPING_NAME_LEN_MAX           (256)       ///<    映射内存全名最大长度
+
+
 
 
 /// 角色
@@ -14,7 +19,11 @@
 ///@}
 
 
+
+
 #define SMQ_LOG_CACHE_LEN_MAX                   (256)       ///<    日志缓冲区的大小
+
+
 
 
 /// 定义了日志级别相关的几个参数
@@ -25,11 +34,15 @@
 ///@}
 
 
+
+
 /// 定义了系统所能支持的内存布局版本的范围
 ///@{
 #define SMQ_SUPPORTED_LAYOUT_VERSION_MIN        (0x0001)    ///<    当前系统所能支持的最小版本号
 #define SMQ_SUPPORTED_LAYOUT_VERSION_MAX        (0x0001)    ///<    当前系统所能支持的最小版本号
 ///@}
+
+
 
 
 /// 定义了当地语言支持
@@ -41,12 +54,16 @@
 ///@}
 
 
+
+
 /// 控制共享内存规格的几个核心参数
 ///@{
 #define SMQ_ALLOC_QUEUES_COUNT                  (4)     ///<    分配队列的个数
 #define SMQ_MSSGE_QUEUES_COUNT                  (2)     ///<    消息队列的个数
 #define SMQ_MEMORY_BLOCK_SIZE_MAX               (4096)  ///<    消息块的最大大小
 ///@}
+
+
 
 
 /// 消息队列配置参数
@@ -57,6 +74,8 @@
 ///@}
 
 
+
+
 /// 定义了共享内存大小配置
 ///@{
 #define SMQ_MEMORY_SIZE_MIN                     (1)
@@ -65,4 +84,30 @@
 ///@}
 
 
+/// 当前所支持的最小版本
+///@{
+#define SMQ_VERSION_MIN                         (1)
+#define SMQ_VERSION_MAX                         (1)
+///@}
+
+
+
+
+#define SMQ_ALLOC_QUEUES_COUNT                  (4)
+#define SMQ_MSSGE_QUEUES_COUNT                  (2)
+#define SMQ_ALLOC_BLOCK_SIZE_MAX                (4096)
+
+
+
+
+/// 定义了一种适用于C语言的精简版且约束众多的异常机制
+///@{
+#define SMQ_TRY(expr)       expr
+#define SMQ_THROW(expr)     expr;       goto    SMQ_EXCEPTION
+#define SMQ_THROW_IF(expr)  if (expr)   goto    SMQ_EXCEPTION
+#define SMQ_CATCH(expr)     SMQ_EXCEPTION:  if (expr)
+///@}
+
+
 #endif
+

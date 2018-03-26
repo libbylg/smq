@@ -18,3 +18,4 @@
 #define smq_sprintf_s   sprintf_s
 
 #endif
+

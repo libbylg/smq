@@ -50,3 +50,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+Debug
+Release
+ipch
+*.log
+*.bak
+*.sdf
+*.suo
+*.opensdf

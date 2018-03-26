@@ -20,7 +20,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t** shm)
+SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t* shm)
 {
     /// 创建成功后，shm->addr必须不为NULL，以便于smq_shm_close能够正确地执行释放操作
     return  SMQ_OK;
@@ -56,5 +56,10 @@ SMQ_EXTERN  smq_errno   smq_proc_mutex_unlock(smq_proc_mutex_t* mutex)
 SMQ_EXTERN  smq_void    smq_proc_mutex_close(smq_proc_mutex_t* mutex)
 {
     return;
+}
+
+SMQ_EXTERN  smq_uint32  smq_proc_getpid()
+{
+    return  11;
 }
 

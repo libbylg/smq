@@ -9,9 +9,34 @@
 </Folder>
 <Folder name="Other Files">
 </Folder>
+	<File>src\smq.h</File>
+	<File>src\smq_alignpop.h</File>
+	<File>src\smq_alignpush.h</File>
+	<File>src\smq_asserts.h</File>
+	<File>src\smq_errors.c</File>
+	<File>src\smq_errors.h</File>
+	<File>src\smq_inst.c</File>
+	<File>src\smq_inst.h</File>
+	<File>src\smq_layout.h</File>
+	<File>src\smq_libc.c</File>
+	<File>src\smq_libc.h</File>
+	<File>src\smq_limit.h</File>
+	<File>src\smq_logs.c</File>
+	<File>src\smq_logs.h</File>
+	<File>src\smq_os.c</File>
+	<File>src\smq_os.h</File>
+	<File>src\smq_params.c</File>
+	<File>src\smq_params.h</File>
+	<File>src\smq_res.h</File>
+	<File>src\smq_utils.c</File>
+	<File>src\smq_utils.h</File>
+<Attribute topline="14" x="1" y="22">src\smq_libc.h</Attribute>
+<Attribute topline="35" x="1" y="70">src\smq_limit.h</Attribute>
+<Attribute topline="19" x="92" y="22">src\smq_params.c</Attribute>
+<Attribute topline="19" x="1" y="28">src\smq_utils.c</Attribute>
 <FolderState>111</FolderState>
 <DefConfig>mingw5</DefConfig>
-<Builder name="mingw5" type="MinGW" version="1.0" changed="1">
+<Builder name="mingw5" type="MinGW" version="1.0">
 	<TargetName>smq</TargetName>
 	<TargetType>dll</TargetType>
 	<TargetDir>mingw5</TargetDir>

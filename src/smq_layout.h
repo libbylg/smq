@@ -5,9 +5,16 @@
 #include "smq_limit.h"
 
 
-
+#if defined(WIN32) || defined(WIN64)
+#pragma warning(disable:4200)   ///<    VC编译器会报告警：使用了非标准扩展 : 结构/联合中的零大小数组
+#endif
 
 #include "smq_alignpush.h"
+// #if defined(WIN32) || defined(WIN64)
+// #pragma pack(1)
+// #endif
+
+
 typedef struct  
 {
     smq_uint16  check_sum;              ///<    整个entry的校验和
@@ -24,44 +31,48 @@ typedef struct
     smq_uint8   padding[108];           ///<    填充字段，用于补齐128字节
 }smq_entry_t;
 
+
 typedef struct  
 {
     smq_uint32  len;
     smq_char    name[SMQ_FULL_MAPPING_NAME_LEN_MAX];    ///<    共享内存的全名
 }smq_desc_t;
 
+
 typedef struct  
 {
-    smq_uint32  next;
-    smq_uint8   queue_index8;
-    smq_uint8   reversed;
-}smq_memory_block_t;
-
-typedef struct
-{
-    smq_uint16  data_size;
-    smq_uint32  next;
+    smq_uint32  next;           /// 下一个内存块
+    smq_uint8   queue_index;    /// 内存块属于哪个队列
+    smq_uint8   options;        /// 选项字段（当前必须填写为0）
+    smq_uint16  data_size;      /// 用户数据大小
     smq_uint8   data[0];
-}smq_message_t;
+}smq_block_t;
+
 
 typedef struct 
 {
     smq_uint32  block_size;
     smq_uint32  block_count;
-    smq_uint32  idle_queue_first;
-    smq_uint32  idle_queue_last;
-    smq_uint32  work_queue_first;
-    smq_uint32  work_queue_last;
+    smq_uint32  idle_block_last;
 }smq_alloc_queue_t;
+
 
 typedef struct
 {
-    smq_uint32  len;
+    smq_uint32  size;
     smq_uint32  index_reader;
     smq_uint32  index_writer;
-}smq_message_queue_t;
-
+    smq_uint32  messages[0];
+}smq_mssge_queue_t;
 
 
 #include "smq_alignpop.h"
+// #if defined(WIN32) || defined(WIN64)
+// #pragma pack(pop)
+// #endif
+
+#if defined(WIN32) || defined(WIN64)
+#pragma warning(default:4200)   ///<    VC编译器会报告警：使用了非标准扩展 : 结构/联合中的零大小数组
+#endif
+
 #endif//__smq_layout_H_
