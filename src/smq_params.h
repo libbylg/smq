@@ -10,7 +10,10 @@ typedef struct
     SMQ_LOGGER_FUNC     log_func;
 
     smq_uint32          memory_size;
+
     smq_uint32          queue_size;
+
+    smq_uint32          locale;
 }smq_params_t;
 
 extern  smq_params_t    smq_params;

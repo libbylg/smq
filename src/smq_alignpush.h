@@ -5,7 +5,7 @@
 
 
 #if defined(WIN32) || defined(WIN64)
-#pragma pack(1)
+#pragma pack(push, 1)
 #endif
 
 
@@ -16,3 +16,6 @@
 
 
 #define SMQ_ALIGN_PUSH
+
+
+

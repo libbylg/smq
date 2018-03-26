@@ -40,6 +40,8 @@ static smq_void smq_layout_map(smq_t* smq)
 }
 
 
+
+
 static smq_void smq_layout_alloc_queue_init(smq_t* smq)
 {
     smq_uint32  each_size   =   smq->entry->heap_len;
@@ -79,6 +81,8 @@ static smq_void smq_layout_alloc_queue_init(smq_t* smq)
         last->next = SMQ_OFFSETS_OF(smq, first);
     }
 }
+
+
 
 
 static smq_void smq_layout_init(smq_t* smq)
@@ -251,12 +255,40 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver)
 {
-    return SMQ_OK;
+    SMQ_ASSERT((NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((NULL != ver), "关键输入参数，由外部保证有效性");
 
+    smq_t* smq = (smq_t*)inst;
+    *ver = smq->entry->version;
+
+    return SMQ_OK;
 }
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f)
+SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f)
 {
+    SMQ_ASSERT((NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((NULL != f),    "关键输入参数，由外部保证有效性");
 
-    return SMQ_OK;
+    smq_t* smq = (smq_t*)inst;
+
+    //  dump开始
+    smq_uint32 flag = 0;
+    (*f)(context, flag++, NULL, 0);
+
+    //  dump头部
+    if (0 != (range & SMQ_DUMP_RANGE_HEAP_HEAD))
+    {
+        (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data);
+    }
+
+    //  dump数据
+    if (0 != (range & SMQ_DUMP_RANGE_HEAP_DATA))
+    {
+        (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data);
+    }
+
+    //  dump结束
+    (*f)(context, (smq_uint32)(~0), NULL, 0);
+
+    return;
 }
