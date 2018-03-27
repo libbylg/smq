@@ -32,9 +32,9 @@
 
 /// 定义了日志级别相关的几个参数
 ///@{
-#define SMQ_LOG_LEVEL_MIN                       (SMQ_LOG_LEVEL_OFF)     ///<    日志级别最小值
+#define SMQ_LOG_LEVEL_MIN                       (SMQ_LOG_LEVEL_DEBUG)   ///<    日志级别最小值
 #define SMQ_LOG_LEVEL_DEF                       (SMQ_LOG_LEVEL_INFO)    ///<    缺省的日志级别
-#define SMQ_LOG_LEVEL_MAX                       (SMQ_LOG_LEVEL_DEBUG)   ///<    日志级别最大值
+#define SMQ_LOG_LEVEL_MAX                       (SMQ_LOG_LEVEL_ERROR)   ///<    日志级别最大值
 ///@}
 
 

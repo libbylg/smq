@@ -127,11 +127,11 @@ typedef union
 
 /// 定义了日志级别
 ///@{
-#define SMQ_LOG_LEVEL_OFF           (0)         ///<    关闭日志
-#define SMQ_LOG_LEVEL_ERROR         (1)         ///<    错误级别
+#define SMQ_LOG_LEVEL_DEBUG         (0)         ///<    调试级别
+#define SMQ_LOG_LEVEL_INFO          (1)         ///<    信息级别
 #define SMQ_LOG_LEVEL_WARN          (2)         ///<    警告级别
-#define SMQ_LOG_LEVEL_INFO          (3)         ///<    信息级别
-#define SMQ_LOG_LEVEL_DEBUG         (4)         ///<    调试级别
+#define SMQ_LOG_LEVEL_ERROR         (3)         ///<    错误级别
+#define SMQ_LOG_LEVEL_OFF           (4)         ///<    关闭日志
 ///@}
 
 
@@ -150,13 +150,32 @@ typedef union
 ///@}
 
 
+/// smq 输出日志时的回调函数
+/// \param  context     [in]    日志上下文，通过 key 为 SMQ_PARAM_LOG_TARGET 的参数调用 #smq_param_set 函数时，第一个指针输入的就是context.
+/// \param  id          [in]    日志编号.
+/// \param  level       [in]    日志级别.
+/// \param  loc         [in]    本地语言支持.
+/// \param  desc        [in]    与 id 对应的，由 loc 指定的语言的日志静态描述.
+/// \param  desc_len    [in]    desc 的长度，不包括\0.
+/// \param  dynamic     [in]    日志的动态信息，一般是日志上下文的参数，参数的是 key1=vaule1,key2=vaule2,... 形式的多个 key-value 对，但并不保证 value 部分不包括字符'='或者','.
+/// \param  dynamic_len [in]    dynamic 的长度，不包括\0.
+typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
 
-typedef smq_int32   (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
+
+
+
+/// Dump共享内存详情
+/// \param  context     [in]    Dump 上下文，该参数来源自调用 #smq_dump 时的同名输入参数
+/// \param  flag        [in]    用于标记 Dump 的阶段，0 表示 Dump 开始，0xFFFFFFFF 表示 Dump 结束，其他值表示 Dump 的数据输出阶段。当处于 Dump 开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
+/// \param  data        [in]    Dump 的数据缓冲区指针。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 NULL.
+/// \param  len         [in]    该参数用于指明 data 参数中的数据区域的长度。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 0.
 typedef smq_void    (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
 
 
 
 
+/// 对 smq 的全局参数进行控制
+///
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_value_t* val);

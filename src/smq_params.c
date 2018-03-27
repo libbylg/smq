@@ -4,7 +4,7 @@
 #include "smq_asserts.h"
 #include "smq_errors.h"
 
-static smq_int32   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
+static smq_void   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
 
 smq_params_t    smq_params = 
 {
@@ -15,8 +15,17 @@ smq_params_t    smq_params =
     SMQ_MESSAGE_QUEUE_SIZE_DEF,
 };
 
-static smq_int32   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len)
+static smq_void   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len)
 {
+    static smq_char* level_name[(SMQ_LOG_LEVEL_MAX - SMQ_LOG_LEVEL_MIN) + 1] = 
+    {
+        "DEBUG",
+        "INFO",
+        "WARN",
+        "ERROR",
+    };
+
+    smq_printf("%s|%d|%s|%s\n", level_name[level], id, desc, dynamic);
     return  0;
 }
 
@@ -57,11 +66,15 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_va
 {
     SMQ_ASSERT((NULL != val), "关键参数由外部保证参数正确性");
 
-    if ((key < SMQ_PARAM_KEY_MIN) || (key > SMQ_PARAM_KEY_MAX))
+    //  设置之前先校验一下
+    smq_errno err = smq_param_check(key, val);
+    if (err != SMQ_OK)
     {
-        return SMQ_ERR_PARAM_UNSUPPORTED_KEY;
+        return err;
     }
 
+
+    //  执行具体的设置工作
     switch (key)
     {
     case SMQ_PARAM_LOG_LEVEL:

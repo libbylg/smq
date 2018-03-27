@@ -1,5 +1,7 @@
 #include "smq_errors.h"
 
+#include "smq_libc.h"
+
 
 extern  smq_error_t smq_errors[SMQ_ERR_COUNT] = 
 {
@@ -13,7 +15,8 @@ extern  smq_error_t smq_errors[SMQ_ERR_COUNT] =
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc)
 {
-    if ((err < SMQ_ERR_MIN) || (err > SMQ_ERR_MAX))
+    //  错误码的上下限的值是占位用的
+    if ((err <= SMQ_ERR_LOWER_LIMIT) || (err >= SMQ_ERR_UPPER_LIMIT))
     {
         return  SMQ_ERR_UNDEFINED_ERR;
     }
@@ -22,6 +25,13 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 
     {
         return SMQ_ERR_UNDEFINED_LOC;
     }
+
+    smq_int32 index = err - SMQ_ERR_UPPER_LIMIT;
+    smq_error_t* error = &(smq_errors[index]);
+
+    smq_uint32 copylen = smq_min(error->len[loc], sizeof(smq_value_t));
+    smq_memcpy(desc->value_str, error->desc[loc], copylen);
+    desc->value_str[sizeof(desc->value_str) - 1] = '\0';
 
     return  SMQ_OK;
 }
