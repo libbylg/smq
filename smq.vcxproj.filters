@@ -25,7 +25,9 @@
     <ClCompile Include="src\smq_utils.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\smq_msg.c" />
+    <ClCompile Include="src\smq_msg.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\smq.h">
@@ -82,7 +84,9 @@
     <ClInclude Include="src\smq_options.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\smq_msg.h" />
+    <ClInclude Include="src\smq_msg.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">

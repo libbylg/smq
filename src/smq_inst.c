@@ -5,7 +5,6 @@
 #include "smq_params.h"
 #include "smq_asserts.h"
 #include "smq_utils.h"
-#include "smq_options.h"
 #include "smq_logs.h"
 
 

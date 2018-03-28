@@ -1,4 +1,10 @@
 #include "smq_msg.h"
+#include "smq_os.h"
+#include "smq_layout.h"
+#include "smq_libc.h"
+#include "smq_asserts.h"
+#include "smq_inst.h"
+#include "smq_errors.h"
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg)
@@ -33,11 +39,11 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_merge(smq_inst inst, smq_msg
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
     smq_t* smq = (smq_t*)inst;
-    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(msg);
+    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
     
     if (SMQ_MSG_NULL == block->next)
     {
-        block->next = 
+        //block->next = 
     }
     else
     {
@@ -61,7 +67,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg 
     SMQ_ASSERT((NULL          != next), "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(msg);
+    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
     *next = (SMQ_MSG_NULL == block->next)?SMQ_MSG_NULL:block->next;
 
     return  SMQ_OK;
@@ -76,7 +82,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(msg);
+    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
 
     smq_uint32 count = 0;
     if (NULL != data)
@@ -111,7 +117,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(msg);
+    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
 
     smq_uint32 cap  = smq->alloc_queues[block->queue_index]->block_size - sizeof(smq_block_t);
     if (len > cap)
