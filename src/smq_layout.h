@@ -5,6 +5,15 @@
 #include "smq_limit.h"
 
 
+
+/// 这里定义了所有的可选项
+///@{
+#define SMQ_OPTION_BYTE_ENDIAN                  (0x0001)
+///@}
+
+
+
+
 #if defined(WIN32) || defined(WIN64)
 #pragma warning(disable:4200)   ///<    VC编译器会报告警：使用了非标准扩展 : 结构/联合中的零大小数组
 #endif

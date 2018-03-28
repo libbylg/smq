@@ -14,7 +14,7 @@ SMQ_ERR(SMQ_ERR_MEMORY_SIZE_OUT_OF_RANGE,       210,    "共享内存大小超出范围", 
 SMQ_ERR(SMQ_ERR_MESSAGE_QUEUE_SIZE_OUT_OF_RANGE,211,    "消息队列的大小超出范围",                        "")
 SMQ_ERR(SMQ_ERR_LOCALE_OUT_OF_RANGE,            212,    "本地语言的值超出支持的范围",                    "")
 SMQ_ERR(SMQ_ERR_LOG_FUNCTION_NULL,              213,    "日志函数不应该为NULL",                         "")
-
+SMQ_ERR(SMQ_ERR_LEN_LARGE_THAN_CAP,             214,    "数据长度超过了消息块的内存限制",                 "")
 
 
 

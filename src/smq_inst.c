@@ -264,6 +264,9 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint3
     return SMQ_OK;
 }
 
+
+
+
 SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f)
 {
     SMQ_ASSERT((NULL != inst), "关键输入参数，由外部保证有效性");

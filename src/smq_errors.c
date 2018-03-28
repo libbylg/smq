@@ -1,6 +1,7 @@
 #include "smq_errors.h"
-
 #include "smq_libc.h"
+
+
 
 
 extern  smq_error_t smq_errors[SMQ_ERR_COUNT] = 
@@ -11,6 +12,8 @@ extern  smq_error_t smq_errors[SMQ_ERR_COUNT] =
 #undef  SMQ_ERR
 #undef  SMQ_LOG
 };
+
+
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc)
@@ -35,3 +38,6 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 
 
     return  SMQ_OK;
 }
+
+
+

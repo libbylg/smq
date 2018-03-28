@@ -97,9 +97,21 @@
 
 
 
+/// 定义了控制共享内存关键结构的几个参数
+///@{
 #define SMQ_ALLOC_QUEUES_COUNT                  (4)
 #define SMQ_MSSGE_QUEUES_COUNT                  (2)
 #define SMQ_ALLOC_BLOCK_SIZE_MAX                (4096)
+///@}
+
+
+
+
+/// 定义了大小端常量
+///@{
+#define SMQ_BYTE_ENDIAN_BIG                     (1)
+#define SMQ_BYTE_ENDIAN_SMALL                   (0)
+///@}
 
 
 

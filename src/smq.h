@@ -174,20 +174,57 @@ typedef smq_void    (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 fl
 
 
 
-/// 对 smq 的全局参数进行控制
-///
+/// 读取由 key 指定的全局参数的值
+/// \param  key         [in]    key 用来标识需要获取哪个参数
+/// \param  val         [out]   获取的参数会被放到 val 变量中
+/// \return 返回 SMQ_OK 表示获取成功，其他表示获取失败
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val);
+
+
+
+
+/// 修改由 key 指定的全局参数的值
+/// \param  key         [in]    key 用来标识需要修改哪个参数的值
+/// \param  val         [in]    新的值放在 val 参数中
+/// \return 返回 SMQ_OK 表示设置成功，其他表示获取失败及原因
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val);
+
+
+
+
+/// 检查是否可以将由 key 标识的参数的值修改为 val
+/// \param  key         [in]    key 用来标识需要修改哪个参数的值
+/// \param  val         [in]    新的值放在 val 参数中
+/// \return 返回 SMQ_OK 表示检查通过，其他表示获取失败，可以通过 #smq_error 函数获取该错误的详细的错误描述文本
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_value_t* val);
 
 
 
 
+/// 获取参数的错误描述
+/// \param  err         [in]    错误码
+/// \param  loc         [in]    本地语言编码
+/// \param  desc        [out]   错误描述文本，该文本存储在 #smq_value_t 的 value_str 成员中，且以 \0 结尾
+/// \return 返回 SMQ_OK 表示检查通过，其他表示获取错误描述失败
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc);
 
 
 
+
+/// 创建 smq 共享内存实例，或者打开已经存在的 smq 共享内存实例
+/// \param  name        [in]    smq 共享内存实例的名称
+/// \param  role        [in]    实例的角色，可参见 SMQ_ROLE_xxx 系列宏了解有哪些角色
+/// \param  size        [in]    smq 共享内存实例的大小
+/// \param  inst        [out]   smq 共享内存实例对象
+/// \return 返回 SMQ_OK 表示创建或者打开成功，其他表示打开失败的错误码
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_uint32 size, smq_inst* inst);
+
+
+
+
+
+/// 关闭已经打开或者创建的 smq 共享内存实例
+/// \param  inst        [in]    待关闭的 smq 共享内存实例
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);

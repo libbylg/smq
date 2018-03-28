@@ -26,7 +26,7 @@ static smq_void   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, sm
     };
 
     smq_printf("%s|%d|%s|%s\n", level_name[level], id, desc, dynamic);
-    return  0;
+    return;
 }
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val)

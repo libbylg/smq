@@ -1,0 +1,16 @@
+LIBRARY "smq"  
+EXPORTS   
+    smq_param_get
+    smq_param_set
+    smq_param_check
+    smq_error
+    smq_open
+    smq_close
+    smq_version
+    smq_dump
+    smq_msg_new
+    smq_msg_del
+    smq_msg_merge
+    smq_msg_next
+    smq_msg_data
+    smq_msg_fix
