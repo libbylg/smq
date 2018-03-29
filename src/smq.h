@@ -145,13 +145,11 @@
 typedef union
 {
     smq_char    value_str[SMQ_VALUE_LEN_MAX];   ///<    字符串类型的值
-    smq_uint32  value_uint32;                   ///<    uint32类型的值
-    smq_uint16  value_uint16;                   ///<    uint16类型的值
-    smq_uint8   value_uint8;                    ///<    uint8类型的值
+    smq_uint32  value_uint32;                   ///<    uint32 类型的值
+    smq_uint16  value_int32;                    ///<    int32 类型的值
     smq_void*   value_ptr;                      ///<    指针类型的值
-    smq_uint32  value_uint32s[0];               ///<    uint32类型的数组
-    smq_uint16  value_uint16s[0];               ///<    uint16类型的数组
-    smq_uint8   value_uint8s[0];                ///<    uint8类型的数组
+    smq_uint32  value_uint32s[0];               ///<    uint32 类型的数组
+    smq_uint16  value_int32s[0];                ///<    int32 类型的数组
     smq_void*   value_ptrs[0];                  ///<    指针数组
 }smq_value_t;
 #if defined(WIN32) || defined(WIN64)
@@ -270,6 +268,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
+
 
 /// 定义了一个适用于C语言的编译期断言宏，用于对编译环境进行一些基本的检查
 ///@{
