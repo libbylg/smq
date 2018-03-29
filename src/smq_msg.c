@@ -53,6 +53,37 @@ static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 
 
 
+static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
+{
+    smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
+
+    //  找到本块所属的队列
+    smq_alloc_queue_t* queue = (smq_alloc_queue_t*)smq->alloc_queues[cur_block->queue_index];
+
+    //  找到本队列的最后一个块，然后将当前要回收的块连接上去
+    smq_block_t* queue_last = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
+    cur_block->next  = queue_last->next;
+    queue_last->next = msg;
+
+    //  修改当前队列的最后一个块的指针
+    queue->idle_block_last = msg;
+    return SMQ_OK;
+}
+
+
+
+
+/// 推进迭代器，但是返回推进之前的消息
+static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
+{
+    smq_msg ret = *itr;
+    *itr = ((smq_block_t*)SMQ_ADDRESS_OF(smq, *itr))->next;
+    return ret;
+}
+
+
+
+
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
@@ -90,37 +121,6 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
     }
 
     return  SMQ_ERR_NO_ENOUGH_SHARE_MEMORY;
-}
-
-
-
-
-static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
-{
-    smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
-
-    //  找到本块所属的队列
-    smq_alloc_queue_t* queue = (smq_alloc_queue_t*)smq->alloc_queues[cur_block->queue_index];
-
-    //  找到本队列的最后一个块，然后将当前要回收的块连接上去
-    smq_block_t* queue_last = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
-    cur_block->next  = queue_last->next;
-    queue_last->next = msg;
-
-    //  修改当前队列的最后一个块的指针
-    queue->idle_block_last = msg;
-    return SMQ_OK;
-}
-
-
-
-
-/// 推进迭代器，但是返回推进之前的消息
-static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
-{
-    smq_msg ret = *itr;
-    *itr = ((smq_block_t*)SMQ_ADDRESS_OF(smq, *itr))->next;
-    return ret;
 }
 
 

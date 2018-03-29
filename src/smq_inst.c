@@ -199,32 +199,6 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 
 
 
-SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
-{
-    if (NULL == inst)
-    {
-        return;
-    }
-
-    smq_t* smq = (smq_t*)inst;
-    smq_shm_close(&(smq->shm));
-    
-    if (NULL != smq->alloc_queues)
-    {
-        smq_free(smq->alloc_queues);
-    }
-
-    if (NULL != smq->mssge_queues)
-    {
-        smq_free(smq->mssge_queues);
-    }
-
-    smq_free(smq);
-}
-
-
-
-
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst)
 {
     SMQ_ASSERT((NULL != name), "名字不能为空");
@@ -280,6 +254,34 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
     return SMQ_OK;
 }
+
+
+
+
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
+{
+    if (NULL == inst)
+    {
+        return;
+    }
+
+    smq_t* smq = (smq_t*)inst;
+    smq_shm_close(&(smq->shm));
+
+    if (NULL != smq->alloc_queues)
+    {
+        smq_free(smq->alloc_queues);
+    }
+
+    if (NULL != smq->mssge_queues)
+    {
+        smq_free(smq->mssge_queues);
+    }
+
+    smq_free(smq);
+}
+
+
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver)
