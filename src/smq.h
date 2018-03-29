@@ -22,14 +22,19 @@
 #endif
 #elif defined(__linux)
 #define SMQ_API
+#else
+#error  "Unsupported platform for 'SMQ_API'"
 #endif
 
 
 
 
 /// 定义了SMQ的调用协定
+#if defined(WIN32) || defined(WIN64)
 #define SMQ_CALL    __stdcall
-
+#else
+#define SMQ_CALL    __attribute__(__stdcall__)
+#endif
 
 
 
@@ -41,17 +46,19 @@
 #define smq_int32   int
 #define smq_int16   short
 #define smq_int8    char
-#define smq_void    void
 #define smq_char    char
-#else
+#define smq_void    void
+#elif defined(__gcc)
 #define smq_uint32  unsigned int
 #define smq_uint16  unsigned short
 #define smq_uint8   unsigned char
 #define smq_int32   int
 #define smq_int16   short
 #define smq_int8    char
-#define smq_void    void
 #define smq_char    char
+#define smq_void    void
+#else
+#error  "Unsupported os or platform"
 #endif
 
 
@@ -81,29 +88,6 @@
 
 
 
-/// 定义了通用的值类型
-#if defined(WIN32) || defined(WIN64)
-#pragma warning(disable:4200)
-#endif
-#define SMQ_VALUE_LEN_MAX       (256)   ///<    定义了参数的最大长度
-typedef union
-{
-    smq_char    value_str[SMQ_VALUE_LEN_MAX];   ///<    字符串类型的值
-    smq_uint32  value_uint32;                   ///<    uint32类型的值
-    smq_uint16  value_uint16;                   ///<    uint16类型的值
-    smq_uint8   value_uint8;                    ///<    uint8类型的值
-    smq_void*   value_ptr;                      ///<    指针类型的值
-    smq_uint32  value_uint32s[0];               ///<    uint32类型的数组
-    smq_uint16  value_uint16s[0];               ///<    uint16类型的数组
-    smq_uint8   value_uint8s[0];                ///<    uint8类型的数组
-    smq_void*   value_ptrs[0];                  ///<    指针数组
-}smq_value_t;
-#if defined(WIN32) || defined(WIN64)
-#pragma warning(default:4200)
-#endif
-///@}
-
-
 
 
 /// 定义了语言相关的几个宏
@@ -117,8 +101,8 @@ typedef union
 
 /// 角色分类
 ///@{
-#define SMQ_ROLE_MASTER             (0)         ///<    主控对象
-#define SMQ_ROLE_SLAVE              (1)         ///<    从控对象
+#define SMQ_ROLE_LEADER             (0)         ///<    主控对象
+#define SMQ_ROLE_FOLLOWER           (1)         ///<    从控对象
 #define SMQ_ROLE_VIEWER             (2)         ///<    观察者对象
 ///@}
 
@@ -150,6 +134,34 @@ typedef union
 ///@}
 
 
+
+
+/// 定义了通用的值类型
+///@{
+#if defined(WIN32) || defined(WIN64)
+#pragma warning(disable:4200)
+#endif
+#define SMQ_VALUE_LEN_MAX       (256)   ///<    定义了参数的最大长度
+typedef union
+{
+    smq_char    value_str[SMQ_VALUE_LEN_MAX];   ///<    字符串类型的值
+    smq_uint32  value_uint32;                   ///<    uint32类型的值
+    smq_uint16  value_uint16;                   ///<    uint16类型的值
+    smq_uint8   value_uint8;                    ///<    uint8类型的值
+    smq_void*   value_ptr;                      ///<    指针类型的值
+    smq_uint32  value_uint32s[0];               ///<    uint32类型的数组
+    smq_uint16  value_uint16s[0];               ///<    uint16类型的数组
+    smq_uint8   value_uint8s[0];                ///<    uint8类型的数组
+    smq_void*   value_ptrs[0];                  ///<    指针数组
+}smq_value_t;
+#if defined(WIN32) || defined(WIN64)
+#pragma warning(default:4200)
+#endif
+///@}
+
+
+
+
 /// smq 输出日志时的回调函数
 /// \param  context     [in]    日志上下文，通过 key 为 SMQ_PARAM_LOG_TARGET 的参数调用 #smq_param_set 函数时，第一个指针输入的就是context.
 /// \param  id          [in]    日志编号.
@@ -169,7 +181,8 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id
 /// \param  flag        [in]    用于标记 Dump 的阶段，0 表示 Dump 开始，0xFFFFFFFF 表示 Dump 结束，其他值表示 Dump 的数据输出阶段。当处于 Dump 开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
 /// \param  data        [in]    Dump 的数据缓冲区指针。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 NULL.
 /// \param  len         [in]    该参数用于指明 data 参数中的数据区域的长度。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 0.
-typedef smq_void    (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
+/// \return 返回 0 表示执行需要继续执行后面的 Dump 操作，否则，将终止后续的操作。
+typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
 
 
 
@@ -226,7 +239,17 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 /// 关闭已经打开或者创建的 smq 共享内存实例
 /// \param  inst        [in]    待关闭的 smq 共享内存实例
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
+
+
+
+
+/// 查询 SMQ 实例的共享内存布局的版本
+/// \param  inst    [in]    SMQ 实例
+/// \param  ver     [out]   版本号
+/// \return 查询成功，返回 SMQ_OK，否则返回失败错误码
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
+
+
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);
 
 
@@ -250,10 +273,16 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 /// 定义了一个适用于C语言的编译期断言宏，用于对编译环境进行一些基本的检查
 ///@{
 #if defined(WIN32) || defined(WIN64)
-#define SMQ_STATIC_ASSERT(expr,message) C_ASSERT(expr)
+    #if defined(__cplusplus)
+        #define SMQ_STATIC_ASSERT(expr,message) static_assert(expr)
+    #else
+        #define SMQ_STATIC_ASSERT(expr,message) C_ASSERT(expr)
+    #endif
 #else
 #define SMQ_STATIC_ASSERT(expr,message) ((void)sizeof(char[1 - 2*!!(expr)]))
 #endif
+
+
 
 // SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "smq_uint32长度必须是4字节");
 // SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "smq_uint32长度必须是4字节");

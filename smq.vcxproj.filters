@@ -45,12 +45,6 @@
     <ClInclude Include="src\smq_errors.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\smq_inst.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_layout.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\smq_libc.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -81,10 +75,10 @@
     <ClInclude Include="src\os\win.msvc\os.c.inc">
       <Filter>src\os\win.msvc</Filter>
     </ClInclude>
-    <ClInclude Include="src\smq_options.h">
+    <ClInclude Include="src\smq_msg.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\smq_msg.h">
+    <ClInclude Include="src\smq_inst.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -32,7 +32,7 @@ static smq_void smq_layout_map(smq_t* smq)
 
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
-        smq->mssge_groups[i]    =   (smq_mssge_queue_t*)smq_cut(&pos, sizeof(smq_mssge_queue_t));
+        smq->mssge_queues[i]    =   (smq_mssge_queue_t*)smq_cut(&pos, sizeof(smq_mssge_queue_t));
     }
 
     smq->heap_data  =   SMQ_ADDRESS_OF(smq, smq->entry->heap_data);
@@ -115,10 +115,10 @@ static smq_void smq_layout_init(smq_t* smq)
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
         smq_uint32 message_queue_size = sizeof(smq_mssge_queue_t) + sizeof(smq_uint32) * smq_params.queue_size;
-        smq->mssge_groups[i]        =   (smq_mssge_queue_t*)smq_cut(&pos, message_queue_size);
-        smq->mssge_groups[i]->size  =   message_queue_size;
-        smq->mssge_groups[i]->index_reader  =   0;
-        smq->mssge_groups[i]->index_writer  =   0;
+        smq->mssge_queues[i]        =   (smq_mssge_queue_t*)smq_cut(&pos, message_queue_size);
+        smq->mssge_queues[i]->size  =   message_queue_size;
+        smq->mssge_queues[i]->index_reader  =   0;
+        smq->mssge_queues[i]->index_writer  =   0;
     }
 
     //  重新定位heap_data，重新统一到4096字节的边界
@@ -197,9 +197,9 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
         smq_free(smq->alloc_queues);
     }
 
-    if (NULL != smq->mssge_groups)
+    if (NULL != smq->mssge_queues)
     {
-        smq_free(smq->mssge_groups);
+        smq_free(smq->mssge_queues);
     }
 
     smq_free(smq);
@@ -221,7 +221,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
         return SMQ_ERR_MALLOC_FAILED;
     }
     smq_memset(smq, 0, sizeof(smq_t));
-     
+    smq->role = role;
+
 
     //  创建共享内存对象
     int shm_size = smq_params.memory_size * 1024 * 1024;
@@ -243,6 +244,11 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
             smq_free(smq->alloc_queues);
         }
 
+        if (NULL == smq->mssge_queues)
+        {
+            smq_free(smq->mssge_queues);
+        }
+
         smq_free(smq);
         return SMQ_ERR_INIT_LAYOUT_FAILED;
     }
@@ -258,6 +264,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint3
     SMQ_ASSERT((NULL != ver), "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
+
     *ver = smq->entry->version;
 
     return SMQ_OK;
@@ -275,22 +282,34 @@ SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 ra
 
     //  dump开始
     smq_uint32 flag = 0;
-    (*f)(context, flag++, NULL, 0);
+    if (0 != (*f)(context, flag++, NULL, 0))
+    {
+        return;
+    }
 
     //  dump头部
     if (0 != (range & SMQ_DUMP_RANGE_HEAP_HEAD))
     {
-        (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data);
+        if (0 != (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data))
+        {
+            return;
+        }
     }
 
     //  dump数据
     if (0 != (range & SMQ_DUMP_RANGE_HEAP_DATA))
     {
-        (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data);
+        if (0 != (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data))
+        {
+            return;
+        }
     }
 
     //  dump结束
-    (*f)(context, (smq_uint32)(~0), NULL, 0);
+    if (0 != (*f)(context, (smq_uint32)(~0), NULL, 0))
+    {
+        return;
+    }
 
     return;
 }

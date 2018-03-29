@@ -22,7 +22,7 @@
 
 /// ½ÇÉ«
 ///@{
-#define SMQ_ROLE_MIN                            (SMQ_ROLE_MASTER)
+#define SMQ_ROLE_MIN                            (SMQ_ROLE_LEADER)
 #define SMQ_ROLE_MAX                            (SMQ_ROLE_VIEWER)
 #define SMQ_ROLE_COUNT                          ((SMQ_ROLE_MAX - SMQ_ROLE_MIN) - 1)
 ///@}
