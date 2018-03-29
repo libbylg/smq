@@ -41,7 +41,7 @@ static smq_void smq_layout_map(smq_t* smq)
 
 
 
-static smq_void smq_layout_alloc_queue_init(smq_t* smq)
+static smq_void smq_layout_alloc_queues_init(smq_t* smq)
 {
     smq_uint32  each_size   =   smq->entry->heap_len;
 
@@ -133,7 +133,24 @@ static smq_void smq_layout_init(smq_t* smq)
     smq->entry->check_sum   =   smq_checksum(smq->shm.addr, sizeof(smq_entry_t));
 
     //  下面开始对共享内存进行存储划分
-    smq_layout_alloc_queue_init(smq);
+    smq_layout_alloc_queues_init(smq);
+
+    //  根据角色的不同，确定收发队列为哪个
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:
+        smq->recv_queue = smq->mssge_queues[0];
+        smq->send_queue = smq->mssge_queues[1];
+        break;
+    case SMQ_ROLE_FOLLOWER:
+        smq->recv_queue = smq->mssge_queues[1];
+        smq->send_queue = smq->mssge_queues[0];
+        break;
+    default:
+        smq->recv_queue = NULL;
+        smq->send_queue = NULL;
+        break;
+    }
 }
 
 
@@ -208,10 +225,15 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_uint32 size, smq_inst* inst)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst)
 {
     SMQ_ASSERT((NULL != name), "名字不能为空");
-    SMQ_ASSERT(((role < SMQ_ROLE_MIN) || (role > SMQ_ROLE_MAX)), "对象角色不支持");
+    SMQ_ASSERT((NULL != inst), "inst 不能为空");
+
+    if ((role < SMQ_ROLE_MIN) || (role > SMQ_ROLE_MAX))
+    {
+        return SMQ_ERR_UNSUPORTED_ROLE;
+    }
 
 
     //  创建smq实例
@@ -239,6 +261,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     if (SMQ_OK != err)
     {
         smq_shm_close(&(smq->shm));
+
         if (NULL == smq->alloc_queues)
         {
             smq_free(smq->alloc_queues);
@@ -253,6 +276,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
         return SMQ_ERR_INIT_LAYOUT_FAILED;
     }
 
+    *inst = smq;
 
     return SMQ_OK;
 }
@@ -313,3 +337,11 @@ SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 ra
 
     return;
 }
+
+
+
+
+
+
+
+

@@ -20,7 +20,7 @@ SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_DEL,    216,    "只读实例不支持执行 
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_MERGE,  217,    "只读实例不支持执行 smq_msg_merge 操作",         "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_FIX,    218,    "只读实例不支持执行 smq_msg_fix 操作",           "")
 SMQ_ERR(SMQ_ERR_NO_ENOUGH_SHARE_MEMORY,             219,    "共享内存不足",                                 "")
-
+SMQ_ERR(SMQ_ERR_UNSUPORTED_ROLE,                    220,    "不支持的角色",                                 "")
 
 
 

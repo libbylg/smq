@@ -86,6 +86,8 @@ typedef struct
     smq_desc_t*             desc;
     smq_alloc_queue_t**     alloc_queues;
     smq_mssge_queue_t**     mssge_queues;
+    smq_mssge_queue_t*      send_queue;
+    smq_mssge_queue_t*      recv_queue;
     smq_uint8*              heap_data;
 }smq_t;
 

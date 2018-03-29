@@ -25,7 +25,7 @@ static smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
 
 
 
-static  smq_msg  smq_queue_pickup_first(smq_t* smq, smq_alloc_queue_t* queue)
+static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 {
     if (SMQ_MSG_NULL == queue->idle_block_last)
     {
@@ -69,7 +69,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
     {
         //  如果队列为空
         smq_alloc_queue_t* queue = smq->alloc_queues[i];
-        smq_msg new_msg = smq_queue_pickup_first(smq, queue);
+        smq_msg new_msg = smq_queue_pop_front(smq, queue);
         if (SMQ_MSG_NULL != new_msg)
         {
             *msg = new_msg;
@@ -81,7 +81,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
     {
         //  如果队列为空
         smq_alloc_queue_t* queue = smq->alloc_queues[i];
-        smq_msg new_msg = smq_queue_pickup_first(smq, queue);
+        smq_msg new_msg = smq_queue_pop_front(smq, queue);
         if (SMQ_MSG_NULL != new_msg)
         {
             *msg = new_msg;
@@ -95,7 +95,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
 
 
 
-static  smq_msg  smq_queue_append_last(smq_t* smq, smq_msg msg)
+static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
 {
     smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
 
@@ -115,6 +115,17 @@ static  smq_msg  smq_queue_append_last(smq_t* smq, smq_msg msg)
 
 
 
+/// 推进迭代器，但是返回推进之前的消息
+static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
+{
+    smq_msg ret = *itr;
+    *itr = ((smq_block_t*)SMQ_ADDRESS_OF(smq, *itr))->next;
+    return ret;
+}
+
+
+
+
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
@@ -126,40 +137,23 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_DEL;
     }
 
-
-    //  追加到队尾
-    smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
-//     for (smq_block_t* sub = (smq_block_t*)SMQ_ADDRESS_OF(smq, cur_block->next); 
-//         (SMQ_MSG_NULL != cur_block->next) || (sub->next == cur_block->next); 
-//         sub = (smq_block_t*)SMQ_ADDRESS_OF(smq, sub->next))
-//     {
-// 
-//     }
-
-    //  如果该消息没有子消息
-    if (SMQ_MSG_NULL == cur_block->next)
+    //  如果该消息有子消息，那么需要先删除子消息
+    smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
+    if (SMQ_MSG_NULL != block->next)
     {
-        smq_queue_append_last(smq, msg);
-        return SMQ_OK;
+        //  如果该消息有子消息，那么从第一个消息开始删除多个消息：last->next 为第一个子消息
+        smq_block_t* last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, block->next);
+        for (smq_msg pos = last->next; pos != block->next; )
+        {
+            smq_queue_push_back(smq, smq_itr_advance(smq, &pos));
+        }
+
+        //  接着删除最后一个子消息
+        smq_queue_push_back(smq, block->next);
     }
 
-    //  如果该消息有子消息
-    smq_block_t* sub_last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, cur_block->next);
-    smq_block_t* sub_first = (smq_block_t*)SMQ_ADDRESS_OF(smq, sub_last->next);
-
-    //  如果只有一个子消息
-    if (sub_first == sub_last)
-    {
-        smq_queue_append_last(smq, cur_block->next);
-        return SMQ_OK;
-    }
-
-    do
-    {
-        smq_block_t* pos  = sub_first;
-        smq_block_t* next = (smq_block_t*)SMQ_ADDRESS_OF(smq, pos->next);
-        smq_queue_append_last(smq, pos);
-    }while(pos != sub_last)
+    //  最后删除 msg 自身
+    smq_queue_push_back(smq, msg);
 
     return  SMQ_OK;
 }
@@ -291,5 +285,34 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 
     return  SMQ_OK;
 }
+
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
+{
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
+
+    smq_t* smq = (smq_t*)inst;
+
+    return SMQ_OK;
+}
+
+
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg)
+{
+    return SMQ_OK;
+}
+
+
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count)
+{
+    return SMQ_OK;
+}
+
 
 

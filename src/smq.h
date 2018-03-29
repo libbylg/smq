@@ -227,10 +227,9 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 
 /// 创建 smq 共享内存实例，或者打开已经存在的 smq 共享内存实例
 /// \param  name        [in]    smq 共享内存实例的名称
 /// \param  role        [in]    实例的角色，可参见 SMQ_ROLE_xxx 系列宏了解有哪些角色
-/// \param  size        [in]    smq 共享内存实例的大小
 /// \param  inst        [out]   smq 共享内存实例对象
 /// \return 返回 SMQ_OK 表示创建或者打开成功，其他表示打开失败的错误码
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_uint32 size, smq_inst* inst);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst);
 
 
 
@@ -244,8 +243,8 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 
 
 /// 查询 SMQ 实例的共享内存布局的版本
-/// \param  inst    [in]    SMQ 实例
-/// \param  ver     [out]   版本号
+/// \param  inst        [in]    SMQ 实例
+/// \param  ver         [out]   版本号
 /// \return 查询成功，返回 SMQ_OK，否则返回失败错误码
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
 
@@ -255,7 +254,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 r
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg);
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg* msg);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg);
 
 
 
@@ -268,29 +267,26 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg msg, smq_uint32 len);
 
 
-
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
 
 /// 定义了一个适用于C语言的编译期断言宏，用于对编译环境进行一些基本的检查
 ///@{
-#if defined(WIN32) || defined(WIN64)
-    #if defined(__cplusplus)
-        #define SMQ_STATIC_ASSERT(expr,message) static_assert(expr)
-    #else
-        #define SMQ_STATIC_ASSERT(expr,message) C_ASSERT(expr)
-    #endif
+#if defined(__cplusplus)
+#define SMQ_STATIC_ASSERT(expr,message)     static_assert(expr,message)
+#elif defined(WIN32) || defined(WIN64)
+#define SMQ_STATIC_ASSERT(expr,message)     C_ASSERT(expr)
 #else
-#define SMQ_STATIC_ASSERT(expr,message) ((void)sizeof(char[1 - 2*!!(expr)]))
+#define SMQ_STATIC_ASSERT(expr,message)     ((void)sizeof(char[1 - 2*!!(expr)]))
 #endif
-
-
-
-// SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((1 == sizeof(smq_uint8 )), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((4 == sizeof(smq_int32 )), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((2 == sizeof(smq_int16 )), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((1 == sizeof(smq_int8  )), "smq_uint32长度必须是4字节");
-// SMQ_STATIC_ASSERT((1 == sizeof(smq_char  )), "smq_uint32长度必须是4字节");
+SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_uint8 )), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((4 == sizeof(smq_int32 )), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((2 == sizeof(smq_int16 )), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_int8  )), "检查编译环境的关键数据长度一致性");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_char  )), "检查编译环境的关键数据长度一致性");
 ///@}
 
 
