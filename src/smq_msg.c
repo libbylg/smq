@@ -4,7 +4,7 @@
 #include "smq_asserts.h"
 #include "smq_inst.h"
 #include "smq_errors.h"
-
+#include "smq_logs.h"
 
 
 static smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
@@ -132,6 +132,11 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
+    if (SMQ_ROLE_VIEWER == smq->role)
+    {
+        SMQ_WARN(SMQ_LOG_READONLY_INST_UNSUPPORT_MSG_DEL, "msg=0x%x", msg);
+        return;
+    }
 
     //  如果该消息有子消息，那么需要先删除子消息
     smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
@@ -157,7 +162,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_merge(smq_inst inst, smq_msg msg, smq_msg sub)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg msg, smq_msg sub)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
@@ -169,25 +174,52 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_merge(smq_inst inst, smq_msg
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_MERGE;
     }
 
-    smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
+    smq_block_t* msg_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
     smq_block_t* sub_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub);
     
     //  还没有子消息
-    if (SMQ_MSG_NULL == cur_block->next)
+    if (SMQ_MSG_NULL == msg_block->next)
     {
-        cur_block->next = sub;
-        sub_block->next = sub;
+        if (SMQ_MSG_NULL == sub_block->next)
+        {
+            msg_block->next = sub;  ///<    先修改msg的指针：sub就是最后添加的指针
+
+            //  整理子消息环
+            sub_block->next = sub;
+        }
+        else
+        {
+            msg_block->next = sub_block->next;  ///<    先修改msg的指针：sub_block->next 是新消息链的最后一个消息
+
+            //  整理子消息环
+            smq_block_t* sub_last_block  = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub_block->next);
+            sub_block->next = sub_last_block->next;
+            sub_last_block->next = sub;     ///<    sub自身将成为msg的第一个消息
+        }
+        
         return SMQ_OK;
     }
 
-    //  重新构造子消息环
-    smq_block_t* last = (smq_block_t*)SMQ_ADDRESS_OF(inst, cur_block->next);
-    sub_block->next = last->next;
-    last->next      = sub;
+    //  拼接子消息环
+    smq_block_t* msg_last_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg_block->next);
+    if (SMQ_MSG_NULL == sub_block->next)
+    {
+        msg_block->next = sub;  ///<    先修改msg的指针：sub就是最后添加的指针
 
-    //  重置队尾指针
-    cur_block->next     = sub;
+        //  整理子消息环
+        sub_block->next = msg_last_block->next;
+        msg_last_block->next = sub;
+    }
+    else
+    {
+        msg_block->next = sub_block->next;  ///<    先修改msg的指针：sub_block->next 是新消息链的最后一个消息
 
+        //  整理子消息环
+        smq_block_t* sub_last_block  = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub_block->next);
+        sub_block->next = sub_last_block->next;
+        sub_last_block->next = msg_last_block->next;
+    }
+    
     return  SMQ_OK;
 }
 

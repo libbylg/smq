@@ -17,7 +17,7 @@ SMQ_ERR(SMQ_ERR_LOG_FUNCTION_NULL,                  213,    "日志函数不应该为 NU
 SMQ_ERR(SMQ_ERR_LEN_LARGE_THAN_CAP,                 214,    "数据长度超过了消息块的内存限制",                 "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_NEW,    215,    "只读实例不支持执行 smq_msg_new 操作",           "")
 SMQ_ERR(SMQ_ERR_NOUSED_216,                         216,    "只读实例不支持执行 smq_msg_del 操作",           "")
-SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_MERGE,  217,    "只读实例不支持执行 smq_msg_merge 操作",         "")
+SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_MERGE,  217,    "只读实例不支持执行 smq_msg_cat 操作",         "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_FIX,    218,    "只读实例不支持执行 smq_msg_fix 操作",           "")
 SMQ_ERR(SMQ_ERR_NO_ENOUGH_SHARE_MEMORY,             219,    "共享内存不足",                                 "")
 SMQ_ERR(SMQ_ERR_UNSUPORTED_ROLE,                    220,    "不支持的角色",                                 "")
@@ -27,5 +27,5 @@ SMQ_ERR(SMQ_ERR_UNSUPORTED_ROLE,                    220,    "不支持的角色",     
 
 SMQ_LOG(SMQ_LOG_LOWER_LIMIT,                        1000,   "",                                            "")
 SMQ_LOG(SMQ_LOG_INIT_UNLOCK_FAILED,                 1001,   "初始化完成之后，解锁全局锁失败",                  "")
-
+SMQ_LOG(SMQ_LOG_READONLY_INST_UNSUPPORT_MSG_DEL,    1002,   "当前角色不支持删除消息操作",                    "")
 

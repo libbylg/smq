@@ -10,7 +10,7 @@ EXPORTS
     smq_dump
     smq_msg_new
     smq_msg_del
-    smq_msg_merge
+    smq_msg_cat
     smq_msg_next
     smq_msg_data
     smq_msg_fix
