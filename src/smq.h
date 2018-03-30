@@ -247,12 +247,37 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
 
 
+
+
+/// Dump SMQ 实例所管理的共享内存中的所有数据
+/// \param  inst        [in]    SMQ 实例
+/// \param  range       [in]    Dump 数据范围
+/// \param  context     [in]    Dump 上下文，该参数最终传递给回调函数 f，作为其的 context 参数
+/// \param  f           [in]    Dump 回调函数，该函数会被调用多次，每次调用其输入参数均不相同，参见 #SMQ_DUMPER_FUNC 的说明
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);
 
 
 
+
+/// 申请一个新的消息缓冲区
+/// \param  inst        [in]    SMQ 实例
+/// \param  size        [in]    期望的缓冲区大小。必须注意，该大小仅仅是申请缓冲区的参考，SMQ 尽量分配至少能够容纳下 size 字节的数据的缓冲区。
+///                             但当共享内存不足时，实际返回的数据缓冲区也可能小于 size；所以，在拷贝数据之前，我们一般需要通过 #smq_msg_data 
+///                             函数获取缓冲区的容量，才能决定需要向缓冲区拷贝多少数据。如果数据区域太小，可以继续继续调用本函数获取新的缓冲区。
+///                             然后将新的缓冲区通过 #smq_msg_merge 函数合并到第一个消息缓冲区上，作为其子消息，并最终随着第一个消息一起发送
+///                             出去。
+/// \param  msg         [out]   获取到的消息缓冲区
+/// \return 消息分配成功，返回值为 SMQ_OK，此时 *msg 的值一定可用；如果分配失败，会返回错误码
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg);
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg);
+
+
+
+
+/// 释放一个消息缓冲区
+/// \param  inst        [in]    SMQ 实例
+/// \param  msg         [out]   需要释放到的消息缓冲区，所有通过 #smq_msg_merge 函数合并到 msg 的子消息都会被一起自
+///                             动释放。所有被合并（#smq_msg_merge）的消息都不需要通过本函数来主动释放。
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg);
 
 
 

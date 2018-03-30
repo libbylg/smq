@@ -126,16 +126,12 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg)
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-    if (SMQ_ROLE_VIEWER == smq->role)
-    {
-        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_DEL;
-    }
 
     //  如果该消息有子消息，那么需要先删除子消息
     smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
@@ -155,7 +151,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
     //  最后删除 msg 自身
     smq_queue_push_back(smq, msg);
 
-    return  SMQ_OK;
+    return;
 }
 
 

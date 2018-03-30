@@ -16,7 +16,7 @@ SMQ_ERR(SMQ_ERR_LOCALE_OUT_OF_RANGE,                212,    "±¾µØÓïÑÔµÄÖµ³¬³öÖ§³
 SMQ_ERR(SMQ_ERR_LOG_FUNCTION_NULL,                  213,    "ÈÕÖ¾º¯Êý²»Ó¦¸ÃÎª NULL",                        "")
 SMQ_ERR(SMQ_ERR_LEN_LARGE_THAN_CAP,                 214,    "Êý¾Ý³¤¶È³¬¹ýÁËÏûÏ¢¿éµÄÄÚ´æÏÞÖÆ",                 "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_NEW,    215,    "Ö»¶ÁÊµÀý²»Ö§³ÖÖ´ÐÐ smq_msg_new ²Ù×÷",           "")
-SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_DEL,    216,    "Ö»¶ÁÊµÀý²»Ö§³ÖÖ´ÐÐ smq_msg_del ²Ù×÷",           "")
+SMQ_ERR(SMQ_ERR_NOUSED_216,                         216,    "Ö»¶ÁÊµÀý²»Ö§³ÖÖ´ÐÐ smq_msg_del ²Ù×÷",           "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_MERGE,  217,    "Ö»¶ÁÊµÀý²»Ö§³ÖÖ´ÐÐ smq_msg_merge ²Ù×÷",         "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_FIX,    218,    "Ö»¶ÁÊµÀý²»Ö§³ÖÖ´ÐÐ smq_msg_fix ²Ù×÷",           "")
 SMQ_ERR(SMQ_ERR_NO_ENOUGH_SHARE_MEMORY,             219,    "¹²ÏíÄÚ´æ²»×ã",                                 "")
