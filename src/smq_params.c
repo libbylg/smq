@@ -4,18 +4,18 @@
 #include "smq_asserts.h"
 #include "smq_errors.h"
 
-static smq_void   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
+static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
 
 smq_params_t    smq_params = 
 {
     SMQ_LOG_LEVEL_DEF,
-    NULL,
-    default_log_func,
+    SMQ_NULL,
+    smq_log_func_def,
     SMQ_MEMORY_SIZE_DEF,
     SMQ_MESSAGE_QUEUE_SIZE_DEF,
 };
 
-static smq_void   SMQ_CALL default_log_func(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len)
+static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len)
 {
     static smq_char* level_name[(SMQ_LOG_LEVEL_MAX - SMQ_LOG_LEVEL_MIN) + 1] = 
     {
@@ -51,7 +51,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_va
         return  SMQ_OK;
     case SMQ_PARAM_SUPPORTED_VERSIONS:  
         val->value_uint32s[0]   =   SMQ_VERSION_MIN;
-        val->value_uint32s[2]   =   SMQ_VERSION_MAX;
+        val->value_uint32s[1]   =   SMQ_VERSION_MAX;
         return  SMQ_OK;
     case SMQ_PARAM_LOCALE:
         val->value_uint32   =   smq_params.locale;      

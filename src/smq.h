@@ -66,7 +66,9 @@
 
 /// 定义了 SMQ_NULL 常量
 ///@{
-#ifndef SMQ_NULL
+#if defined(NULL)
+#define SMQ_NULL    NULL
+#else 
 #ifdef __cplusplus
 #define SMQ_NULL	0
 #else
@@ -97,8 +99,6 @@
 #define SMQ_PARAM_SUPPORTED_VERSIONS    4   ///<    (get/--- smq_uint32[2])当前所支持的共享内存的版本号范围
 #define SMQ_PARAM_LOCALE                5   ///<    (get/set smq_uint32)本地语言信息
 /// @}
-
-
 
 
 
@@ -391,6 +391,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 ti
 /// \param  count       [out]       存放消息数量的值
 /// \return 如果获取成功，返回 SMQ_OK，否则，返回失败错误码。
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
+
+
 
 
 /// 定义了一个适用于C语言的编译期断言宏，用于对编译环境进行一些基本的检查

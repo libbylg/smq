@@ -26,3 +26,4 @@ typedef struct
 extern  smq_error_t smq_errors[SMQ_ERR_COUNT];
 
 #endif
+

@@ -30,9 +30,12 @@
 	<File>src\smq_res.h</File>
 	<File>src\smq_utils.c</File>
 	<File>src\smq_utils.h</File>
+<Attribute topline="403" x="3" y="415">src\smq.h</Attribute>
+<Attribute topline="1" x="2" y="8">src\smq_errors.c</Attribute>
+<Attribute topline="20" x="1" y="30">src\smq_errors.h</Attribute>
 <Attribute topline="14" x="1" y="22">src\smq_libc.h</Attribute>
 <Attribute topline="35" x="1" y="70">src\smq_limit.h</Attribute>
-<Attribute topline="19" x="92" y="22">src\smq_params.c</Attribute>
+<Attribute topline="21" x="1" y="64">src\smq_params.c</Attribute>
 <Attribute topline="19" x="1" y="28">src\smq_utils.c</Attribute>
 <FolderState>111</FolderState>
 <DefConfig>mingw5</DefConfig>
