@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E183E0020710FED00252AC0 /* smq_errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DDF20710FED00252AC0 /* smq_errors.h */; };
+		4E183E0120710FED00252AC0 /* smq_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE020710FED00252AC0 /* smq_utils.c */; };
+		4E183E0220710FED00252AC0 /* smq_inst.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE120710FED00252AC0 /* smq_inst.c */; };
+		4E183E0320710FED00252AC0 /* smq_logs.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE220710FED00252AC0 /* smq_logs.c */; };
+		4E183E0420710FED00252AC0 /* smq_res.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE320710FED00252AC0 /* smq_res.h */; };
+		4E183E0520710FED00252AC0 /* smq_alignpush.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE420710FED00252AC0 /* smq_alignpush.h */; };
+		4E183E0620710FED00252AC0 /* smq_params.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE520710FED00252AC0 /* smq_params.h */; };
+		4E183E0720710FED00252AC0 /* smq_limit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE620710FED00252AC0 /* smq_limit.h */; };
+		4E183E0820710FED00252AC0 /* smq_os.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE720710FED00252AC0 /* smq_os.c */; };
+		4E183E0920710FED00252AC0 /* smq_alignpop.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE820710FED00252AC0 /* smq_alignpop.h */; };
+		4E183E0A20710FED00252AC0 /* smq_msg.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE920710FED00252AC0 /* smq_msg.h */; };
+		4E183E0B20710FED00252AC0 /* smq_libc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEA20710FED00252AC0 /* smq_libc.h */; };
+		4E183E0C20710FED00252AC0 /* smq_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEB20710FED00252AC0 /* smq_utils.h */; };
+		4E183E0D20710FED00252AC0 /* smq_errors.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DEC20710FED00252AC0 /* smq_errors.c */; };
+		4E183E0E20710FED00252AC0 /* smq_inst.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DED20710FED00252AC0 /* smq_inst.h */; };
+		4E183E0F20710FED00252AC0 /* smq.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEE20710FED00252AC0 /* smq.h */; };
+		4E183E1020710FED00252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF120710FED00252AC0 /* os.h */; };
+		4E183E1120710FED00252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DF220710FED00252AC0 /* os.c.inc */; };
+		4E183E1220710FED00252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF420710FED00252AC0 /* os.h */; };
+		4E183E1320710FED00252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DF620710FED00252AC0 /* os.c.inc */; };
+		4E183E1420710FED00252AC0 /* smq_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF720710FED00252AC0 /* smq_os.h */; };
+		4E183E1520710FED00252AC0 /* smq_jni.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF920710FED00252AC0 /* smq_jni.h */; };
+		4E183E1620710FED00252AC0 /* smq_jni.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFA20710FED00252AC0 /* smq_jni.c */; };
+		4E183E1720710FED00252AC0 /* smq_logs.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DFB20710FED00252AC0 /* smq_logs.h */; };
+		4E183E1820710FED00252AC0 /* smq_asserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DFC20710FED00252AC0 /* smq_asserts.h */; };
+		4E183E1920710FED00252AC0 /* smq_params.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFD20710FED00252AC0 /* smq_params.c */; };
+		4E183E1A20710FED00252AC0 /* smq_libc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFE20710FED00252AC0 /* smq_libc.c */; };
+		4E183E1B20710FED00252AC0 /* smq_msg.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFF20710FED00252AC0 /* smq_msg.c */; };
+		4E183E1F2071114500252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183E1D2071114500252AC0 /* os.h */; };
+		4E183E202071114500252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183E1E2071114500252AC0 /* os.c.inc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4E183DD120710D9D00252AC0 /* libsmq.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsmq.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E183DDF20710FED00252AC0 /* smq_errors.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_errors.h; sourceTree = "<group>"; };
+		4E183DE020710FED00252AC0 /* smq_utils.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_utils.c; sourceTree = "<group>"; };
+		4E183DE120710FED00252AC0 /* smq_inst.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_inst.c; sourceTree = "<group>"; };
+		4E183DE220710FED00252AC0 /* smq_logs.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_logs.c; sourceTree = "<group>"; };
+		4E183DE320710FED00252AC0 /* smq_res.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = smq_res.h; sourceTree = "<group>"; };
+		4E183DE420710FED00252AC0 /* smq_alignpush.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_alignpush.h; sourceTree = "<group>"; };
+		4E183DE520710FED00252AC0 /* smq_params.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_params.h; sourceTree = "<group>"; };
+		4E183DE620710FED00252AC0 /* smq_limit.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_limit.h; sourceTree = "<group>"; };
+		4E183DE720710FED00252AC0 /* smq_os.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_os.c; sourceTree = "<group>"; };
+		4E183DE820710FED00252AC0 /* smq_alignpop.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_alignpop.h; sourceTree = "<group>"; };
+		4E183DE920710FED00252AC0 /* smq_msg.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_msg.h; sourceTree = "<group>"; };
+		4E183DEA20710FED00252AC0 /* smq_libc.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_libc.h; sourceTree = "<group>"; };
+		4E183DEB20710FED00252AC0 /* smq_utils.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_utils.h; sourceTree = "<group>"; };
+		4E183DEC20710FED00252AC0 /* smq_errors.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_errors.c; sourceTree = "<group>"; };
+		4E183DED20710FED00252AC0 /* smq_inst.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_inst.h; sourceTree = "<group>"; };
+		4E183DEE20710FED00252AC0 /* smq.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq.h; sourceTree = "<group>"; };
+		4E183DF120710FED00252AC0 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		4E183DF220710FED00252AC0 /* os.c.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
+		4E183DF420710FED00252AC0 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		4E183DF520710FED00252AC0 /* smq.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smq.def; sourceTree = "<group>"; };
+		4E183DF620710FED00252AC0 /* os.c.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
+		4E183DF720710FED00252AC0 /* smq_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_os.h; sourceTree = "<group>"; };
+		4E183DF920710FED00252AC0 /* smq_jni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_jni.h; sourceTree = "<group>"; };
+		4E183DFA20710FED00252AC0 /* smq_jni.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_jni.c; sourceTree = "<group>"; };
+		4E183DFB20710FED00252AC0 /* smq_logs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_logs.h; sourceTree = "<group>"; };
+		4E183DFC20710FED00252AC0 /* smq_asserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_asserts.h; sourceTree = "<group>"; };
+		4E183DFD20710FED00252AC0 /* smq_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_params.c; sourceTree = "<group>"; };
+		4E183DFE20710FED00252AC0 /* smq_libc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_libc.c; sourceTree = "<group>"; };
+		4E183DFF20710FED00252AC0 /* smq_msg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_msg.c; sourceTree = "<group>"; };
+		4E183E1D2071114500252AC0 /* os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		4E183E1E2071114500252AC0 /* os.c.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E183DCE20710D9D00252AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E183DC820710D9D00252AC0 = {
+			isa = PBXGroup;
+			children = (
+				4E183DDE20710FED00252AC0 /* src */,
+				4E183DD220710D9D00252AC0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4E183DD220710D9D00252AC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E183DD120710D9D00252AC0 /* libsmq.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4E183DDE20710FED00252AC0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4E183DF820710FED00252AC0 /* jni */,
+				4E183DEF20710FED00252AC0 /* os */,
+				4E183DE820710FED00252AC0 /* smq_alignpop.h */,
+				4E183DE420710FED00252AC0 /* smq_alignpush.h */,
+				4E183DFC20710FED00252AC0 /* smq_asserts.h */,
+				4E183DEC20710FED00252AC0 /* smq_errors.c */,
+				4E183DDF20710FED00252AC0 /* smq_errors.h */,
+				4E183DE120710FED00252AC0 /* smq_inst.c */,
+				4E183DED20710FED00252AC0 /* smq_inst.h */,
+				4E183DFE20710FED00252AC0 /* smq_libc.c */,
+				4E183DEA20710FED00252AC0 /* smq_libc.h */,
+				4E183DE620710FED00252AC0 /* smq_limit.h */,
+				4E183DE220710FED00252AC0 /* smq_logs.c */,
+				4E183DFB20710FED00252AC0 /* smq_logs.h */,
+				4E183DFF20710FED00252AC0 /* smq_msg.c */,
+				4E183DE920710FED00252AC0 /* smq_msg.h */,
+				4E183DE720710FED00252AC0 /* smq_os.c */,
+				4E183DF720710FED00252AC0 /* smq_os.h */,
+				4E183DFD20710FED00252AC0 /* smq_params.c */,
+				4E183DE520710FED00252AC0 /* smq_params.h */,
+				4E183DE320710FED00252AC0 /* smq_res.h */,
+				4E183DE020710FED00252AC0 /* smq_utils.c */,
+				4E183DEB20710FED00252AC0 /* smq_utils.h */,
+				4E183DEE20710FED00252AC0 /* smq.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4E183DEF20710FED00252AC0 /* os */ = {
+			isa = PBXGroup;
+			children = (
+				4E183E1C207110B300252AC0 /* osx.clang */,
+				4E183DF020710FED00252AC0 /* linux.gcc */,
+				4E183DF320710FED00252AC0 /* win.msvc */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
+		4E183DF020710FED00252AC0 /* linux.gcc */ = {
+			isa = PBXGroup;
+			children = (
+				4E183DF120710FED00252AC0 /* os.h */,
+				4E183DF220710FED00252AC0 /* os.c.inc */,
+			);
+			path = linux.gcc;
+			sourceTree = "<group>";
+		};
+		4E183DF320710FED00252AC0 /* win.msvc */ = {
+			isa = PBXGroup;
+			children = (
+				4E183DF420710FED00252AC0 /* os.h */,
+				4E183DF520710FED00252AC0 /* smq.def */,
+				4E183DF620710FED00252AC0 /* os.c.inc */,
+			);
+			path = win.msvc;
+			sourceTree = "<group>";
+		};
+		4E183DF820710FED00252AC0 /* jni */ = {
+			isa = PBXGroup;
+			children = (
+				4E183DF920710FED00252AC0 /* smq_jni.h */,
+				4E183DFA20710FED00252AC0 /* smq_jni.c */,
+			);
+			path = jni;
+			sourceTree = "<group>";
+		};
+		4E183E1C207110B300252AC0 /* osx.clang */ = {
+			isa = PBXGroup;
+			children = (
+				4E183E1D2071114500252AC0 /* os.h */,
+				4E183E1E2071114500252AC0 /* os.c.inc */,
+			);
+			path = osx.clang;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4E183DCF20710D9D00252AC0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E183E0F20710FED00252AC0 /* smq.h in Headers */,
+				4E183E0020710FED00252AC0 /* smq_errors.h in Headers */,
+				4E183E0420710FED00252AC0 /* smq_res.h in Headers */,
+				4E183E0B20710FED00252AC0 /* smq_libc.h in Headers */,
+				4E183E1020710FED00252AC0 /* os.h in Headers */,
+				4E183E1720710FED00252AC0 /* smq_logs.h in Headers */,
+				4E183E0C20710FED00252AC0 /* smq_utils.h in Headers */,
+				4E183E1220710FED00252AC0 /* os.h in Headers */,
+				4E183E0620710FED00252AC0 /* smq_params.h in Headers */,
+				4E183E0A20710FED00252AC0 /* smq_msg.h in Headers */,
+				4E183E0720710FED00252AC0 /* smq_limit.h in Headers */,
+				4E183E1820710FED00252AC0 /* smq_asserts.h in Headers */,
+				4E183E0920710FED00252AC0 /* smq_alignpop.h in Headers */,
+				4E183E0E20710FED00252AC0 /* smq_inst.h in Headers */,
+				4E183E1420710FED00252AC0 /* smq_os.h in Headers */,
+				4E183E1520710FED00252AC0 /* smq_jni.h in Headers */,
+				4E183E1F2071114500252AC0 /* os.h in Headers */,
+				4E183E0520710FED00252AC0 /* smq_alignpush.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4E183DD020710D9D00252AC0 /* smq */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E183DD520710D9D00252AC0 /* Build configuration list for PBXNativeTarget "smq" */;
+			buildPhases = (
+				4E183DCD20710D9D00252AC0 /* Sources */,
+				4E183DCE20710D9D00252AC0 /* Frameworks */,
+				4E183DCF20710D9D00252AC0 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = smq;
+			productName = smq;
+			productReference = 4E183DD120710D9D00252AC0 /* libsmq.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4E183DC920710D9D00252AC0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = luolijun;
+				TargetAttributes = {
+					4E183DD020710D9D00252AC0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4E183DCC20710D9D00252AC0 /* Build configuration list for PBXProject "smq" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4E183DC820710D9D00252AC0;
+			productRefGroup = 4E183DD220710D9D00252AC0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E183DD020710D9D00252AC0 /* smq */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E183DCD20710D9D00252AC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E183E0320710FED00252AC0 /* smq_logs.c in Sources */,
+				4E183E1120710FED00252AC0 /* os.c.inc in Sources */,
+				4E183E0120710FED00252AC0 /* smq_utils.c in Sources */,
+				4E183E202071114500252AC0 /* os.c.inc in Sources */,
+				4E183E1A20710FED00252AC0 /* smq_libc.c in Sources */,
+				4E183E1620710FED00252AC0 /* smq_jni.c in Sources */,
+				4E183E1320710FED00252AC0 /* os.c.inc in Sources */,
+				4E183E1B20710FED00252AC0 /* smq_msg.c in Sources */,
+				4E183E0220710FED00252AC0 /* smq_inst.c in Sources */,
+				4E183E1920710FED00252AC0 /* smq_params.c in Sources */,
+				4E183E0D20710FED00252AC0 /* smq_errors.c in Sources */,
+				4E183E0820710FED00252AC0 /* smq_os.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4E183DD320710D9D00252AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4E183DD420710D9D00252AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4E183DD620710D9D00252AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4E183DD720710D9D00252AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E183DCC20710D9D00252AC0 /* Build configuration list for PBXProject "smq" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E183DD320710D9D00252AC0 /* Debug */,
+				4E183DD420710D9D00252AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E183DD520710D9D00252AC0 /* Build configuration list for PBXNativeTarget "smq" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E183DD620710D9D00252AC0 /* Debug */,
+				4E183DD720710D9D00252AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4E183DC920710D9D00252AC0 /* Project object */;
+}

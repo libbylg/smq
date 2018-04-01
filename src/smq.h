@@ -22,6 +22,8 @@
 #endif
 #elif defined(__linux)
 #define SMQ_API
+#elif defined(__clang__)
+#define SMQ_API
 #else
 #error  "Unsupported platform for 'SMQ_API'"
 #endif
@@ -49,6 +51,15 @@
 #define smq_char    char
 #define smq_void    void
 #elif defined(__gcc)
+#define smq_uint32  unsigned int
+#define smq_uint16  unsigned short
+#define smq_uint8   unsigned char
+#define smq_int32   int
+#define smq_int16   short
+#define smq_int8    char
+#define smq_char    char
+#define smq_void    void
+#elif defined(__clang__)
 #define smq_uint32  unsigned int
 #define smq_uint16  unsigned short
 #define smq_uint8   unsigned char
@@ -92,12 +103,12 @@
 
 /// 下面定义了获取和设置参数相关的信息
 /// @{
-#define SMQ_PARAM_LOG_LEVEL             0   ///<    (get/set smq_uint32)日志级别
-#define SMQ_PARAM_LOG_TARGET            1   ///<    (---/set smq_ptr[2])日志回调函数
-#define SMQ_PARAM_MEMORY_SIZE           2   ///<    (get/set smq_uint32)共享内存大小
-#define SMQ_PARAM_QUEUE_SIZE            3   ///<    (get/set smq_uint32)消息队列大小
-#define SMQ_PARAM_SUPPORTED_VERSIONS    4   ///<    (get/--- smq_uint32[2])当前所支持的共享内存的版本号范围
-#define SMQ_PARAM_LOCALE                5   ///<    (get/set smq_uint32)本地语言信息
+#define SMQ_PARAM_LOG_LEVEL         (0)         ///<    (get/set smq_uint32)日志级别
+#define SMQ_PARAM_LOG_TARGET        (1)         ///<    (---/set smq_ptr[2])日志回调函数
+#define SMQ_PARAM_MEMORY_SIZE       (2)         ///<    (get/set smq_uint32)共享内存大小
+#define SMQ_PARAM_QUEUE_SIZE        (3)         ///<    (get/set smq_uint32)消息队列大小
+#define SMQ_PARAM_VERSIONS          (4)         ///<    (get/--- smq_uint32[2])当前所支持的共享内存的版本号范围
+#define SMQ_PARAM_LOCALE            (5)         ///<    (get/set smq_uint32)本地语言信息
 /// @}
 
 
@@ -105,8 +116,8 @@
 
 /// 定义了语言相关的几个宏
 ///@{
-#define SMQ_LOCALE_ENUS             (0) ///<    英文
-#define SMQ_LOCALE_ZHCN             (1) ///<    中文
+#define SMQ_LOCALE_ENUS             (0)         ///<    英文
+#define SMQ_LOCALE_ZHCN             (1)         ///<    中文
 ///@}
 
 
@@ -142,8 +153,8 @@
 
 /// 定义了dump数据的范围
 ///@{
-#define SMQ_DUMP_RANGE_HEAP_HEAD    (0x0001)
-#define SMQ_DUMP_RANGE_HEAP_DATA    (0x0002)
+#define SMQ_DUMP_RANGE_HEAP_HEAD    (0x0001)    ///<    Dump 共享内存头部
+#define SMQ_DUMP_RANGE_HEAP_DATA    (0x0002)    ///<    Dump 共享内存数据区
 ///@}
 
 
@@ -316,8 +327,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg m
 
 
 /// 通过迭代的方式，逐个遍历 msg 的所有子消息
-/// \param  inst        [in]        SMQ 实例
-/// \param  msg         [in]        对 msg 的子消息进行遍历，在遍历的多次调用过程中 msg 参数不能改变
+/// \param  inst        [in]    SMQ 实例
+/// \param  msg         [in]    对 msg 的子消息进行遍历，在遍历的多次调用过程中 msg 参数不能改变
 /// \param  next        [in,out]    迭代参数，如果获取子消息成功，那么 *next 将指向获取到的子消息；如果 *next 为 SMQ_SMQ_NULL，
 ///                                 表示已经无后继消息，此时应该停止遍历操作。当 next 做输入参数时，*next 的值，如果等于 msg，
 ///                                 表示获取 msg 的第一个子消息，下面是一个通过遍历 msg 及其子消息，并获取消息中的数据的管用法示例：
