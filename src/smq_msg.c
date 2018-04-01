@@ -257,7 +257,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg 
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap)
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
@@ -286,7 +286,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
 
     SMQ_ASSERT((count > 0), "data、len、cap 三个参数均为 NULL，这种用法是错误的，通常可能是代码存在什么 bug");
 
-    return  SMQ_OK;
+    return;
 }
 
 

@@ -64,13 +64,26 @@
 
 
 
+/// 定义了 SMQ_NULL 常量
+///@{
+#ifndef SMQ_NULL
+#ifdef __cplusplus
+#define SMQ_NULL	0
+#else
+#define SMQ_NULL	((void *)0)
+#endif
+#endif
+///@}
+
+
+
 /// 定义了接口中用到的几个重要类型，以及这些类型相关的几个基本常量
 #define smq_errno               smq_int32       ///<    错误码类型
 #define smq_msg                 smq_uint32      ///<    消息类型
 #define smq_inst                smq_void*       ///<    smq实例类型
 #define SMQ_OK                  (0)             ///<    表示成功的错误码
 #define SMQ_MSG_NULL            (0)             ///<    无效消息
-#define SMQ_INST_NULL           NULL            ///<    定义了无效实例对象
+#define SMQ_INST_NULL           SMQ_NULL        ///<    定义了无效实例对象
 
 
 
@@ -141,10 +154,9 @@
 #if defined(WIN32) || defined(WIN64)
 #pragma warning(disable:4200)
 #endif
-#define SMQ_VALUE_LEN_MAX       (256)   ///<    定义了参数的最大长度
 typedef union
 {
-    smq_char    value_str[SMQ_VALUE_LEN_MAX];   ///<    字符串类型的值
+    smq_char    value_str[256];                 ///<    字符串类型的值
     smq_uint32  value_uint32;                   ///<    uint32 类型的值
     smq_uint16  value_int32;                    ///<    int32 类型的值
     smq_void*   value_ptr;                      ///<    指针类型的值
@@ -161,6 +173,7 @@ typedef union
 
 
 /// smq 输出日志时的回调函数
+///
 /// \param  context     [in]    日志上下文，通过 key 为 SMQ_PARAM_LOG_TARGET 的参数调用 #smq_param_set 函数时，第一个指针输入的就是context.
 /// \param  id          [in]    日志编号.
 /// \param  level       [in]    日志级别.
@@ -175,6 +188,7 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id
 
 
 /// Dump共享内存详情
+///
 /// \param  context     [in]    Dump 上下文，该参数来源自调用 #smq_dump 时的同名输入参数
 /// \param  flag        [in]    用于标记 Dump 的阶段，0 表示 Dump 开始，0xFFFFFFFF 表示 Dump 结束，其他值表示 Dump 的数据输出阶段。当处于 Dump 开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
 /// \param  data        [in]    Dump 的数据缓冲区指针。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 NULL.
@@ -186,6 +200,7 @@ typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 fl
 
 
 /// 读取由 key 指定的全局参数的值
+///
 /// \param  key         [in]    key 用来标识需要获取哪个参数
 /// \param  val         [out]   获取的参数会被放到 val 变量中
 /// \return 返回 SMQ_OK 表示获取成功，其他表示获取失败
@@ -195,6 +210,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_va
 
 
 /// 修改由 key 指定的全局参数的值
+///
 /// \param  key         [in]    key 用来标识需要修改哪个参数的值
 /// \param  val         [in]    新的值放在 val 参数中
 /// \return 返回 SMQ_OK 表示设置成功，其他表示获取失败及原因
@@ -213,6 +229,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_
 
 
 /// 获取参数的错误描述
+///
 /// \param  err         [in]    错误码
 /// \param  loc         [in]    本地语言编码
 /// \param  desc        [out]   错误描述文本，该文本存储在 #smq_value_t 的 value_str 成员中，且以 \0 结尾
@@ -223,6 +240,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 
 
 
 /// 创建 smq 共享内存实例，或者打开已经存在的 smq 共享内存实例
+///
 /// \param  name        [in]    smq 共享内存实例的名称
 /// \param  role        [in]    实例的角色，可参见 SMQ_ROLE_xxx 系列宏了解有哪些角色
 /// \param  inst        [out]   smq 共享内存实例对象
@@ -234,6 +252,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
 
 /// 关闭已经打开或者创建的 smq 共享内存实例
+///
 /// \param  inst        [in]    待关闭的 smq 共享内存实例
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 
@@ -241,6 +260,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 
 
 /// 查询 SMQ 实例的共享内存布局的版本
+///
 /// \param  inst        [in]    SMQ 实例
 /// \param  ver         [out]   版本号
 /// \return 查询成功，返回 SMQ_OK，否则返回失败错误码
@@ -260,6 +280,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 r
 
 
 /// 申请一个新的消息缓冲区
+///
 /// \param  inst        [in]    SMQ 实例
 /// \param  size        [in]    期望的缓冲区大小。必须注意，该大小仅仅是申请缓冲区的参考，SMQ 尽量分配至少能够容纳下 size 字节的数据的缓冲区。
 ///                             但当共享内存不足时，实际返回的数据缓冲区也可能小于 size；所以，在拷贝数据之前，我们一般需要通过 #smq_msg_data 
@@ -274,27 +295,101 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
 
 
 /// 释放一个消息缓冲区
+///
 /// \param  inst        [in]    SMQ 实例
 /// \param  msg         [out]   需要释放到的消息缓冲区，所有通过 #smq_msg_cat 函数合并到 msg 的子消息都会被自
 ///                             动释放，而不需要通过本函数来主动释放。
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg);
 
 
-/// 将一个 sub 消息追加到 msg 消息链的末尾，作为其子消息
+
+
+/// 将一个 sub 消息拼接到 msg 消息链的末尾，作为其子消息
+///
 /// \param  inst        [in]    SMQ 实例
 /// \param  msg         [in]    sub 消息将追加到 msg 参数指定的消息链的末尾
 /// \param  sub         [in]    被追加的子消息。
+/// \return 拼接成功，返回 SMQ_OK；当拼接失败时，返回错误码，且系统确保 msg 和 sub 不会被破坏
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg msg, smq_msg sub);
+
+
+
+
+/// 通过迭代的方式，逐个遍历 msg 的所有子消息
+/// \param  inst        [in]        SMQ 实例
+/// \param  msg         [in]        对 msg 的子消息进行遍历，在遍历的多次调用过程中 msg 参数不能改变
+/// \param  next        [in,out]    迭代参数，如果获取子消息成功，那么 *next 将指向获取到的子消息；如果 *next 为 SMQ_SMQ_NULL，
+///                                 表示已经无后继消息，此时应该停止遍历操作。当 next 做输入参数时，*next 的值，如果等于 msg，
+///                                 表示获取 msg 的第一个子消息，下面是一个通过遍历 msg 及其子消息，并获取消息中的数据的管用法示例：
+///
+///     smq_errno err = SMQ_OK;
+///     for (smq_msg* next = &msg; (err == SMQ_OK) && (next != SMQ_MSG_NULL); err = smq_msg_next(inst, msg, next)
+///     {
+///         
+///         smq_void*  data = NULL;
+///         smq_uint32 len  = 0;
+///         smq_uint32 cap  = 0;
+///         smq_errno  ret  = smq_msg_data(inst, *next, &data, &len, &cap);
+///
+///         // your code
+///
+///     }
+///     
+/// \return 获取成功，返回 SMQ_OK，可通过 *next 取得消息；获取失败
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg msg, smq_msg* next);
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap);
+
+//  获取 msg 消息的数据存储地址、数据长度以及容量信息
+/// \param  inst        [in]        SMQ 实例
+/// \param  msg         [in]        指定获取对象
+/// \param  data        [out]       存放取到的数据地址，当不需要取得该信息时，可以填写 NULL
+/// \param  len         [out]       存放取到的数据长度，当不需要取得该信息时，可以填写 NULL
+/// \paran  cap         [out]       存放取到的数据容量，如果消息缓冲区并没有存满，那么 cap 会大于 len。，当不需要取得该信息时，可以填写 NULL
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap);
+
+
+
+
+/// 修订 msg 的数据区的长度
+///
+/// \param  inst        [in]        SMQ 实例
+/// \param  msg         [in]        本函数操作的消息对象
+/// \param  len         [in]        消息数据长度将设定为 len
+/// \return 如果设定成功，返回 SMQ_OK；如果设置失败，返回错误码
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg msg, smq_uint32 len);
 
 
+
+
+/// 投递（发送）一个消息
+///
+/// \param  inst        [in]        SMQ 实例
+/// \param  msg         [in]        把 msg 消息投递到 inst 实例的另一端
+/// \return 投递成功，返回 SMQ_OK；投递失败，返回错误码。
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg);
+
+
+
+
+/// 接收发送到本端的消息
+///
+/// \param  inst        [in]        SMQ 实例
+/// \param  timeout     [in]        等待超时时长，单位是微秒，如果 timeout 的值为 0，表示永远不超时，除非收到消息或者系统退出
+/// \param  msg         [out]       接收到的新消息
+/// \return 如果接收到新消息或者等待超时，均返回 SMQ_OK，但等待消息超时时，*msg 的值为 SMQ_MSG_NULL
+///         如果接收过程中遇到错误，返回错误码。
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
+
+
+
+
+/// 获取一下消息队列中还有多少消息未收取
+///
+/// \param  inst        [in]        SMQ 实例
+/// \param  count       [out]       存放消息数量的值
+/// \return 如果获取成功，返回 SMQ_OK，否则，返回失败错误码。
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
 
 
