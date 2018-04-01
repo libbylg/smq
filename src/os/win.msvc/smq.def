@@ -14,3 +14,4 @@ EXPORTS
     smq_msg_next
     smq_msg_data
     smq_msg_fix
+
