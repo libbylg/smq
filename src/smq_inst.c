@@ -52,14 +52,14 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
         queue->block_size   =   SMQ_MEMORY_BLOCK_SIZE_MAX >> (smq->entry->alloc_queues_count - (q + 1));
         queue->block_count  =   each_size / queue->block_size;
         
-        //  ×îºóÒ»¸ö¶ÓÁĞĞèÒªÎªHeaderÔ¤ÁôÒ»²¿·Ö´æ´¢Çø
+        //  æœ€åä¸€ä¸ªé˜Ÿåˆ—éœ€è¦ä¸ºHeaderé¢„ç•™ä¸€éƒ¨åˆ†å­˜å‚¨åŒº
         if ((q + 1) == smq->entry->alloc_queues_count)
         {
-            SMQ_ASSERT((each_size >= smq->entry->heap_data), "×îºóÒ»¸ö¶ÓÁĞµÄ×ÜÄÚ´æ±ØĞë´óÓÚ£¬HeapHeaderµÄ³¤¶È£¨smq->entry->heap_data¾ÍÊÇHeapHeaderµÄ³¤¶È£©")
+            SMQ_ASSERT((each_size >= smq->entry->heap_data), "æœ€åä¸€ä¸ªé˜Ÿåˆ—çš„æ€»å†…å­˜å¿…é¡»å¤§äºï¼ŒHeapHeaderçš„é•¿åº¦ï¼ˆsmq->entry->heap_dataå°±æ˜¯HeapHeaderçš„é•¿åº¦ï¼‰")
             queue->block_count = (each_size - smq->entry->heap_data) / queue->block_size;
         }
 
-        //  ÏÂÃæ¿ªÊ¼¹¹Ôì¶ÓÁĞÖĞµÄËùÓĞÄÚ´æ¿é
+        //  ä¸‹é¢å¼€å§‹æ„é€ é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰å†…å­˜å—
         smq_block_t* first = (smq_block_t*)smq_cut(&pos, queue->block_size);
         first->queue_index = q;
         first->options = 0;
@@ -74,8 +74,8 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
             last = block;
         }
 
-        //  ¶ÓÁĞµÄÖ¸Õë×ÜÊÇÖ¸Ïò×îºóÒ»¸öÄÚ´æ¿é£¬¶ø×îºóÒ»¿éÄÚ´æ×ÜÊÇÖ¸ÏòµÚÒ»¿éÄÚ´æ
-        //  ÕâÑùĞÎ³ÉÒ»¸ö»·×´£¬ÎŞÂÛÊÇÏò¶ÔÎ»Ìí¼ÓÄÚ´æ¿é»¹ÊÇ´Ó¶ÓÊ×»ñÈ¡ÄÚ´æ¿é¶¼·Ç³£·½±ã
+        //  é˜Ÿåˆ—çš„æŒ‡é’ˆæ€»æ˜¯æŒ‡å‘æœ€åä¸€ä¸ªå†…å­˜å—ï¼Œè€Œæœ€åä¸€å—å†…å­˜æ€»æ˜¯æŒ‡å‘ç¬¬ä¸€å—å†…å­˜
+        //  è¿™æ ·å½¢æˆä¸€ä¸ªç¯çŠ¶ï¼Œæ— è®ºæ˜¯å‘å¯¹ä½æ·»åŠ å†…å­˜å—è¿˜æ˜¯ä»é˜Ÿé¦–è·å–å†…å­˜å—éƒ½éå¸¸æ–¹ä¾¿
         queue->idle_block_last = SMQ_OFFSETS_OF(smq, last);
         last->next = SMQ_OFFSETS_OF(smq, first);
     }
@@ -88,7 +88,7 @@ static smq_void smq_layout_init(smq_t* smq)
 {
     smq_uint8*  pos     =   smq->shm.addr;
 
-    //  ³õÊ¼»¯entry
+    //  åˆå§‹åŒ–entry
     smq->entry          =   (smq_entry_t*)smq_cut(&pos, sizeof(smq_entry_t));
     smq_memset(smq->entry, 0, sizeof(smq_entry_t));
     smq->entry->check_sum           =   0;
@@ -99,19 +99,19 @@ static smq_void smq_layout_init(smq_t* smq)
     smq->entry->mark                =   smq_proc_getpid();
     smq->entry->heap_len            =   smq->shm.real_size;
 
-    //  ³õÊ¼»¯desc
+    //  åˆå§‹åŒ–desc
     smq->desc           =   (smq_desc_t*)smq_cut(&pos, sizeof(smq_desc_t));
     smq_memset(smq->desc, 0, sizeof(smq_desc_t));
     smq->desc->len  =   sizeof(smq_desc_t);
     smq_memcpy(smq->desc->name, smq->shm.full_name, smq_strlen(smq->shm.full_name) + 1);
 
-    //  ³õÊ¼»¯·ÖÅä¶ÓÁĞ
+    //  åˆå§‹åŒ–åˆ†é…é˜Ÿåˆ—
     for (smq_uint32 i = 0; i < smq->entry->alloc_queues_count; i++)
     {
         smq->alloc_queues[i]     =  (smq_alloc_queue_t*)smq_cut(&pos, sizeof(smq_alloc_queue_t));
     }
 
-    //  ³õÊ¼»¯ÏûÏ¢¶ÓÁĞ
+    //  åˆå§‹åŒ–æ¶ˆæ¯é˜Ÿåˆ—
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
         smq_uint32 message_queue_size = sizeof(smq_mssge_queue_t) + sizeof(smq_uint32) * smq_params.queue_size;
@@ -121,7 +121,7 @@ static smq_void smq_layout_init(smq_t* smq)
         smq->mssge_queues[i]->index_writer  =   0;
     }
 
-    //  ÖØĞÂ¶¨Î»heap_data£¬ÖØĞÂÍ³Ò»µ½4096×Ö½ÚµÄ±ß½ç
+    //  é‡æ–°å®šä½heap_dataï¼Œé‡æ–°ç»Ÿä¸€åˆ°4096å­—èŠ‚çš„è¾¹ç•Œ
     smq->entry->heap_data   =   SMQ_OFFSETS_OF(smq, pos);
     if (0 != (smq->entry->heap_data % 4096))
     {
@@ -129,13 +129,13 @@ static smq_void smq_layout_init(smq_t* smq)
         smq->heap_data          =   SMQ_ADDRESS_OF(smq, smq->entry->heap_data);
     }
 
-    //  entryµÄËùÓĞ×Ö¶ÎÒÑ¾­Ìî³äÍê±Ï£¬´ËÊ±ÖØĞÂ¼ÆËãentryµÄchecksum
+    //  entryçš„æ‰€æœ‰å­—æ®µå·²ç»å¡«å……å®Œæ¯•ï¼Œæ­¤æ—¶é‡æ–°è®¡ç®—entryçš„checksum
     smq->entry->check_sum   =   smq_checksum(smq->shm.addr, sizeof(smq_entry_t));
 
-    //  ÏÂÃæ¿ªÊ¼¶Ô¹²ÏíÄÚ´æ½øĞĞ´æ´¢»®·Ö
+    //  ä¸‹é¢å¼€å§‹å¯¹å…±äº«å†…å­˜è¿›è¡Œå­˜å‚¨åˆ’åˆ†
     smq_layout_alloc_queues_init(smq);
 
-    //  ¸ù¾İ½ÇÉ«µÄ²»Í¬£¬È·¶¨ÊÕ·¢¶ÓÁĞÎªÄÄ¸ö
+    //  æ ¹æ®è§’è‰²çš„ä¸åŒï¼Œç¡®å®šæ”¶å‘é˜Ÿåˆ—ä¸ºå“ªä¸ª
     switch (smq->role)
     {
     case SMQ_ROLE_LEADER:
@@ -158,7 +158,7 @@ static smq_void smq_layout_init(smq_t* smq)
 
 static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 {
-    //  ´´½¨½ø³Ì¼ä»¥³âËø
+    //  åˆ›å»ºè¿›ç¨‹é—´äº’æ–¥é”
     smq_proc_mutex_t mutex = {0};
     smq_errno err = smq_proc_mutex_open(smq->shm.base_name, &mutex);
     if (SMQ_OK != err)
@@ -166,14 +166,14 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
         return err;
     }
 
-    //  Ö´ĞĞ¼ÓËø²Ù×÷
+    //  æ‰§è¡ŒåŠ é”æ“ä½œ
     err = smq_proc_mutex_lock(&mutex);
     if (SMQ_OK != err)
     {
         return err;
     }
 
-    //  Í¨¹ıĞ£ÑéºÍÈ·¶¨Ò»ÏÂ¹²ÏíÄÚ´æÊÇ·ñÍê³ÉÁË³õÊ¼»¯
+    //  é€šè¿‡æ ¡éªŒå’Œç¡®å®šä¸€ä¸‹å…±äº«å†…å­˜æ˜¯å¦å®Œæˆäº†åˆå§‹åŒ–
     if (0 == smq_checksum(smq->shm.addr, sizeof(smq_entry_t)))
     {
         smq_layout_map(smq);
@@ -183,14 +183,14 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
         smq_layout_init(smq);
     }
 
-    //  ³õÊ¼»¯Íê³ÉÖ´ĞĞ½âËø²Ù×÷
+    //  åˆå§‹åŒ–å®Œæˆæ‰§è¡Œè§£é”æ“ä½œ
     err = smq_proc_mutex_unlock(&mutex);
     if (SMQ_OK != err)
     {
         SMQ_WARN(SMQ_LOG_INIT_UNLOCK_FAILED, "errno=%d, mutex-name=%s", err, mutex.full_name);
     }
 
-    //  ÊÍ·Å½ø³Ì¼¶Ëø
+    //  é‡Šæ”¾è¿›ç¨‹çº§é”
     smq_proc_mutex_close(&mutex);
 
     return SMQ_OK;
@@ -201,8 +201,8 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst)
 {
-    SMQ_ASSERT((NULL != name), "Ãû×Ö²»ÄÜÎª¿Õ");
-    SMQ_ASSERT((NULL != inst), "inst ²»ÄÜÎª¿Õ");
+    SMQ_ASSERT((NULL != name), "åå­—ä¸èƒ½ä¸ºç©º");
+    SMQ_ASSERT((NULL != inst), "inst ä¸èƒ½ä¸ºç©º");
 
     if ((role < SMQ_ROLE_MIN) || (role > SMQ_ROLE_MAX))
     {
@@ -210,7 +210,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     }
 
 
-    //  ´´½¨smqÊµÀı
+    //  åˆ›å»ºsmqå®ä¾‹
     smq_t* smq = (smq_t*)malloc(sizeof(smq_t));
     if (NULL == smq)
     {
@@ -220,7 +220,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     smq->role = role;
 
 
-    //  ´´½¨¹²ÏíÄÚ´æ¶ÔÏó
+    //  åˆ›å»ºå…±äº«å†…å­˜å¯¹è±¡
     int shm_size = smq_params.memory_size * 1024 * 1024;
     smq_errno err = smq_shm_open(name, shm_size, &(smq->shm));
     if (SMQ_OK != err)
@@ -230,7 +230,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     }
 
 
-    //  ³õÊ¼»¯¹²ÏíÄÚ´æ²¼¾Ö
+    //  åˆå§‹åŒ–å…±äº«å†…å­˜å¸ƒå±€
     err = smq_layout_load(smq);
     if (SMQ_OK != err)
     {
@@ -286,8 +286,8 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver)
 {
-    SMQ_ASSERT((NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
-    SMQ_ASSERT((NULL != ver), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆæ€§");
+    SMQ_ASSERT((NULL != ver), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆæ€§");
 
     smq_t* smq = (smq_t*)inst;
 
@@ -301,19 +301,19 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint3
 
 SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f)
 {
-    SMQ_ASSERT((NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
-    SMQ_ASSERT((NULL != f),    "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆæ€§");
+    SMQ_ASSERT((NULL != f),    "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆæ€§");
 
     smq_t* smq = (smq_t*)inst;
 
-    //  dump¿ªÊ¼
+    //  dumpå¼€å§‹
     smq_uint32 flag = 0;
     if (0 != (*f)(context, flag++, NULL, 0))
     {
         return;
     }
 
-    //  dumpÍ·²¿
+    //  dumpå¤´éƒ¨
     if (0 != (range & SMQ_DUMP_RANGE_HEAP_HEAD))
     {
         if (0 != (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data))
@@ -322,7 +322,7 @@ SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 ra
         }
     }
 
-    //  dumpÊı¾İ
+    //  dumpæ•°æ®
     if (0 != (range & SMQ_DUMP_RANGE_HEAP_DATA))
     {
         if (0 != (*f)(context, flag++, smq->shm.addr, smq->entry->heap_data))
@@ -331,7 +331,7 @@ SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 ra
         }
     }
 
-    //  dump½áÊø
+    //  dumpç»“æŸ
     if (0 != (*f)(context, (smq_uint32)(~0), NULL, 0))
     {
         return;

@@ -1,5 +1,5 @@
 #if defined(SMQ_ALIGN_PUSH)
-#error  "ÔÚ include smq_alignpop.h Ö®Ç°±ØĞëÏÈ include smq_alignpush.h"
+#error  "åœ¨ include smq_alignpop.h ä¹‹å‰å¿…é¡»å…ˆ include smq_alignpush.h"
 #endif
 
 
