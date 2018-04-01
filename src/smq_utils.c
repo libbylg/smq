@@ -15,7 +15,7 @@ SMQ_EXTERN  smq_uint16 SMQ_CALL smq_checksum(smq_uint8* data, smq_uint32 size)
         cksum += *(smq_uint8*)buffer;
     }
 
-    //½«32Î»Êý×ª»»³É16 
+    //å°†32ä½æ•°è½¬æ¢æˆ16 
     while (cksum >> 16)
     {
         cksum = (cksum >> 16) + (cksum & 0xffff);

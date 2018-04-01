@@ -1,12 +1,12 @@
 #if !defined(SMQ_ALIGN_PUSH)
-#error  "ÔÚ include smq_alignpop.h Ö®Ç°±ØĞëÏÈ include smq_alignpush.h"
+#error  "åœ¨ include smq_alignpop.h ä¹‹å‰å¿…é¡»å…ˆ include smq_alignpush.h"
 #else
 #undef  SMQ_ALIGN_PUSH
 #endif
 
 
 #if defined(SMQ_ALIGN_POP)
-#error  "smq_alignpush.h ºÍ smq_alignpop.h ²»ÔÊĞíÇ¶Ì×Ê¹ÓÃ"
+#error  "smq_alignpush.h å’Œ smq_alignpop.h ä¸å…è®¸åµŒå¥—ä½¿ç”¨"
 #endif
 
 

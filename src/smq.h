@@ -3,7 +3,7 @@
 
 
 
-/// ¶¨ÒåÁËÍâ²¿ÒıÓÃºê
+/// å®šä¹‰äº†å¤–éƒ¨å¼•ç”¨å®
 #if  defined(__cplusplus)
 #define SMQ_EXTERN  extern  "C"
 #else
@@ -13,7 +13,7 @@
 
 
 
-/// ¶¨ÒåÁË·ûºÅµ¼ÈëºÍµ¼³öºê
+/// å®šä¹‰äº†ç¬¦å·å¯¼å…¥å’Œå¯¼å‡ºå®
 #if   defined(WIN32) || defined(WIN64)
 #ifdef SMQ_EXPORTS
 #define SMQ_API __declspec(dllexport)
@@ -31,7 +31,7 @@
 
 
 
-/// ¶¨ÒåÁËSMQµÄµ÷ÓÃĞ­¶¨
+/// å®šä¹‰äº†SMQçš„è°ƒç”¨åå®š
 #if defined(WIN32) || defined(WIN64)
 #define SMQ_CALL    __stdcall
 #else
@@ -40,7 +40,7 @@
 
 
 
-/// ¶¨ÒåÁËËùÓĞµÄ»ù±¾³£Á¿
+/// å®šä¹‰äº†æ‰€æœ‰çš„åŸºæœ¬å¸¸é‡
 #if defined(WIN32) || defined(WIN64)
 #define smq_uint32  unsigned int
 #define smq_uint16  unsigned short
@@ -75,7 +75,7 @@
 
 
 
-/// ¶¨ÒåÁË SMQ_NULL ³£Á¿
+/// å®šä¹‰äº† SMQ_NULL å¸¸é‡
 ///@{
 #if defined(NULL)
 #define SMQ_NULL    NULL
@@ -90,90 +90,90 @@
 
 
 
-/// ¶¨ÒåÁË½Ó¿ÚÖĞÓÃµ½µÄ¼¸¸öÖØÒªÀàĞÍ£¬ÒÔ¼°ÕâĞ©ÀàĞÍÏà¹ØµÄ¼¸¸ö»ù±¾³£Á¿
-#define smq_errno               smq_int32       ///<    ´íÎóÂëÀàĞÍ
-#define smq_msg                 smq_uint32      ///<    ÏûÏ¢ÀàĞÍ
-#define smq_inst                smq_void*       ///<    smqÊµÀıÀàĞÍ
-#define SMQ_OK                  (0)             ///<    ±íÊ¾³É¹¦µÄ´íÎóÂë
-#define SMQ_MSG_NULL            (0)             ///<    ÎŞĞ§ÏûÏ¢
-#define SMQ_INST_NULL           SMQ_NULL        ///<    ¶¨ÒåÁËÎŞĞ§ÊµÀı¶ÔÏó
+/// å®šä¹‰äº†æ¥å£ä¸­ç”¨åˆ°çš„å‡ ä¸ªé‡è¦ç±»å‹ï¼Œä»¥åŠè¿™äº›ç±»å‹ç›¸å…³çš„å‡ ä¸ªåŸºæœ¬å¸¸é‡
+#define smq_errno               smq_int32       ///<    é”™è¯¯ç ç±»å‹
+#define smq_msg                 smq_uint32      ///<    æ¶ˆæ¯ç±»å‹
+#define smq_inst                smq_void*       ///<    smqå®ä¾‹ç±»å‹
+#define SMQ_OK                  (0)             ///<    è¡¨ç¤ºæˆåŠŸçš„é”™è¯¯ç 
+#define SMQ_MSG_NULL            (0)             ///<    æ— æ•ˆæ¶ˆæ¯
+#define SMQ_INST_NULL           SMQ_NULL        ///<    å®šä¹‰äº†æ— æ•ˆå®ä¾‹å¯¹è±¡
 
 
 
 
-/// ÏÂÃæ¶¨ÒåÁË»ñÈ¡ºÍÉèÖÃ²ÎÊıÏà¹ØµÄĞÅÏ¢
+/// ä¸‹é¢å®šä¹‰äº†è·å–å’Œè®¾ç½®å‚æ•°ç›¸å…³çš„ä¿¡æ¯
 /// @{
-#define SMQ_PARAM_LOG_LEVEL         (0)         ///<    (get/set smq_uint32)ÈÕÖ¾¼¶±ğ
-#define SMQ_PARAM_LOG_TARGET        (1)         ///<    (---/set smq_ptr[2])ÈÕÖ¾»Øµ÷º¯Êı
-#define SMQ_PARAM_MEMORY_SIZE       (2)         ///<    (get/set smq_uint32)¹²ÏíÄÚ´æ´óĞ¡
-#define SMQ_PARAM_QUEUE_SIZE        (3)         ///<    (get/set smq_uint32)ÏûÏ¢¶ÓÁĞ´óĞ¡
-#define SMQ_PARAM_VERSIONS          (4)         ///<    (get/--- smq_uint32[2])µ±Ç°ËùÖ§³ÖµÄ¹²ÏíÄÚ´æµÄ°æ±¾ºÅ·¶Î§
-#define SMQ_PARAM_LOCALE            (5)         ///<    (get/set smq_uint32)±¾µØÓïÑÔĞÅÏ¢
+#define SMQ_PARAM_LOG_LEVEL         (0)         ///<    (get/set smq_uint32)æ—¥å¿—çº§åˆ«
+#define SMQ_PARAM_LOG_TARGET        (1)         ///<    (---/set smq_ptr[2])æ—¥å¿—å›è°ƒå‡½æ•°
+#define SMQ_PARAM_MEMORY_SIZE       (2)         ///<    (get/set smq_uint32)å…±äº«å†…å­˜å¤§å°
+#define SMQ_PARAM_QUEUE_SIZE        (3)         ///<    (get/set smq_uint32)æ¶ˆæ¯é˜Ÿåˆ—å¤§å°
+#define SMQ_PARAM_VERSIONS          (4)         ///<    (get/--- smq_uint32[2])å½“å‰æ‰€æ”¯æŒçš„å…±äº«å†…å­˜çš„ç‰ˆæœ¬å·èŒƒå›´
+#define SMQ_PARAM_LOCALE            (5)         ///<    (get/set smq_uint32)æœ¬åœ°è¯­è¨€ä¿¡æ¯
 /// @}
 
 
 
 
-/// ¶¨ÒåÁËÓïÑÔÏà¹ØµÄ¼¸¸öºê
+/// å®šä¹‰äº†è¯­è¨€ç›¸å…³çš„å‡ ä¸ªå®
 ///@{
-#define SMQ_LOCALE_ENUS             (0)         ///<    Ó¢ÎÄ
-#define SMQ_LOCALE_ZHCN             (1)         ///<    ÖĞÎÄ
+#define SMQ_LOCALE_ENUS             (0)         ///<    è‹±æ–‡
+#define SMQ_LOCALE_ZHCN             (1)         ///<    ä¸­æ–‡
 ///@}
 
 
 
 
-/// ½ÇÉ«·ÖÀà
+/// è§’è‰²åˆ†ç±»
 ///@{
-#define SMQ_ROLE_LEADER             (0)         ///<    Ö÷¿Ø¶ÔÏó
-#define SMQ_ROLE_FOLLOWER           (1)         ///<    ´Ó¿Ø¶ÔÏó
-#define SMQ_ROLE_VIEWER             (2)         ///<    ¹Û²ìÕß¶ÔÏó
+#define SMQ_ROLE_LEADER             (0)         ///<    ä¸»æ§å¯¹è±¡
+#define SMQ_ROLE_FOLLOWER           (1)         ///<    ä»æ§å¯¹è±¡
+#define SMQ_ROLE_VIEWER             (2)         ///<    è§‚å¯Ÿè€…å¯¹è±¡
 ///@}
 
 
 
 
-/// ¶¨ÒåÁËÈÕÖ¾¼¶±ğ
+/// å®šä¹‰äº†æ—¥å¿—çº§åˆ«
 ///@{
-#define SMQ_LOG_LEVEL_DEBUG         (0)         ///<    µ÷ÊÔ¼¶±ğ
-#define SMQ_LOG_LEVEL_INFO          (1)         ///<    ĞÅÏ¢¼¶±ğ
-#define SMQ_LOG_LEVEL_WARN          (2)         ///<    ¾¯¸æ¼¶±ğ
-#define SMQ_LOG_LEVEL_ERROR         (3)         ///<    ´íÎó¼¶±ğ
-#define SMQ_LOG_LEVEL_OFF           (4)         ///<    ¹Ø±ÕÈÕÖ¾
+#define SMQ_LOG_LEVEL_DEBUG         (0)         ///<    è°ƒè¯•çº§åˆ«
+#define SMQ_LOG_LEVEL_INFO          (1)         ///<    ä¿¡æ¯çº§åˆ«
+#define SMQ_LOG_LEVEL_WARN          (2)         ///<    è­¦å‘Šçº§åˆ«
+#define SMQ_LOG_LEVEL_ERROR         (3)         ///<    é”™è¯¯çº§åˆ«
+#define SMQ_LOG_LEVEL_OFF           (4)         ///<    å…³é—­æ—¥å¿—
 ///@}
 
 
 
-/// ¶¨ÒåÁË¼¸¸ö»ù±¾³£Á¿
+/// å®šä¹‰äº†å‡ ä¸ªåŸºæœ¬å¸¸é‡
 ///@{
-#define SMQ_MAPPING_NAME_LEN_MAX    (100)       ///<    ¹²ÏíÄÚ´æÓ³ÉäÃû³ÆµÄ×î´ó³¤¶È(²»º¬\0)
+#define SMQ_MAPPING_NAME_LEN_MAX    (100)       ///<    å…±äº«å†…å­˜æ˜ å°„åç§°çš„æœ€å¤§é•¿åº¦(ä¸å«\0)
 ///@}
 
 
 
-/// ¶¨ÒåÁËdumpÊı¾İµÄ·¶Î§
+/// å®šä¹‰äº†dumpæ•°æ®çš„èŒƒå›´
 ///@{
-#define SMQ_DUMP_RANGE_HEAP_HEAD    (0x0001)    ///<    Dump ¹²ÏíÄÚ´æÍ·²¿
-#define SMQ_DUMP_RANGE_HEAP_DATA    (0x0002)    ///<    Dump ¹²ÏíÄÚ´æÊı¾İÇø
+#define SMQ_DUMP_RANGE_HEAP_HEAD    (0x0001)    ///<    Dump å…±äº«å†…å­˜å¤´éƒ¨
+#define SMQ_DUMP_RANGE_HEAP_DATA    (0x0002)    ///<    Dump å…±äº«å†…å­˜æ•°æ®åŒº
 ///@}
 
 
 
 
-/// ¶¨ÒåÁËÍ¨ÓÃµÄÖµÀàĞÍ
+/// å®šä¹‰äº†é€šç”¨çš„å€¼ç±»å‹
 ///@{
 #if defined(WIN32) || defined(WIN64)
 #pragma warning(disable:4200)
 #endif
 typedef union
 {
-    smq_char    value_str[256];                 ///<    ×Ö·û´®ÀàĞÍµÄÖµ
-    smq_uint32  value_uint32;                   ///<    uint32 ÀàĞÍµÄÖµ
-    smq_uint16  value_int32;                    ///<    int32 ÀàĞÍµÄÖµ
-    smq_void*   value_ptr;                      ///<    Ö¸ÕëÀàĞÍµÄÖµ
-    smq_uint32  value_uint32s[0];               ///<    uint32 ÀàĞÍµÄÊı×é
-    smq_uint16  value_int32s[0];                ///<    int32 ÀàĞÍµÄÊı×é
-    smq_void*   value_ptrs[0];                  ///<    Ö¸ÕëÊı×é
+    smq_char    value_str[256];                 ///<    å­—ç¬¦ä¸²ç±»å‹çš„å€¼
+    smq_uint32  value_uint32;                   ///<    uint32 ç±»å‹çš„å€¼
+    smq_uint16  value_int32;                    ///<    int32 ç±»å‹çš„å€¼
+    smq_void*   value_ptr;                      ///<    æŒ‡é’ˆç±»å‹çš„å€¼
+    smq_uint32  value_uint32s[0];               ///<    uint32 ç±»å‹çš„æ•°ç»„
+    smq_uint16  value_int32s[0];                ///<    int32 ç±»å‹çš„æ•°ç»„
+    smq_void*   value_ptrs[0];                  ///<    æŒ‡é’ˆæ•°ç»„
 }smq_value_t;
 #if defined(WIN32) || defined(WIN64)
 #pragma warning(default:4200)
@@ -183,155 +183,155 @@ typedef union
 
 
 
-/// smq Êä³öÈÕÖ¾Ê±µÄ»Øµ÷º¯Êı
+/// smq è¾“å‡ºæ—¥å¿—æ—¶çš„å›è°ƒå‡½æ•°
 ///
-/// \param  context     [in]    ÈÕÖ¾ÉÏÏÂÎÄ£¬Í¨¹ı key Îª SMQ_PARAM_LOG_TARGET µÄ²ÎÊıµ÷ÓÃ #smq_param_set º¯ÊıÊ±£¬µÚÒ»¸öÖ¸ÕëÊäÈëµÄ¾ÍÊÇcontext.
-/// \param  id          [in]    ÈÕÖ¾±àºÅ.
-/// \param  level       [in]    ÈÕÖ¾¼¶±ğ.
-/// \param  loc         [in]    ±¾µØÓïÑÔÖ§³Ö.
-/// \param  desc        [in]    Óë id ¶ÔÓ¦µÄ£¬ÓÉ loc Ö¸¶¨µÄÓïÑÔµÄÈÕÖ¾¾²Ì¬ÃèÊö.
-/// \param  desc_len    [in]    desc µÄ³¤¶È£¬²»°üÀ¨\0.
-/// \param  dynamic     [in]    ÈÕÖ¾µÄ¶¯Ì¬ĞÅÏ¢£¬Ò»°ãÊÇÈÕÖ¾ÉÏÏÂÎÄµÄ²ÎÊı£¬²ÎÊıµÄÊÇ key1=vaule1,key2=vaule2,... ĞÎÊ½µÄ¶à¸ö key-value ¶Ô£¬µ«²¢²»±£Ö¤ value ²¿·Ö²»°üÀ¨×Ö·û'='»òÕß','.
-/// \param  dynamic_len [in]    dynamic µÄ³¤¶È£¬²»°üÀ¨\0.
+/// \param  context     [in]    æ—¥å¿—ä¸Šä¸‹æ–‡ï¼Œé€šè¿‡ key ä¸º SMQ_PARAM_LOG_TARGET çš„å‚æ•°è°ƒç”¨ #smq_param_set å‡½æ•°æ—¶ï¼Œç¬¬ä¸€ä¸ªæŒ‡é’ˆè¾“å…¥çš„å°±æ˜¯context.
+/// \param  id          [in]    æ—¥å¿—ç¼–å·.
+/// \param  level       [in]    æ—¥å¿—çº§åˆ«.
+/// \param  loc         [in]    æœ¬åœ°è¯­è¨€æ”¯æŒ.
+/// \param  desc        [in]    ä¸ id å¯¹åº”çš„ï¼Œç”± loc æŒ‡å®šçš„è¯­è¨€çš„æ—¥å¿—é™æ€æè¿°.
+/// \param  desc_len    [in]    desc çš„é•¿åº¦ï¼Œä¸åŒ…æ‹¬\0.
+/// \param  dynamic     [in]    æ—¥å¿—çš„åŠ¨æ€ä¿¡æ¯ï¼Œä¸€èˆ¬æ˜¯æ—¥å¿—ä¸Šä¸‹æ–‡çš„å‚æ•°ï¼Œå‚æ•°çš„æ˜¯ key1=vaule1,key2=vaule2,... å½¢å¼çš„å¤šä¸ª key-value å¯¹ï¼Œä½†å¹¶ä¸ä¿è¯ value éƒ¨åˆ†ä¸åŒ…æ‹¬å­—ç¬¦'='æˆ–è€…','.
+/// \param  dynamic_len [in]    dynamic çš„é•¿åº¦ï¼Œä¸åŒ…æ‹¬\0.
 typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
 
 
 
 
-/// Dump¹²ÏíÄÚ´æÏêÇé
+/// Dumpå…±äº«å†…å­˜è¯¦æƒ…
 ///
-/// \param  context     [in]    Dump ÉÏÏÂÎÄ£¬¸Ã²ÎÊıÀ´Ô´×Ôµ÷ÓÃ #smq_dump Ê±µÄÍ¬ÃûÊäÈë²ÎÊı
-/// \param  flag        [in]    ÓÃÓÚ±ê¼Ç Dump µÄ½×¶Î£¬0 ±íÊ¾ Dump ¿ªÊ¼£¬0xFFFFFFFF ±íÊ¾ Dump ½áÊø£¬ÆäËûÖµ±íÊ¾ Dump µÄÊı¾İÊä³ö½×¶Î¡£µ±´¦ÓÚ Dump ¿ªÊ¼ºÍ½áÊø½×¶ÎÊ±£¬ÊäÈë²ÎÊı data ºÍ len ·Ö±ğÎª NULL ºÍ 0.
-/// \param  data        [in]    Dump µÄÊı¾İ»º³åÇøÖ¸Õë¡£µ± flag Ö¸Ã÷µ±Ç°´¦ÓÚ Dump ¿ªÊ¼»òÕß½áÊø½×¶ÎÊ±£¬¸Ã²ÎÊıÖµÎª NULL.
-/// \param  len         [in]    ¸Ã²ÎÊıÓÃÓÚÖ¸Ã÷ data ²ÎÊıÖĞµÄÊı¾İÇøÓòµÄ³¤¶È¡£µ± flag Ö¸Ã÷µ±Ç°´¦ÓÚ Dump ¿ªÊ¼»òÕß½áÊø½×¶ÎÊ±£¬¸Ã²ÎÊıÖµÎª 0.
-/// \return ·µ»Ø 0 ±íÊ¾Ö´ĞĞĞèÒª¼ÌĞøÖ´ĞĞºóÃæµÄ Dump ²Ù×÷£¬·ñÔò£¬½«ÖÕÖ¹ºóĞøµÄ²Ù×÷¡£
+/// \param  context     [in]    Dump ä¸Šä¸‹æ–‡ï¼Œè¯¥å‚æ•°æ¥æºè‡ªè°ƒç”¨ #smq_dump æ—¶çš„åŒåè¾“å…¥å‚æ•°
+/// \param  flag        [in]    ç”¨äºæ ‡è®° Dump çš„é˜¶æ®µï¼Œ0 è¡¨ç¤º Dump å¼€å§‹ï¼Œ0xFFFFFFFF è¡¨ç¤º Dump ç»“æŸï¼Œå…¶ä»–å€¼è¡¨ç¤º Dump çš„æ•°æ®è¾“å‡ºé˜¶æ®µã€‚å½“å¤„äº Dump å¼€å§‹å’Œç»“æŸé˜¶æ®µæ—¶ï¼Œè¾“å…¥å‚æ•° data å’Œ len åˆ†åˆ«ä¸º NULL å’Œ 0.
+/// \param  data        [in]    Dump çš„æ•°æ®ç¼“å†²åŒºæŒ‡é’ˆã€‚å½“ flag æŒ‡æ˜å½“å‰å¤„äº Dump å¼€å§‹æˆ–è€…ç»“æŸé˜¶æ®µæ—¶ï¼Œè¯¥å‚æ•°å€¼ä¸º NULL.
+/// \param  len         [in]    è¯¥å‚æ•°ç”¨äºæŒ‡æ˜ data å‚æ•°ä¸­çš„æ•°æ®åŒºåŸŸçš„é•¿åº¦ã€‚å½“ flag æŒ‡æ˜å½“å‰å¤„äº Dump å¼€å§‹æˆ–è€…ç»“æŸé˜¶æ®µæ—¶ï¼Œè¯¥å‚æ•°å€¼ä¸º 0.
+/// \return è¿”å› 0 è¡¨ç¤ºæ‰§è¡Œéœ€è¦ç»§ç»­æ‰§è¡Œåé¢çš„ Dump æ“ä½œï¼Œå¦åˆ™ï¼Œå°†ç»ˆæ­¢åç»­çš„æ“ä½œã€‚
 typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
 
 
 
 
-/// ¶ÁÈ¡ÓÉ key Ö¸¶¨µÄÈ«¾Ö²ÎÊıµÄÖµ
+/// è¯»å–ç”± key æŒ‡å®šçš„å…¨å±€å‚æ•°çš„å€¼
 ///
-/// \param  key         [in]    key ÓÃÀ´±êÊ¶ĞèÒª»ñÈ¡ÄÄ¸ö²ÎÊı
-/// \param  val         [out]   »ñÈ¡µÄ²ÎÊı»á±»·Åµ½ val ±äÁ¿ÖĞ
-/// \return ·µ»Ø SMQ_OK ±íÊ¾»ñÈ¡³É¹¦£¬ÆäËû±íÊ¾»ñÈ¡Ê§°Ü
+/// \param  key         [in]    key ç”¨æ¥æ ‡è¯†éœ€è¦è·å–å“ªä¸ªå‚æ•°
+/// \param  val         [out]   è·å–çš„å‚æ•°ä¼šè¢«æ”¾åˆ° val å˜é‡ä¸­
+/// \return è¿”å› SMQ_OK è¡¨ç¤ºè·å–æˆåŠŸï¼Œå…¶ä»–è¡¨ç¤ºè·å–å¤±è´¥
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val);
 
 
 
 
-/// ĞŞ¸ÄÓÉ key Ö¸¶¨µÄÈ«¾Ö²ÎÊıµÄÖµ
+/// ä¿®æ”¹ç”± key æŒ‡å®šçš„å…¨å±€å‚æ•°çš„å€¼
 ///
-/// \param  key         [in]    key ÓÃÀ´±êÊ¶ĞèÒªĞŞ¸ÄÄÄ¸ö²ÎÊıµÄÖµ
-/// \param  val         [in]    ĞÂµÄÖµ·ÅÔÚ val ²ÎÊıÖĞ
-/// \return ·µ»Ø SMQ_OK ±íÊ¾ÉèÖÃ³É¹¦£¬ÆäËû±íÊ¾»ñÈ¡Ê§°Ü¼°Ô­Òò
+/// \param  key         [in]    key ç”¨æ¥æ ‡è¯†éœ€è¦ä¿®æ”¹å“ªä¸ªå‚æ•°çš„å€¼
+/// \param  val         [in]    æ–°çš„å€¼æ”¾åœ¨ val å‚æ•°ä¸­
+/// \return è¿”å› SMQ_OK è¡¨ç¤ºè®¾ç½®æˆåŠŸï¼Œå…¶ä»–è¡¨ç¤ºè·å–å¤±è´¥åŠåŸå› 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val);
 
 
 
 
-/// ¼ì²éÊÇ·ñ¿ÉÒÔ½«ÓÉ key ±êÊ¶µÄ²ÎÊıµÄÖµĞŞ¸ÄÎª val
-/// \param  key         [in]    key ÓÃÀ´±êÊ¶ĞèÒªĞŞ¸ÄÄÄ¸ö²ÎÊıµÄÖµ
-/// \param  val         [in]    ĞÂµÄÖµ·ÅÔÚ val ²ÎÊıÖĞ
-/// \return ·µ»Ø SMQ_OK ±íÊ¾¼ì²éÍ¨¹ı£¬ÆäËû±íÊ¾»ñÈ¡Ê§°Ü£¬¿ÉÒÔÍ¨¹ı #smq_error º¯Êı»ñÈ¡¸Ã´íÎóµÄÏêÏ¸µÄ´íÎóÃèÊöÎÄ±¾
+/// æ£€æŸ¥æ˜¯å¦å¯ä»¥å°†ç”± key æ ‡è¯†çš„å‚æ•°çš„å€¼ä¿®æ”¹ä¸º val
+/// \param  key         [in]    key ç”¨æ¥æ ‡è¯†éœ€è¦ä¿®æ”¹å“ªä¸ªå‚æ•°çš„å€¼
+/// \param  val         [in]    æ–°çš„å€¼æ”¾åœ¨ val å‚æ•°ä¸­
+/// \return è¿”å› SMQ_OK è¡¨ç¤ºæ£€æŸ¥é€šè¿‡ï¼Œå…¶ä»–è¡¨ç¤ºè·å–å¤±è´¥ï¼Œå¯ä»¥é€šè¿‡ #smq_error å‡½æ•°è·å–è¯¥é”™è¯¯çš„è¯¦ç»†çš„é”™è¯¯æè¿°æ–‡æœ¬
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_value_t* val);
 
 
 
 
-/// »ñÈ¡²ÎÊıµÄ´íÎóÃèÊö
+/// è·å–å‚æ•°çš„é”™è¯¯æè¿°
 ///
-/// \param  err         [in]    ´íÎóÂë
-/// \param  loc         [in]    ±¾µØÓïÑÔ±àÂë
-/// \param  desc        [out]   ´íÎóÃèÊöÎÄ±¾£¬¸ÃÎÄ±¾´æ´¢ÔÚ #smq_value_t µÄ value_str ³ÉÔ±ÖĞ£¬ÇÒÒÔ \0 ½áÎ²
-/// \return ·µ»Ø SMQ_OK ±íÊ¾¼ì²éÍ¨¹ı£¬ÆäËû±íÊ¾»ñÈ¡´íÎóÃèÊöÊ§°Ü
+/// \param  err         [in]    é”™è¯¯ç 
+/// \param  loc         [in]    æœ¬åœ°è¯­è¨€ç¼–ç 
+/// \param  desc        [out]   é”™è¯¯æè¿°æ–‡æœ¬ï¼Œè¯¥æ–‡æœ¬å­˜å‚¨åœ¨ #smq_value_t çš„ value_str æˆå‘˜ä¸­ï¼Œä¸”ä»¥ \0 ç»“å°¾
+/// \return è¿”å› SMQ_OK è¡¨ç¤ºæ£€æŸ¥é€šè¿‡ï¼Œå…¶ä»–è¡¨ç¤ºè·å–é”™è¯¯æè¿°å¤±è´¥
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc);
 
 
 
 
-/// ´´½¨ smq ¹²ÏíÄÚ´æÊµÀı£¬»òÕß´ò¿ªÒÑ¾­´æÔÚµÄ smq ¹²ÏíÄÚ´æÊµÀı
+/// åˆ›å»º smq å…±äº«å†…å­˜å®ä¾‹ï¼Œæˆ–è€…æ‰“å¼€å·²ç»å­˜åœ¨çš„ smq å…±äº«å†…å­˜å®ä¾‹
 ///
-/// \param  name        [in]    smq ¹²ÏíÄÚ´æÊµÀıµÄÃû³Æ
-/// \param  role        [in]    ÊµÀıµÄ½ÇÉ«£¬¿É²Î¼û SMQ_ROLE_xxx ÏµÁĞºêÁË½âÓĞÄÄĞ©½ÇÉ«
-/// \param  inst        [out]   smq ¹²ÏíÄÚ´æÊµÀı¶ÔÏó
-/// \return ·µ»Ø SMQ_OK ±íÊ¾´´½¨»òÕß´ò¿ª³É¹¦£¬ÆäËû±íÊ¾´ò¿ªÊ§°ÜµÄ´íÎóÂë
+/// \param  name        [in]    smq å…±äº«å†…å­˜å®ä¾‹çš„åç§°
+/// \param  role        [in]    å®ä¾‹çš„è§’è‰²ï¼Œå¯å‚è§ SMQ_ROLE_xxx ç³»åˆ—å®äº†è§£æœ‰å“ªäº›è§’è‰²
+/// \param  inst        [out]   smq å…±äº«å†…å­˜å®ä¾‹å¯¹è±¡
+/// \return è¿”å› SMQ_OK è¡¨ç¤ºåˆ›å»ºæˆ–è€…æ‰“å¼€æˆåŠŸï¼Œå…¶ä»–è¡¨ç¤ºæ‰“å¼€å¤±è´¥çš„é”™è¯¯ç 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst);
 
 
 
 
 
-/// ¹Ø±ÕÒÑ¾­´ò¿ª»òÕß´´½¨µÄ smq ¹²ÏíÄÚ´æÊµÀı
+/// å…³é—­å·²ç»æ‰“å¼€æˆ–è€…åˆ›å»ºçš„ smq å…±äº«å†…å­˜å®ä¾‹
 ///
-/// \param  inst        [in]    ´ı¹Ø±ÕµÄ smq ¹²ÏíÄÚ´æÊµÀı
+/// \param  inst        [in]    å¾…å…³é—­çš„ smq å…±äº«å†…å­˜å®ä¾‹
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst);
 
 
 
 
-/// ²éÑ¯ SMQ ÊµÀıµÄ¹²ÏíÄÚ´æ²¼¾ÖµÄ°æ±¾
+/// æŸ¥è¯¢ SMQ å®ä¾‹çš„å…±äº«å†…å­˜å¸ƒå±€çš„ç‰ˆæœ¬
 ///
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  ver         [out]   °æ±¾ºÅ
-/// \return ²éÑ¯³É¹¦£¬·µ»Ø SMQ_OK£¬·ñÔò·µ»ØÊ§°Ü´íÎóÂë
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  ver         [out]   ç‰ˆæœ¬å·
+/// \return æŸ¥è¯¢æˆåŠŸï¼Œè¿”å› SMQ_OKï¼Œå¦åˆ™è¿”å›å¤±è´¥é”™è¯¯ç 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver);
 
 
 
 
-/// Dump SMQ ÊµÀıËù¹ÜÀíµÄ¹²ÏíÄÚ´æÖĞµÄËùÓĞÊı¾İ
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  range       [in]    Dump Êı¾İ·¶Î§
-/// \param  context     [in]    Dump ÉÏÏÂÎÄ£¬¸Ã²ÎÊı×îÖÕ´«µİ¸ø»Øµ÷º¯Êı f£¬×÷ÎªÆäµÄ context ²ÎÊı
-/// \param  f           [in]    Dump »Øµ÷º¯Êı£¬¸Ãº¯Êı»á±»µ÷ÓÃ¶à´Î£¬Ã¿´Îµ÷ÓÃÆäÊäÈë²ÎÊı¾ù²»ÏàÍ¬£¬²Î¼û #SMQ_DUMPER_FUNC µÄËµÃ÷
+/// Dump SMQ å®ä¾‹æ‰€ç®¡ç†çš„å…±äº«å†…å­˜ä¸­çš„æ‰€æœ‰æ•°æ®
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  range       [in]    Dump æ•°æ®èŒƒå›´
+/// \param  context     [in]    Dump ä¸Šä¸‹æ–‡ï¼Œè¯¥å‚æ•°æœ€ç»ˆä¼ é€’ç»™å›è°ƒå‡½æ•° fï¼Œä½œä¸ºå…¶çš„ context å‚æ•°
+/// \param  f           [in]    Dump å›è°ƒå‡½æ•°ï¼Œè¯¥å‡½æ•°ä¼šè¢«è°ƒç”¨å¤šæ¬¡ï¼Œæ¯æ¬¡è°ƒç”¨å…¶è¾“å…¥å‚æ•°å‡ä¸ç›¸åŒï¼Œå‚è§ #SMQ_DUMPER_FUNC çš„è¯´æ˜
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);
 
 
 
 
-/// ÉêÇëÒ»¸öĞÂµÄÏûÏ¢»º³åÇø
+/// ç”³è¯·ä¸€ä¸ªæ–°çš„æ¶ˆæ¯ç¼“å†²åŒº
 ///
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  size        [in]    ÆÚÍûµÄ»º³åÇø´óĞ¡¡£±ØĞë×¢Òâ£¬¸Ã´óĞ¡½ö½öÊÇÉêÇë»º³åÇøµÄ²Î¿¼£¬SMQ ¾¡Á¿·ÖÅäÖÁÉÙÄÜ¹»ÈİÄÉÏÂ size ×Ö½ÚµÄÊı¾İµÄ»º³åÇø¡£
-///                             µ«µ±¹²ÏíÄÚ´æ²»×ãÊ±£¬Êµ¼Ê·µ»ØµÄÊı¾İ»º³åÇøÒ²¿ÉÄÜĞ¡ÓÚ size£»ËùÒÔ£¬ÔÚ¿½±´Êı¾İÖ®Ç°£¬ÎÒÃÇÒ»°ãĞèÒªÍ¨¹ı #smq_msg_data 
-///                             º¯Êı»ñÈ¡»º³åÇøµÄÈİÁ¿£¬²ÅÄÜ¾ö¶¨ĞèÒªÏò»º³åÇø¿½±´¶àÉÙÊı¾İ¡£Èç¹ûÊı¾İÇøÓòÌ«Ğ¡£¬¿ÉÒÔ¼ÌĞø¼ÌĞøµ÷ÓÃ±¾º¯Êı»ñÈ¡ĞÂµÄ»º³åÇø¡£
-///                             È»ºó½«ĞÂµÄ»º³åÇøÍ¨¹ı #smq_msg_cat º¯ÊıºÏ²¢µ½µÚÒ»¸öÏûÏ¢»º³åÇøÉÏ£¬×÷ÎªÆä×ÓÏûÏ¢£¬²¢×îÖÕËæ×ÅµÚÒ»¸öÏûÏ¢Ò»Æğ·¢ËÍ
-///                             ³öÈ¥¡£
-/// \param  msg         [out]   »ñÈ¡µ½µÄÏûÏ¢»º³åÇø
-/// \return ÏûÏ¢·ÖÅä³É¹¦£¬·µ»ØÖµÎª SMQ_OK£¬´ËÊ± *msg µÄÖµÒ»¶¨¿ÉÓÃ£»Èç¹û·ÖÅäÊ§°Ü£¬»á·µ»Ø´íÎóÂë
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  size        [in]    æœŸæœ›çš„ç¼“å†²åŒºå¤§å°ã€‚å¿…é¡»æ³¨æ„ï¼Œè¯¥å¤§å°ä»…ä»…æ˜¯ç”³è¯·ç¼“å†²åŒºçš„å‚è€ƒï¼ŒSMQ å°½é‡åˆ†é…è‡³å°‘èƒ½å¤Ÿå®¹çº³ä¸‹ size å­—èŠ‚çš„æ•°æ®çš„ç¼“å†²åŒºã€‚
+///                             ä½†å½“å…±äº«å†…å­˜ä¸è¶³æ—¶ï¼Œå®é™…è¿”å›çš„æ•°æ®ç¼“å†²åŒºä¹Ÿå¯èƒ½å°äº sizeï¼›æ‰€ä»¥ï¼Œåœ¨æ‹·è´æ•°æ®ä¹‹å‰ï¼Œæˆ‘ä»¬ä¸€èˆ¬éœ€è¦é€šè¿‡ #smq_msg_data 
+///                             å‡½æ•°è·å–ç¼“å†²åŒºçš„å®¹é‡ï¼Œæ‰èƒ½å†³å®šéœ€è¦å‘ç¼“å†²åŒºæ‹·è´å¤šå°‘æ•°æ®ã€‚å¦‚æœæ•°æ®åŒºåŸŸå¤ªå°ï¼Œå¯ä»¥ç»§ç»­ç»§ç»­è°ƒç”¨æœ¬å‡½æ•°è·å–æ–°çš„ç¼“å†²åŒºã€‚
+///                             ç„¶åå°†æ–°çš„ç¼“å†²åŒºé€šè¿‡ #smq_msg_cat å‡½æ•°åˆå¹¶åˆ°ç¬¬ä¸€ä¸ªæ¶ˆæ¯ç¼“å†²åŒºä¸Šï¼Œä½œä¸ºå…¶å­æ¶ˆæ¯ï¼Œå¹¶æœ€ç»ˆéšç€ç¬¬ä¸€ä¸ªæ¶ˆæ¯ä¸€èµ·å‘é€
+///                             å‡ºå»ã€‚
+/// \param  msg         [out]   è·å–åˆ°çš„æ¶ˆæ¯ç¼“å†²åŒº
+/// \return æ¶ˆæ¯åˆ†é…æˆåŠŸï¼Œè¿”å›å€¼ä¸º SMQ_OKï¼Œæ­¤æ—¶ *msg çš„å€¼ä¸€å®šå¯ç”¨ï¼›å¦‚æœåˆ†é…å¤±è´¥ï¼Œä¼šè¿”å›é”™è¯¯ç 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg);
 
 
 
 
-/// ÊÍ·ÅÒ»¸öÏûÏ¢»º³åÇø
+/// é‡Šæ”¾ä¸€ä¸ªæ¶ˆæ¯ç¼“å†²åŒº
 ///
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  msg         [out]   ĞèÒªÊÍ·Åµ½µÄÏûÏ¢»º³åÇø£¬ËùÓĞÍ¨¹ı #smq_msg_cat º¯ÊıºÏ²¢µ½ msg µÄ×ÓÏûÏ¢¶¼»á±»×Ô
-///                             ¶¯ÊÍ·Å£¬¶ø²»ĞèÒªÍ¨¹ı±¾º¯ÊıÀ´Ö÷¶¯ÊÍ·Å¡£
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  msg         [out]   éœ€è¦é‡Šæ”¾åˆ°çš„æ¶ˆæ¯ç¼“å†²åŒºï¼Œæ‰€æœ‰é€šè¿‡ #smq_msg_cat å‡½æ•°åˆå¹¶åˆ° msg çš„å­æ¶ˆæ¯éƒ½ä¼šè¢«è‡ª
+///                             åŠ¨é‡Šæ”¾ï¼Œè€Œä¸éœ€è¦é€šè¿‡æœ¬å‡½æ•°æ¥ä¸»åŠ¨é‡Šæ”¾ã€‚
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg);
 
 
 
 
-/// ½«Ò»¸ö sub ÏûÏ¢Æ´½Óµ½ msg ÏûÏ¢Á´µÄÄ©Î²£¬×÷ÎªÆä×ÓÏûÏ¢
+/// å°†ä¸€ä¸ª sub æ¶ˆæ¯æ‹¼æ¥åˆ° msg æ¶ˆæ¯é“¾çš„æœ«å°¾ï¼Œä½œä¸ºå…¶å­æ¶ˆæ¯
 ///
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  msg         [in]    sub ÏûÏ¢½«×·¼Óµ½ msg ²ÎÊıÖ¸¶¨µÄÏûÏ¢Á´µÄÄ©Î²
-/// \param  sub         [in]    ±»×·¼ÓµÄ×ÓÏûÏ¢¡£
-/// \return Æ´½Ó³É¹¦£¬·µ»Ø SMQ_OK£»µ±Æ´½ÓÊ§°ÜÊ±£¬·µ»Ø´íÎóÂë£¬ÇÒÏµÍ³È·±£ msg ºÍ sub ²»»á±»ÆÆ»µ
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  msg         [in]    sub æ¶ˆæ¯å°†è¿½åŠ åˆ° msg å‚æ•°æŒ‡å®šçš„æ¶ˆæ¯é“¾çš„æœ«å°¾
+/// \param  sub         [in]    è¢«è¿½åŠ çš„å­æ¶ˆæ¯ã€‚
+/// \return æ‹¼æ¥æˆåŠŸï¼Œè¿”å› SMQ_OKï¼›å½“æ‹¼æ¥å¤±è´¥æ—¶ï¼Œè¿”å›é”™è¯¯ç ï¼Œä¸”ç³»ç»Ÿç¡®ä¿ msg å’Œ sub ä¸ä¼šè¢«ç ´å
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg msg, smq_msg sub);
 
 
 
 
-/// Í¨¹ıµü´úµÄ·½Ê½£¬Öğ¸ö±éÀú msg µÄËùÓĞ×ÓÏûÏ¢
-/// \param  inst        [in]    SMQ ÊµÀı
-/// \param  msg         [in]    ¶Ô msg µÄ×ÓÏûÏ¢½øĞĞ±éÀú£¬ÔÚ±éÀúµÄ¶à´Îµ÷ÓÃ¹ı³ÌÖĞ msg ²ÎÊı²»ÄÜ¸Ä±ä
-/// \param  next        [in,out]    µü´ú²ÎÊı£¬Èç¹û»ñÈ¡×ÓÏûÏ¢³É¹¦£¬ÄÇÃ´ *next ½«Ö¸Ïò»ñÈ¡µ½µÄ×ÓÏûÏ¢£»Èç¹û *next Îª SMQ_SMQ_NULL£¬
-///                                 ±íÊ¾ÒÑ¾­ÎŞºó¼ÌÏûÏ¢£¬´ËÊ±Ó¦¸ÃÍ£Ö¹±éÀú²Ù×÷¡£µ± next ×öÊäÈë²ÎÊıÊ±£¬*next µÄÖµ£¬Èç¹ûµÈÓÚ msg£¬
-///                                 ±íÊ¾»ñÈ¡ msg µÄµÚÒ»¸ö×ÓÏûÏ¢£¬ÏÂÃæÊÇÒ»¸öÍ¨¹ı±éÀú msg ¼°Æä×ÓÏûÏ¢£¬²¢»ñÈ¡ÏûÏ¢ÖĞµÄÊı¾İµÄ¹ÜÓÃ·¨Ê¾Àı£º
+/// é€šè¿‡è¿­ä»£çš„æ–¹å¼ï¼Œé€ä¸ªéå† msg çš„æ‰€æœ‰å­æ¶ˆæ¯
+/// \param  inst        [in]    SMQ å®ä¾‹
+/// \param  msg         [in]    å¯¹ msg çš„å­æ¶ˆæ¯è¿›è¡Œéå†ï¼Œåœ¨éå†çš„å¤šæ¬¡è°ƒç”¨è¿‡ç¨‹ä¸­ msg å‚æ•°ä¸èƒ½æ”¹å˜
+/// \param  next        [in,out]    è¿­ä»£å‚æ•°ï¼Œå¦‚æœè·å–å­æ¶ˆæ¯æˆåŠŸï¼Œé‚£ä¹ˆ *next å°†æŒ‡å‘è·å–åˆ°çš„å­æ¶ˆæ¯ï¼›å¦‚æœ *next ä¸º SMQ_SMQ_NULLï¼Œ
+///                                 è¡¨ç¤ºå·²ç»æ— åç»§æ¶ˆæ¯ï¼Œæ­¤æ—¶åº”è¯¥åœæ­¢éå†æ“ä½œã€‚å½“ next åšè¾“å…¥å‚æ•°æ—¶ï¼Œ*next çš„å€¼ï¼Œå¦‚æœç­‰äº msgï¼Œ
+///                                 è¡¨ç¤ºè·å– msg çš„ç¬¬ä¸€ä¸ªå­æ¶ˆæ¯ï¼Œä¸‹é¢æ˜¯ä¸€ä¸ªé€šè¿‡éå† msg åŠå…¶å­æ¶ˆæ¯ï¼Œå¹¶è·å–æ¶ˆæ¯ä¸­çš„æ•°æ®çš„ç®¡ç”¨æ³•ç¤ºä¾‹ï¼š
 ///
 ///     smq_errno err = SMQ_OK;
 ///     for (smq_msg* next = &msg; (err == SMQ_OK) && (next != SMQ_MSG_NULL); err = smq_msg_next(inst, msg, next)
@@ -346,67 +346,67 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg m
 ///
 ///     }
 ///     
-/// \return »ñÈ¡³É¹¦£¬·µ»Ø SMQ_OK£¬¿ÉÍ¨¹ı *next È¡µÃÏûÏ¢£»»ñÈ¡Ê§°Ü
+/// \return è·å–æˆåŠŸï¼Œè¿”å› SMQ_OKï¼Œå¯é€šè¿‡ *next å–å¾—æ¶ˆæ¯ï¼›è·å–å¤±è´¥
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg msg, smq_msg* next);
 
 
 
 
-//  »ñÈ¡ msg ÏûÏ¢µÄÊı¾İ´æ´¢µØÖ·¡¢Êı¾İ³¤¶ÈÒÔ¼°ÈİÁ¿ĞÅÏ¢
-/// \param  inst        [in]        SMQ ÊµÀı
-/// \param  msg         [in]        Ö¸¶¨»ñÈ¡¶ÔÏó
-/// \param  data        [out]       ´æ·ÅÈ¡µ½µÄÊı¾İµØÖ·£¬µ±²»ĞèÒªÈ¡µÃ¸ÃĞÅÏ¢Ê±£¬¿ÉÒÔÌîĞ´ NULL
-/// \param  len         [out]       ´æ·ÅÈ¡µ½µÄÊı¾İ³¤¶È£¬µ±²»ĞèÒªÈ¡µÃ¸ÃĞÅÏ¢Ê±£¬¿ÉÒÔÌîĞ´ NULL
-/// \paran  cap         [out]       ´æ·ÅÈ¡µ½µÄÊı¾İÈİÁ¿£¬Èç¹ûÏûÏ¢»º³åÇø²¢Ã»ÓĞ´æÂú£¬ÄÇÃ´ cap »á´óÓÚ len¡££¬µ±²»ĞèÒªÈ¡µÃ¸ÃĞÅÏ¢Ê±£¬¿ÉÒÔÌîĞ´ NULL
+//  è·å– msg æ¶ˆæ¯çš„æ•°æ®å­˜å‚¨åœ°å€ã€æ•°æ®é•¿åº¦ä»¥åŠå®¹é‡ä¿¡æ¯
+/// \param  inst        [in]        SMQ å®ä¾‹
+/// \param  msg         [in]        æŒ‡å®šè·å–å¯¹è±¡
+/// \param  data        [out]       å­˜æ”¾å–åˆ°çš„æ•°æ®åœ°å€ï¼Œå½“ä¸éœ€è¦å–å¾—è¯¥ä¿¡æ¯æ—¶ï¼Œå¯ä»¥å¡«å†™ NULL
+/// \param  len         [out]       å­˜æ”¾å–åˆ°çš„æ•°æ®é•¿åº¦ï¼Œå½“ä¸éœ€è¦å–å¾—è¯¥ä¿¡æ¯æ—¶ï¼Œå¯ä»¥å¡«å†™ NULL
+/// \paran  cap         [out]       å­˜æ”¾å–åˆ°çš„æ•°æ®å®¹é‡ï¼Œå¦‚æœæ¶ˆæ¯ç¼“å†²åŒºå¹¶æ²¡æœ‰å­˜æ»¡ï¼Œé‚£ä¹ˆ cap ä¼šå¤§äº lenã€‚ï¼Œå½“ä¸éœ€è¦å–å¾—è¯¥ä¿¡æ¯æ—¶ï¼Œå¯ä»¥å¡«å†™ NULL
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap);
 
 
 
 
-/// ĞŞ¶© msg µÄÊı¾İÇøµÄ³¤¶È
+/// ä¿®è®¢ msg çš„æ•°æ®åŒºçš„é•¿åº¦
 ///
-/// \param  inst        [in]        SMQ ÊµÀı
-/// \param  msg         [in]        ±¾º¯Êı²Ù×÷µÄÏûÏ¢¶ÔÏó
-/// \param  len         [in]        ÏûÏ¢Êı¾İ³¤¶È½«Éè¶¨Îª len
-/// \return Èç¹ûÉè¶¨³É¹¦£¬·µ»Ø SMQ_OK£»Èç¹ûÉèÖÃÊ§°Ü£¬·µ»Ø´íÎóÂë
+/// \param  inst        [in]        SMQ å®ä¾‹
+/// \param  msg         [in]        æœ¬å‡½æ•°æ“ä½œçš„æ¶ˆæ¯å¯¹è±¡
+/// \param  len         [in]        æ¶ˆæ¯æ•°æ®é•¿åº¦å°†è®¾å®šä¸º len
+/// \return å¦‚æœè®¾å®šæˆåŠŸï¼Œè¿”å› SMQ_OKï¼›å¦‚æœè®¾ç½®å¤±è´¥ï¼Œè¿”å›é”™è¯¯ç 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg msg, smq_uint32 len);
 
 
 
 
-/// Í¶µİ£¨·¢ËÍ£©Ò»¸öÏûÏ¢
+/// æŠ•é€’ï¼ˆå‘é€ï¼‰ä¸€ä¸ªæ¶ˆæ¯
 ///
-/// \param  inst        [in]        SMQ ÊµÀı
-/// \param  msg         [in]        °Ñ msg ÏûÏ¢Í¶µİµ½ inst ÊµÀıµÄÁíÒ»¶Ë
-/// \return Í¶µİ³É¹¦£¬·µ»Ø SMQ_OK£»Í¶µİÊ§°Ü£¬·µ»Ø´íÎóÂë¡£
+/// \param  inst        [in]        SMQ å®ä¾‹
+/// \param  msg         [in]        æŠŠ msg æ¶ˆæ¯æŠ•é€’åˆ° inst å®ä¾‹çš„å¦ä¸€ç«¯
+/// \return æŠ•é€’æˆåŠŸï¼Œè¿”å› SMQ_OKï¼›æŠ•é€’å¤±è´¥ï¼Œè¿”å›é”™è¯¯ç ã€‚
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg);
 
 
 
 
-/// ½ÓÊÕ·¢ËÍµ½±¾¶ËµÄÏûÏ¢
+/// æ¥æ”¶å‘é€åˆ°æœ¬ç«¯çš„æ¶ˆæ¯
 ///
-/// \param  inst        [in]        SMQ ÊµÀı
-/// \param  timeout     [in]        µÈ´ı³¬Ê±Ê±³¤£¬µ¥Î»ÊÇÎ¢Ãë£¬Èç¹û timeout µÄÖµÎª 0£¬±íÊ¾ÓÀÔ¶²»³¬Ê±£¬³ı·ÇÊÕµ½ÏûÏ¢»òÕßÏµÍ³ÍË³ö
-/// \param  msg         [out]       ½ÓÊÕµ½µÄĞÂÏûÏ¢
-/// \return Èç¹û½ÓÊÕµ½ĞÂÏûÏ¢»òÕßµÈ´ı³¬Ê±£¬¾ù·µ»Ø SMQ_OK£¬µ«µÈ´ıÏûÏ¢³¬Ê±Ê±£¬*msg µÄÖµÎª SMQ_MSG_NULL
-///         Èç¹û½ÓÊÕ¹ı³ÌÖĞÓöµ½´íÎó£¬·µ»Ø´íÎóÂë¡£
+/// \param  inst        [in]        SMQ å®ä¾‹
+/// \param  timeout     [in]        ç­‰å¾…è¶…æ—¶æ—¶é•¿ï¼Œå•ä½æ˜¯å¾®ç§’ï¼Œå¦‚æœ timeout çš„å€¼ä¸º 0ï¼Œè¡¨ç¤ºæ°¸è¿œä¸è¶…æ—¶ï¼Œé™¤éæ”¶åˆ°æ¶ˆæ¯æˆ–è€…ç³»ç»Ÿé€€å‡º
+/// \param  msg         [out]       æ¥æ”¶åˆ°çš„æ–°æ¶ˆæ¯
+/// \return å¦‚æœæ¥æ”¶åˆ°æ–°æ¶ˆæ¯æˆ–è€…ç­‰å¾…è¶…æ—¶ï¼Œå‡è¿”å› SMQ_OKï¼Œä½†ç­‰å¾…æ¶ˆæ¯è¶…æ—¶æ—¶ï¼Œ*msg çš„å€¼ä¸º SMQ_MSG_NULL
+///         å¦‚æœæ¥æ”¶è¿‡ç¨‹ä¸­é‡åˆ°é”™è¯¯ï¼Œè¿”å›é”™è¯¯ç ã€‚
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
 
 
 
 
-/// »ñÈ¡Ò»ÏÂÏûÏ¢¶ÓÁĞÖĞ»¹ÓĞ¶àÉÙÏûÏ¢Î´ÊÕÈ¡
+/// è·å–ä¸€ä¸‹æ¶ˆæ¯é˜Ÿåˆ—ä¸­è¿˜æœ‰å¤šå°‘æ¶ˆæ¯æœªæ”¶å–
 ///
-/// \param  inst        [in]        SMQ ÊµÀı
-/// \param  count       [out]       ´æ·ÅÏûÏ¢ÊıÁ¿µÄÖµ
-/// \return Èç¹û»ñÈ¡³É¹¦£¬·µ»Ø SMQ_OK£¬·ñÔò£¬·µ»ØÊ§°Ü´íÎóÂë¡£
+/// \param  inst        [in]        SMQ å®ä¾‹
+/// \param  count       [out]       å­˜æ”¾æ¶ˆæ¯æ•°é‡çš„å€¼
+/// \return å¦‚æœè·å–æˆåŠŸï¼Œè¿”å› SMQ_OKï¼Œå¦åˆ™ï¼Œè¿”å›å¤±è´¥é”™è¯¯ç ã€‚
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
 
 
 
 
-/// ¶¨ÒåÁËÒ»¸öÊÊÓÃÓÚCÓïÑÔµÄ±àÒëÆÚ¶ÏÑÔºê£¬ÓÃÓÚ¶Ô±àÒë»·¾³½øĞĞÒ»Ğ©»ù±¾µÄ¼ì²é
+/// å®šä¹‰äº†ä¸€ä¸ªé€‚ç”¨äºCè¯­è¨€çš„ç¼–è¯‘æœŸæ–­è¨€å®ï¼Œç”¨äºå¯¹ç¼–è¯‘ç¯å¢ƒè¿›è¡Œä¸€äº›åŸºæœ¬çš„æ£€æŸ¥
 ///@{
 #if defined(__cplusplus)
 #define SMQ_STATIC_ASSERT(expr,message)     static_assert(expr,message)
@@ -415,13 +415,13 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* 
 #else
 #define SMQ_STATIC_ASSERT(expr,message)     ((void)sizeof(char[1 - 2*!!(expr)]))
 #endif
-SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((1 == sizeof(smq_uint8 )), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((4 == sizeof(smq_int32 )), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((2 == sizeof(smq_int16 )), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((1 == sizeof(smq_int8  )), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
-SMQ_STATIC_ASSERT((1 == sizeof(smq_char  )), "¼ì²é±àÒë»·¾³µÄ¹Ø¼üÊı¾İ³¤¶ÈÒ»ÖÂĞÔ");
+SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_uint8 )), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((4 == sizeof(smq_int32 )), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((2 == sizeof(smq_int16 )), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_int8  )), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
+SMQ_STATIC_ASSERT((1 == sizeof(smq_char  )), "æ£€æŸ¥ç¼–è¯‘ç¯å¢ƒçš„å…³é”®æ•°æ®é•¿åº¦ä¸€è‡´æ€§");
 ///@}
 
 

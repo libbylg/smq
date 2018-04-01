@@ -31,7 +31,7 @@ static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_uint32 id, sm
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "¹Ø¼ü²ÎÊıÓÉÍâ²¿±£Ö¤²ÎÊıÕıÈ·ĞÔ");
+    SMQ_ASSERT((NULL != val), "å…³é”®å‚æ•°ç”±å¤–éƒ¨ä¿è¯å‚æ•°æ­£ç¡®æ€§");
 
     if ((key < SMQ_PARAM_KEY_MIN) || (key > SMQ_PARAM_KEY_MAX))
     {
@@ -64,9 +64,9 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_va
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "¹Ø¼ü²ÎÊıÓÉÍâ²¿±£Ö¤²ÎÊıÕıÈ·ĞÔ");
+    SMQ_ASSERT((NULL != val), "å…³é”®å‚æ•°ç”±å¤–éƒ¨ä¿è¯å‚æ•°æ­£ç¡®æ€§");
 
-    //  ÉèÖÃÖ®Ç°ÏÈĞ£ÑéÒ»ÏÂ
+    //  è®¾ç½®ä¹‹å‰å…ˆæ ¡éªŒä¸€ä¸‹
     smq_errno err = smq_param_check(key, val);
     if (err != SMQ_OK)
     {
@@ -74,7 +74,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_va
     }
 
 
-    //  Ö´ĞĞ¾ßÌåµÄÉèÖÃ¹¤×÷
+    //  æ‰§è¡Œå…·ä½“çš„è®¾ç½®å·¥ä½œ
     switch (key)
     {
     case SMQ_PARAM_LOG_LEVEL:
@@ -105,7 +105,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_va
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "¹Ø¼ü²ÎÊıÓÉÍâ²¿±£Ö¤²ÎÊıÕıÈ·ĞÔ");
+    SMQ_ASSERT((NULL != val), "å…³é”®å‚æ•°ç”±å¤–éƒ¨ä¿è¯å‚æ•°æ­£ç¡®æ€§");
 
     if ((key < SMQ_PARAM_KEY_MIN) || (key > SMQ_PARAM_KEY_MAX))
     {

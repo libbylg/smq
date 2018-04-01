@@ -34,7 +34,7 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uin
         level = SMQ_LOG_LEVEL_MAX;
     }
 
-    //  Èç¹ûÈÕÖ¾id³¬³ö·¶Î§£¬Ö±½ÓÊ¹ÓÃÈÕÖ¾SMQ_LOG_LOWER_LIMITµÄÈÕÖ¾idÊä³öÈÕÖ¾£¬
+    //  å¦‚æžœæ—¥å¿—idè¶…å‡ºèŒƒå›´ï¼Œç›´æŽ¥ä½¿ç”¨æ—¥å¿—SMQ_LOG_LOWER_LIMITçš„æ—¥å¿—idè¾“å‡ºæ—¥å¿—ï¼Œ
     smq_log_t* log = NULL;
     if ((id < SMQ_LOG_LOWER_LIMIT) || (id > SMQ_LOG_UPPER_LIMIT))
     {

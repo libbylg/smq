@@ -6,21 +6,21 @@
 
 
 
-#define SMQ_FULL_MAPPING_NAME_LEN_MAX           (256)       ///<    Ó³ÉäÄÚ´æÈ«Ãû×î´ó³¤¶È
+#define SMQ_FULL_MAPPING_NAME_LEN_MAX           (256)       ///<    æ˜ å°„å†…å­˜å…¨åæœ€å¤§é•¿åº¦
 
-#define SMQ_LOG_CACHE_LEN_MAX                   (256)       ///<    ÈÕÖ¾»º³åÇøµÄ´óÐ¡
+#define SMQ_LOG_CACHE_LEN_MAX                   (256)       ///<    æ—¥å¿—ç¼“å†²åŒºçš„å¤§å°
 
 
 
-/// ²ÎÊýµÄkeyµÄ·¶Î§
+/// å‚æ•°çš„keyçš„èŒƒå›´
 ///@{
 #define SMQ_PARAM_KEY_MIN                       (0)
-#define SMQ_PARAM_KEY_MAX                       (9)         ///<    ¿É¿ØÖÆµÄ²ÎÊý²»³¬¹ý10¸ö
+#define SMQ_PARAM_KEY_MAX                       (9)         ///<    å¯æŽ§åˆ¶çš„å‚æ•°ä¸è¶…è¿‡10ä¸ª
 ///@}
 
 
 
-/// ½ÇÉ«
+/// è§’è‰²
 ///@{
 #define SMQ_ROLE_MIN                            (SMQ_ROLE_LEADER)
 #define SMQ_ROLE_MAX                            (SMQ_ROLE_VIEWER)
@@ -30,26 +30,26 @@
 
 
 
-/// ¶¨ÒåÁËÈÕÖ¾¼¶±ðÏà¹ØµÄ¼¸¸ö²ÎÊý
+/// å®šä¹‰äº†æ—¥å¿—çº§åˆ«ç›¸å…³çš„å‡ ä¸ªå‚æ•°
 ///@{
-#define SMQ_LOG_LEVEL_MIN                       (SMQ_LOG_LEVEL_DEBUG)   ///<    ÈÕÖ¾¼¶±ð×îÐ¡Öµ
-#define SMQ_LOG_LEVEL_DEF                       (SMQ_LOG_LEVEL_INFO)    ///<    È±Ê¡µÄÈÕÖ¾¼¶±ð
-#define SMQ_LOG_LEVEL_MAX                       (SMQ_LOG_LEVEL_ERROR)   ///<    ÈÕÖ¾¼¶±ð×î´óÖµ
+#define SMQ_LOG_LEVEL_MIN                       (SMQ_LOG_LEVEL_DEBUG)   ///<    æ—¥å¿—çº§åˆ«æœ€å°å€¼
+#define SMQ_LOG_LEVEL_DEF                       (SMQ_LOG_LEVEL_INFO)    ///<    ç¼ºçœçš„æ—¥å¿—çº§åˆ«
+#define SMQ_LOG_LEVEL_MAX                       (SMQ_LOG_LEVEL_ERROR)   ///<    æ—¥å¿—çº§åˆ«æœ€å¤§å€¼
 ///@}
 
 
 
 
-/// ¶¨ÒåÁËÏµÍ³ËùÄÜÖ§³ÖµÄÄÚ´æ²¼¾Ö°æ±¾µÄ·¶Î§
+/// å®šä¹‰äº†ç³»ç»Ÿæ‰€èƒ½æ”¯æŒçš„å†…å­˜å¸ƒå±€ç‰ˆæœ¬çš„èŒƒå›´
 ///@{
-#define SMQ_SUPPORTED_LAYOUT_VERSION_MIN        (0x0001)    ///<    µ±Ç°ÏµÍ³ËùÄÜÖ§³ÖµÄ×îÐ¡°æ±¾ºÅ
-#define SMQ_SUPPORTED_LAYOUT_VERSION_MAX        (0x0001)    ///<    µ±Ç°ÏµÍ³ËùÄÜÖ§³ÖµÄ×îÐ¡°æ±¾ºÅ
+#define SMQ_SUPPORTED_LAYOUT_VERSION_MIN        (0x0001)    ///<    å½“å‰ç³»ç»Ÿæ‰€èƒ½æ”¯æŒçš„æœ€å°ç‰ˆæœ¬å·
+#define SMQ_SUPPORTED_LAYOUT_VERSION_MAX        (0x0001)    ///<    å½“å‰ç³»ç»Ÿæ‰€èƒ½æ”¯æŒçš„æœ€å°ç‰ˆæœ¬å·
 ///@}
 
 
 
 
-/// ¶¨ÒåÁËµ±µØÓïÑÔÖ§³Ö
+/// å®šä¹‰äº†å½“åœ°è¯­è¨€æ”¯æŒ
 ///@{
 #define SMQ_LOCALE_MIN                          (0)
 #define SMQ_LOCALE_DEF                          (1)
@@ -60,17 +60,17 @@
 
 
 
-/// ¿ØÖÆ¹²ÏíÄÚ´æ¹æ¸ñµÄ¼¸¸öºËÐÄ²ÎÊý
+/// æŽ§åˆ¶å…±äº«å†…å­˜è§„æ ¼çš„å‡ ä¸ªæ ¸å¿ƒå‚æ•°
 ///@{
-#define SMQ_ALLOC_QUEUES_COUNT                  (4)     ///<    ·ÖÅä¶ÓÁÐµÄ¸öÊý
-#define SMQ_MSSGE_QUEUES_COUNT                  (2)     ///<    ÏûÏ¢¶ÓÁÐµÄ¸öÊý
-#define SMQ_MEMORY_BLOCK_SIZE_MAX               (4096)  ///<    ÏûÏ¢¿éµÄ×î´ó´óÐ¡
+#define SMQ_ALLOC_QUEUES_COUNT                  (4)     ///<    åˆ†é…é˜Ÿåˆ—çš„ä¸ªæ•°
+#define SMQ_MSSGE_QUEUES_COUNT                  (2)     ///<    æ¶ˆæ¯é˜Ÿåˆ—çš„ä¸ªæ•°
+#define SMQ_MEMORY_BLOCK_SIZE_MAX               (4096)  ///<    æ¶ˆæ¯å—çš„æœ€å¤§å¤§å°
 ///@}
 
 
 
 
-/// ÏûÏ¢¶ÓÁÐÅäÖÃ²ÎÊý
+/// æ¶ˆæ¯é˜Ÿåˆ—é…ç½®å‚æ•°
 ///@{
 #define SMQ_MESSAGE_QUEUE_SIZE_MIN              (100)
 #define SMQ_MESSAGE_QUEUE_SIZE_DEF              (1000)
@@ -80,7 +80,7 @@
 
 
 
-/// ¶¨ÒåÁË¹²ÏíÄÚ´æ´óÐ¡ÅäÖÃ
+/// å®šä¹‰äº†å…±äº«å†…å­˜å¤§å°é…ç½®
 ///@{
 #define SMQ_MEMORY_SIZE_MIN                     (1)
 #define SMQ_MEMORY_SIZE_DEF                     (32)
@@ -88,7 +88,7 @@
 ///@}
 
 
-/// µ±Ç°ËùÖ§³ÖµÄ×îÐ¡°æ±¾
+/// å½“å‰æ‰€æ”¯æŒçš„æœ€å°ç‰ˆæœ¬
 ///@{
 #define SMQ_VERSION_MIN                         (1)
 #define SMQ_VERSION_MAX                         (1)
@@ -97,7 +97,7 @@
 
 
 
-/// ¶¨ÒåÁË¿ØÖÆ¹²ÏíÄÚ´æ¹Ø¼ü½á¹¹µÄ¼¸¸ö²ÎÊý
+/// å®šä¹‰äº†æŽ§åˆ¶å…±äº«å†…å­˜å…³é”®ç»“æž„çš„å‡ ä¸ªå‚æ•°
 ///@{
 #define SMQ_ALLOC_QUEUES_COUNT                  (4)
 #define SMQ_MSSGE_QUEUES_COUNT                  (2)
@@ -107,7 +107,7 @@
 
 
 
-/// ¶¨ÒåÁË´óÐ¡¶Ë³£Á¿
+/// å®šä¹‰äº†å¤§å°ç«¯å¸¸é‡
 ///@{
 #define SMQ_BYTE_ENDIAN_BIG                     (1)
 #define SMQ_BYTE_ENDIAN_SMALL                   (0)
@@ -116,7 +116,7 @@
 
 
 
-/// ¶¨ÒåÁËÒ»ÖÖÊÊÓÃÓÚCÓïÑÔµÄ¾«¼ò°æÇÒÔ¼ÊøÖÚ¶àµÄÒì³£»úÖÆ
+/// å®šä¹‰äº†ä¸€ç§é€‚ç”¨äºŽCè¯­è¨€çš„ç²¾ç®€ç‰ˆä¸”çº¦æŸä¼—å¤šçš„å¼‚å¸¸æœºåˆ¶
 ///@{
 #define SMQ_TRY(expr)       expr
 #define SMQ_THROW(expr)     expr;       goto    SMQ_EXCEPTION

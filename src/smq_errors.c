@@ -18,7 +18,7 @@ extern  smq_error_t smq_errors[SMQ_ERR_COUNT] =
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 loc, smq_value_t* desc)
 {
-    //  错误码的上下限的值是占位用的
+    //  閿欒鐮佺殑涓婁笅闄愮殑鍊兼槸鍗犱綅鐢ㄧ殑
     if ((err <= SMQ_ERR_LOWER_LIMIT) || (err >= SMQ_ERR_UPPER_LIMIT))
     {
         return  SMQ_ERR_UNDEFINED_ERR;
