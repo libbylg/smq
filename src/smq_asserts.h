@@ -2,7 +2,7 @@
 #define __smq_asserts_H_
 
 
-/// å®šä¹‰äº†é€šç”¨çš„æ–­è¨€å®
+/// ¶¨ÒåÁËÍ¨ÓÃµÄ¶ÏÑÔºê
 #if defined(DEBUG)
 #define SMQ_ASSERT(expr,m)    //assert(expr)
 #else

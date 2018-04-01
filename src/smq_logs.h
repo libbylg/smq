@@ -33,7 +33,7 @@ extern  smq_log_t smq_logs[SMQ_LOG_UPPER_LIMIT - SMQ_LOG_LOWER_LIMIT];
 SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uint32 id, smq_char* format, ...);
 
 
-/// 浣跨敤涓嬮潰杩欑粍瀹忥紝杈撳嚭鏃ュ織鏁堢巼鏇撮珮
+/// 使用下面这组宏，输出日志效率更高
 ///@{
 #define SMQ_ERROR(id,format,...)    if ((SMQ_LOG_LEVEL_ERROR) >= smq_params.log_level) smq_log_writer(smq_params.locale, (SMQ_LOG_LEVEL_ERROR), (id), format, __VA_ARGS__)
 #define SMQ_WARN(id,format,...)     if ((SMQ_LOG_LEVEL_WARN)  >= smq_params.log_level) smq_log_writer(smq_params.locale, (SMQ_LOG_LEVEL_WARN),  (id), format, __VA_ARGS__)

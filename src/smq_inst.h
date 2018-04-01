@@ -8,7 +8,7 @@
 
 
 
-/// è¿™é‡Œå®šä¹‰äº†æ‰€æœ‰çš„å¯é€‰é¡¹
+/// ÕâÀï¶¨ÒåÁËËùÓĞµÄ¿ÉÑ¡Ïî
 ///@{
 #define SMQ_OPTION_BYTE_ENDIAN                  (0x0001)
 ///@}
@@ -18,38 +18,38 @@
 
 #include "smq_alignpush.h"
 #if defined(WIN32) || defined(WIN64)
-#pragma warning(disable:4200)   ///<    VCç¼–è¯‘å™¨ä¼šæŠ¥å‘Šè­¦ï¼šä½¿ç”¨äº†éæ ‡å‡†æ‰©å±• : ç»“æ„/è”åˆä¸­çš„é›¶å¤§å°æ•°ç»„
+#pragma warning(disable:4200)   ///<    VC±àÒëÆ÷»á±¨¸æ¾¯£ºÊ¹ÓÃÁË·Ç±ê×¼À©Õ¹ : ½á¹¹/ÁªºÏÖĞµÄÁã´óĞ¡Êı×é
 #endif
 typedef struct  
 {
-    smq_uint16  check_sum;              ///<    æ•´ä¸ªentryçš„æ ¡éªŒå’Œ
-    smq_uint16  version;                ///<    å…±äº«å†…å­˜å¸ƒå±€ç‰ˆæœ¬å·
+    smq_uint16  check_sum;              ///<    Õû¸öentryµÄĞ£ÑéºÍ
+    smq_uint16  version;                ///<    ¹²ÏíÄÚ´æ²¼¾Ö°æ±¾ºÅ
     
-    smq_uint16  options;                ///<    é€‰é¡¹
-    smq_uint8   alloc_queues_count;     ///<    å¤šå°‘ä¸ªåˆ†é…é˜Ÿåˆ—
-    smq_uint8   mssge_queues_count;     ///<    å¤šå°‘ä¸ªæ¶ˆæ¯é˜Ÿåˆ—
+    smq_uint16  options;                ///<    Ñ¡Ïî
+    smq_uint8   alloc_queues_count;     ///<    ¶àÉÙ¸ö·ÖÅä¶ÓÁĞ
+    smq_uint8   mssge_queues_count;     ///<    ¶àÉÙ¸öÏûÏ¢¶ÓÁĞ
     
-    smq_uint32  mark;                   ///<    æ ‡è®°å­—æ®µï¼Œç”±äºentryçš„å†…å®¹å¾€å¾€æ˜¯ç›¸åŒçš„ï¼ŒåŠ å…¥è¯¥å­—æ®µç”¨äºåŒºåˆ«æ¯æ¬¡é‡æ–°åˆ›å»ºçš„å…±äº«å†…å­˜
-    smq_uint32  heap_len;               ///<    æ•´ä¸ªå †çš„é•¿åº¦
-    smq_uint32  heap_data;              ///<    å †çš„èµ·å§‹åœ°å€ï¼ŒåŒæ—¶ä¹Ÿæ˜¯å…±äº«å†…å­˜å¤´éƒ¨çš„é•¿åº¦
+    smq_uint32  mark;                   ///<    ±ê¼Ç×Ö¶Î£¬ÓÉÓÚentryµÄÄÚÈİÍùÍùÊÇÏàÍ¬µÄ£¬¼ÓÈë¸Ã×Ö¶ÎÓÃÓÚÇø±ğÃ¿´ÎÖØĞÂ´´½¨µÄ¹²ÏíÄÚ´æ
+    smq_uint32  heap_len;               ///<    Õû¸ö¶ÑµÄ³¤¶È
+    smq_uint32  heap_data;              ///<    ¶ÑµÄÆğÊ¼µØÖ·£¬Í¬Ê±Ò²ÊÇ¹²ÏíÄÚ´æÍ·²¿µÄ³¤¶È
 
-    smq_uint8   padding[108];           ///<    å¡«å……å­—æ®µï¼Œç”¨äºè¡¥é½128å­—èŠ‚
+    smq_uint8   padding[108];           ///<    Ìî³ä×Ö¶Î£¬ÓÃÓÚ²¹Æë128×Ö½Ú
 }smq_entry_t;
 
 
 typedef struct  
 {
     smq_uint32  len;
-    smq_char    name[SMQ_FULL_MAPPING_NAME_LEN_MAX];    ///<    å…±äº«å†…å­˜çš„å…¨å
+    smq_char    name[SMQ_FULL_MAPPING_NAME_LEN_MAX];    ///<    ¹²ÏíÄÚ´æµÄÈ«Ãû
 }smq_desc_t;
 
 
 typedef struct  
 {
-    smq_uint32  next;           /// ä¸‹ä¸€ä¸ªå†…å­˜å—
-    smq_uint8   queue_index;    /// å†…å­˜å—å±äºå“ªä¸ªé˜Ÿåˆ—
-    smq_uint8   options;        /// é€‰é¡¹å­—æ®µï¼ˆå½“å‰å¿…é¡»å¡«å†™ä¸º0ï¼‰
-    smq_uint16  data_size;      /// ç”¨æˆ·æ•°æ®å¤§å°
+    smq_uint32  next;           /// ÏÂÒ»¸öÄÚ´æ¿é
+    smq_uint8   queue_index;    /// ÄÚ´æ¿éÊôÓÚÄÄ¸ö¶ÓÁĞ
+    smq_uint8   options;        /// Ñ¡Ïî×Ö¶Î£¨µ±Ç°±ØĞëÌîĞ´Îª0£©
+    smq_uint16  data_size;      /// ÓÃ»§Êı¾İ´óĞ¡
     smq_uint8   data[0];
 }smq_block_t;
 
@@ -70,14 +70,14 @@ typedef struct
     smq_uint32  messages[0];
 }smq_mssge_queue_t;
 #if defined(WIN32) || defined(WIN64)
-#pragma warning(default:4200)   ///<    VCç¼–è¯‘å™¨ä¼šæŠ¥å‘Šè­¦ï¼šä½¿ç”¨äº†éæ ‡å‡†æ‰©å±• : ç»“æ„/è”åˆä¸­çš„é›¶å¤§å°æ•°ç»„
+#pragma warning(default:4200)   ///<    VC±àÒëÆ÷»á±¨¸æ¾¯£ºÊ¹ÓÃÁË·Ç±ê×¼À©Õ¹ : ½á¹¹/ÁªºÏÖĞµÄÁã´óĞ¡Êı×é
 #endif
 #include "smq_alignpop.h"
 
 
 
 
-/// smqå®ä¾‹å¯¹è±¡ï¼Œè¯¥å¯¹è±¡çš„æ‰€æœ‰æˆå‘˜éƒ½æ”¯æŒ0æˆ–è€…NULLä½œä¸ºåˆå§‹å€¼
+/// smqÊµÀı¶ÔÏó£¬¸Ã¶ÔÏóµÄËùÓĞ³ÉÔ±¶¼Ö§³Ö0»òÕßNULL×÷Îª³õÊ¼Öµ
 typedef struct  
 {
     smq_shm_t               shm;

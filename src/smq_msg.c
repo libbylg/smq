@@ -34,7 +34,7 @@ static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 
     smq_msg msg = SMQ_MSG_NULL;
 
-    //  å¦‚æœé˜Ÿåˆ—ä¸ä¸ºï¿½?
+    //  Èç¹û¶ÓÁĞ²»Îª¿Õ
     smq_block_t* last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
     smq_block_t* first = (smq_block_t*)SMQ_ADDRESS_OF(smq, last->next);
     if (last == first)
@@ -57,15 +57,15 @@ static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
 {
     smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
 
-    //  æ‰¾åˆ°æœ¬å—æ‰€å±çš„é˜Ÿåˆ—
+    //  ÕÒµ½±¾¿éËùÊôµÄ¶ÓÁĞ
     smq_alloc_queue_t* queue = (smq_alloc_queue_t*)smq->alloc_queues[cur_block->queue_index];
 
-    //  æ‰¾åˆ°æœ¬é˜Ÿåˆ—çš„æœ€åä¸€ä¸ªå—ï¼Œç„¶åå°†å½“å‰è¦å›æ”¶çš„å—è¿æ¥ä¸Šï¿½?
+    //  ÕÒµ½±¾¶ÓÁĞµÄ×îºóÒ»¸ö¿é£¬È»ºó½«µ±Ç°Òª»ØÊÕµÄ¿éÁ¬½ÓÉÏÈ¥
     smq_block_t* queue_last = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
     cur_block->next  = queue_last->next;
     queue_last->next = msg;
 
-    //  ä¿®æ”¹å½“å‰é˜Ÿåˆ—çš„æœ€åä¸€ä¸ªå—çš„æŒ‡ï¿½?
+    //  ĞŞ¸Äµ±Ç°¶ÓÁĞµÄ×îºóÒ»¸ö¿éµÄÖ¸Õë
     queue->idle_block_last = msg;
     return SMQ_OK;
 }
@@ -73,7 +73,7 @@ static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
 
 
 
-/// æ¨è¿›è¿­ä»£å™¨ï¼Œä½†æ˜¯è¿”å›æ¨è¿›ä¹‹å‰çš„æ¶ˆï¿½?
+/// ÍÆ½øµü´úÆ÷£¬µ«ÊÇ·µ»ØÍÆ½øÖ®Ç°µÄÏûÏ¢
 static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
 {
     smq_msg ret = *itr;
@@ -86,8 +86,8 @@ static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint32 size, smq_msg* msg)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     if (SMQ_ROLE_VIEWER == smq->role)
@@ -98,7 +98,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
     smq_int32 primary_index = smq_alloc_queue_index(smq, size);
     for (smq_int32 i = primary_index; i >= 0; i--)
     {
-        //  å¦‚æœé˜Ÿåˆ—ä¸ºç©º
+        //  Èç¹û¶ÓÁĞÎª¿Õ
         smq_alloc_queue_t* queue = smq->alloc_queues[i];
         smq_msg new_msg = smq_queue_pop_front(smq, queue);
         if (SMQ_MSG_NULL != new_msg)
@@ -110,7 +110,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
 
     for (smq_int32 i = primary_index + 1; i < smq->entry->alloc_queues_count; i++)
     {
-        //  å¦‚æœé˜Ÿåˆ—ä¸ºç©º
+        //  Èç¹û¶ÓÁĞÎª¿Õ
         smq_alloc_queue_t* queue = smq->alloc_queues[i];
         smq_msg new_msg = smq_queue_pop_front(smq, queue);
         if (SMQ_MSG_NULL != new_msg)
@@ -128,8 +128,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_new(smq_inst inst, smq_uint3
 
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg msg)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     if (SMQ_ROLE_VIEWER == smq->role)
@@ -138,22 +138,22 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
         return;
     }
 
-    //  å¦‚æœè¯¥æ¶ˆæ¯æœ‰å­æ¶ˆæ¯ï¼Œé‚£ä¹ˆéœ€è¦å…ˆåˆ é™¤å­æ¶ˆï¿½?
+    //  Èç¹û¸ÃÏûÏ¢ÓĞ×ÓÏûÏ¢£¬ÄÇÃ´ĞèÒªÏÈÉ¾³ı×ÓÏûÏ¢
     smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
     if (SMQ_MSG_NULL != block->next)
     {
-        //  å¦‚æœè¯¥æ¶ˆæ¯æœ‰å­æ¶ˆæ¯ï¼Œé‚£ä¹ˆä»ç¬¬ä¸€ä¸ªæ¶ˆæ¯å¼€å§‹åˆ é™¤å¤šä¸ªæ¶ˆæ¯ï¼šlast->next ä¸ºç¬¬ä¸€ä¸ªå­æ¶ˆæ¯
+        //  Èç¹û¸ÃÏûÏ¢ÓĞ×ÓÏûÏ¢£¬ÄÇÃ´´ÓµÚÒ»¸öÏûÏ¢¿ªÊ¼É¾³ı¶à¸öÏûÏ¢£ºlast->next ÎªµÚÒ»¸ö×ÓÏûÏ¢
         smq_block_t* last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, block->next);
         for (smq_msg pos = last->next; pos != block->next; )
         {
             smq_queue_push_back(smq, smq_itr_advance(smq, &pos));
         }
 
-        //  æ¥ç€åˆ é™¤æœ€åä¸€ä¸ªå­æ¶ˆæ¯
+        //  ½Ó×ÅÉ¾³ı×îºóÒ»¸ö×ÓÏûÏ¢
         smq_queue_push_back(smq, block->next);
     }
 
-    //  æœ€ååˆ ï¿½?msg è‡ªèº«
+    //  ×îºóÉ¾³ı msg ×ÔÉí
     smq_queue_push_back(smq, msg);
 
     return;
@@ -164,9 +164,9 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg msg, smq_msg sub)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != sub),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != sub),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     if (SMQ_ROLE_VIEWER == smq->role)
@@ -177,44 +177,44 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg m
     smq_block_t* msg_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
     smq_block_t* sub_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub);
     
-    //  è¿˜æ²¡æœ‰å­æ¶ˆæ¯
+    //  »¹Ã»ÓĞ×ÓÏûÏ¢
     if (SMQ_MSG_NULL == msg_block->next)
     {
         if (SMQ_MSG_NULL == sub_block->next)
         {
-            msg_block->next = sub;  ///<    å…ˆä¿®æ”¹msgçš„æŒ‡é’ˆï¼šsubå°±æ˜¯æœ€åæ·»åŠ çš„æŒ‡é’ˆ
+            msg_block->next = sub;  ///<    ÏÈĞŞ¸ÄmsgµÄÖ¸Õë£ºsub¾ÍÊÇ×îºóÌí¼ÓµÄÖ¸Õë
 
-            //  æ•´ç†å­æ¶ˆæ¯ç¯
+            //  ÕûÀí×ÓÏûÏ¢»·
             sub_block->next = sub;
         }
         else
         {
-            msg_block->next = sub_block->next;  ///<    å…ˆä¿®æ”¹msgçš„æŒ‡é’ˆï¼šsub_block->next æ˜¯æ–°æ¶ˆæ¯é“¾çš„æœ€åä¸€ä¸ªæ¶ˆï¿½?
+            msg_block->next = sub_block->next;  ///<    ÏÈĞŞ¸ÄmsgµÄÖ¸Õë£ºsub_block->next ÊÇĞÂÏûÏ¢Á´µÄ×îºóÒ»¸öÏûÏ¢
 
-            //  æ•´ç†å­æ¶ˆæ¯ç¯
+            //  ÕûÀí×ÓÏûÏ¢»·
             smq_block_t* sub_last_block  = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub_block->next);
             sub_block->next = sub_last_block->next;
-            sub_last_block->next = sub;     ///<    subè‡ªèº«å°†æˆä¸ºmsgçš„ç¬¬ä¸€ä¸ªæ¶ˆï¿½?
+            sub_last_block->next = sub;     ///<    sub×ÔÉí½«³ÉÎªmsgµÄµÚÒ»¸öÏûÏ¢
         }
         
         return SMQ_OK;
     }
 
-    //  æ‹¼æ¥å­æ¶ˆæ¯ç¯
+    //  Æ´½Ó×ÓÏûÏ¢»·
     smq_block_t* msg_last_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg_block->next);
     if (SMQ_MSG_NULL == sub_block->next)
     {
-        msg_block->next = sub;  ///<    å…ˆä¿®æ”¹msgçš„æŒ‡é’ˆï¼šsubå°±æ˜¯æœ€åæ·»åŠ çš„æŒ‡é’ˆ
+        msg_block->next = sub;  ///<    ÏÈĞŞ¸ÄmsgµÄÖ¸Õë£ºsub¾ÍÊÇ×îºóÌí¼ÓµÄÖ¸Õë
 
-        //  æ•´ç†å­æ¶ˆæ¯ç¯
+        //  ÕûÀí×ÓÏûÏ¢»·
         sub_block->next = msg_last_block->next;
         msg_last_block->next = sub;
     }
     else
     {
-        msg_block->next = sub_block->next;  ///<    å…ˆä¿®æ”¹msgçš„æŒ‡é’ˆï¼šsub_block->next æ˜¯æ–°æ¶ˆæ¯é“¾çš„æœ€åä¸€ä¸ªæ¶ˆï¿½?
+        msg_block->next = sub_block->next;  ///<    ÏÈĞŞ¸ÄmsgµÄÖ¸Õë£ºsub_block->next ÊÇĞÂÏûÏ¢Á´µÄ×îºóÒ»¸öÏûÏ¢
 
-        //  æ•´ç†å­æ¶ˆæ¯ç¯
+        //  ÕûÀí×ÓÏûÏ¢»·
         smq_block_t* sub_last_block  = (smq_block_t*)SMQ_ADDRESS_OF(inst, sub_block->next);
         sub_block->next = sub_last_block->next;
         sub_last_block->next = msg_last_block->next;
@@ -228,21 +228,21 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg m
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg msg, smq_msg* next)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((NULL          != next), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((NULL          != next), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
 
-    //  å¦‚æœmsgæ²¡æœ‰å­å…ƒç´ æˆ–è€…å·²ç»åˆ°è¾¾æ¶ˆæ¯é“¾çš„å°¾éƒ¨ï¼ˆæ³¨æ„è¿™ä¸¤ä¸ªæ¡ä»¶çš„åˆ¤æ–­æ–¹å¼æ˜¯ä¸€æ¨¡ä¸€æ ·çš„ï¿½?
+    //  Èç¹ûmsgÃ»ÓĞ×ÓÔªËØ»òÕßÒÑ¾­µ½´ïÏûÏ¢Á´µÄÎ²²¿£¨×¢ÒâÕâÁ½¸öÌõ¼şµÄÅĞ¶Ï·½Ê½ÊÇÒ»Ä£Ò»ÑùµÄ£©
     if (cur_block->next == *next)
     {
         *next = SMQ_MSG_NULL;
         return  SMQ_OK;
     }
 
-    //  å¦‚æœæ˜¯ç¬¬ä¸€æ¬¡è¿­ï¿½?
+    //  Èç¹ûÊÇµÚÒ»´Îµü´ú
     smq_block_t* last = (smq_block_t*)(SMQ_ADDRESS_OF(inst, cur_block->next));
     if (SMQ_MSG_NULL == *next)
     {
@@ -259,8 +259,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg 
 
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg msg, smq_void** data, smq_uint32* len, smq_uint32* cap)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
@@ -284,7 +284,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
         count++;
     }
 
-    SMQ_ASSERT((count > 0), "dataã€lenã€cap ä¸‰ä¸ªå‚æ•°å‡ä¸º NULLï¼Œè¿™ç§ç”¨æ³•æ˜¯é”™è¯¯çš„ï¼Œé€šå¸¸å¯èƒ½æ˜¯ä»£ç å­˜åœ¨ä»€ï¿½?bug");
+    SMQ_ASSERT((count > 0), "data¡¢len¡¢cap Èı¸ö²ÎÊı¾ùÎª NULL£¬ÕâÖÖÓÃ·¨ÊÇ´íÎóµÄ£¬Í¨³£¿ÉÄÜÊÇ´úÂë´æÔÚÊ²Ã´ bug");
 
     return;
 }
@@ -294,8 +294,8 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg msg, smq_uint32 len)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
     if (SMQ_ROLE_VIEWER == smq->role)
@@ -318,8 +318,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
 {
-    SMQ_ASSERT((SMQ_INST_NULL != inst), "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "å…³é”®è¾“å…¥å‚æ•°ï¼Œç”±å¤–éƒ¨ä¿è¯æœ‰æ•ˆï¿½?);
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "¹Ø¼üÊäÈë²ÎÊı£¬ÓÉÍâ²¿±£Ö¤ÓĞĞ§ĞÔ");
 
     smq_t* smq = (smq_t*)inst;
 
