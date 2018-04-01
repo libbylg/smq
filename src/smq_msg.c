@@ -1,4 +1,3 @@
-#include "smq_msg.h"
 #include "smq_os.h"
 #include "smq_libc.h"
 #include "smq_asserts.h"

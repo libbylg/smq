@@ -10,9 +10,6 @@
     <ClCompile Include="src\smq_inst.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\smq_libc.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\smq_logs.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="src\os\win.msvc\os.c.inc">
       <Filter>src\os\win.msvc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_msg.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\smq_inst.h">
       <Filter>src</Filter>

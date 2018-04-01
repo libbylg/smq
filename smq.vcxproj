@@ -27,13 +27,11 @@
     </ClInclude>
     <ClCompile Include="src\smq_errors.c" />
     <ClCompile Include="src\smq_inst.c" />
-    <ClCompile Include="src\smq_libc.c" />
     <ClCompile Include="src\smq_logs.c" />
     <ClCompile Include="src\smq_os.c" />
     <ClCompile Include="src\smq_params.c" />
     <ClInclude Include="src\smq_alignpop.h" />
     <ClInclude Include="src\smq_alignpush.h" />
-    <ClInclude Include="src\smq_msg.h" />
     <ClInclude Include="src\smq_utils.h" />
   </ItemGroup>
   <ItemGroup>
