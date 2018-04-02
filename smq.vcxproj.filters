@@ -1,98 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\jni\smq_jni.c">
-      <Filter>src\jni</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_errors.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_inst.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_logs.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_os.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_params.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_utils.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\smq_msg.c">
-      <Filter>src</Filter>
+    <ClCompile Include="smq_errors.c" />
+    <ClCompile Include="smq_inst.c" />
+    <ClCompile Include="smq_logs.c" />
+    <ClCompile Include="smq_msg.c" />
+    <ClCompile Include="smq_os.c" />
+    <ClCompile Include="smq_params.c" />
+    <ClCompile Include="smq_utils.c" />
+    <ClCompile Include="jni\smq_jni.c">
+      <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\smq.h">
-      <Filter>src</Filter>
+    <ClInclude Include="smq.h" />
+    <ClInclude Include="smq_alignpop.h" />
+    <ClInclude Include="smq_alignpush.h" />
+    <ClInclude Include="smq_asserts.h" />
+    <ClInclude Include="smq_errors.h" />
+    <ClInclude Include="smq_inst.h" />
+    <ClInclude Include="smq_libc.h" />
+    <ClInclude Include="smq_limit.h" />
+    <ClInclude Include="smq_logs.h" />
+    <ClInclude Include="smq_os.h" />
+    <ClInclude Include="smq_params.h" />
+    <ClInclude Include="smq_res.h" />
+    <ClInclude Include="smq_utils.h" />
+    <ClInclude Include="jni\smq_jni.h">
+      <Filter>jni</Filter>
     </ClInclude>
-    <ClInclude Include="src\jni\smq_jni.h">
-      <Filter>src\jni</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_res.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_asserts.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_errors.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_libc.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_limit.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_logs.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_os.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_params.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\os\win.msvc\os.h">
-      <Filter>src\os\win.msvc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_utils.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_alignpop.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_alignpush.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\os\win.msvc\os.c.inc">
-      <Filter>src\os\win.msvc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\smq_inst.h">
-      <Filter>src</Filter>
+    <ClInclude Include="os\win.msvc\os.h">
+      <Filter>os\win.msvc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{d18d0d47-3b5d-41bb-9b39-7e332e2c800b}</UniqueIdentifier>
+    <Filter Include="os">
+      <UniqueIdentifier>{f31cc04c-7d16-4196-9b9e-0ea1a6bfc7b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\os">
-      <UniqueIdentifier>{ec03f453-5c73-48aa-a56c-8aed75b0687f}</UniqueIdentifier>
+    <Filter Include="jni">
+      <UniqueIdentifier>{0930b6b5-b827-4fa9-aca8-e2c6dfc32e07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\os\win.msvc">
-      <UniqueIdentifier>{05f6156c-768d-46eb-8fce-258cb7dba551}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\jni">
-      <UniqueIdentifier>{1d7c0198-af45-4f9c-8ec3-ddafaeff3579}</UniqueIdentifier>
+    <Filter Include="os\win.msvc">
+      <UniqueIdentifier>{40d1313a-680e-4aec-a606-fd3e85b9bba2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\os\win.msvc\smq.def">
-      <Filter>src\os\win.msvc</Filter>
+    <None Include="os\win.msvc\os.c.inc">
+      <Filter>os\win.msvc</Filter>
     </None>
   </ItemGroup>
 </Project>
