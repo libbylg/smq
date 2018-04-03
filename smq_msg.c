@@ -318,9 +318,39 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
+
+
+
+    smq_mssge_queue_t* queue = SMQ_NULL;
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:   queue = smq->mssge_queues[SMQ_ROLE_FOLLOWER];   break;
+    case SMQ_ROLE_FOLLOWER: queue = smq->mssge_queues[SMQ_ROLE_LEADER];     break;
+    case SMQ_ROLE_VIEWER:   return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_POST;
+    default:                return SMQ_ERR_UNSUPORTED_ROLE_2;
+    }
+
+    register volatile smq_uint32 r = queue->index_reader;
+    register volatile smq_uint32 w = queue->index_reader;
+
+    if (w < r)
+    {
+        if ((w + 1) == r)
+        {
+            return SMQ_ERR_MSSGE_QUEUE_FULL;
+        }
+    }
+    else
+    if (w > r)
+    {
+        if (((w + 1) % queue->size) == r)
+        {
+            return SMQ_ERR_MSSGE_QUEUE_FULL;
+        }
+    }
 
     return SMQ_OK;
 }
@@ -330,6 +360,35 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg)
 {
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
+
+    smq_t* smq = (smq_t*)inst;
+
+    if (SMQ_ROLE_VIEWER == smq->role)
+    {
+        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WAIT;
+    }
+
+    smq_mssge_queue_t* queue = smq->mssge_queues[smq->role];
+    register volatile smq_uint32 r = queue->index_reader;
+    register volatile smq_uint32 w = queue->index_reader;
+
+    //  如果队列空
+    if (r == w)
+    {
+        //  下面开始等待
+    }
+
+    //  计算下一个消息的位置
+    smq_uint32 msg_index = ((r + 1) + queue->size) % queue->size;
+
+    //  取出消息
+    *msg = queue->messages[msg_index];
+
+    //  修改reader
+    queue->index_reader = msg_index;
+
     return SMQ_OK;
 }
 
