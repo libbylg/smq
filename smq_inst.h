@@ -69,6 +69,8 @@ typedef struct
     smq_uint32  index_writer;   //< index_writer指向的数据还未写
     smq_uint32  messages[0];
 }smq_mssge_queue_t;
+#define SMQ_QUEUE_FULL(size,r,w)    (((w)<(r))?(((w) + 1) == (r)):((r)==0)&&((w)==((size)-1)))
+#define SMQ_QUEUE_EMPTY(size,r,w)   ((r)==(w))
 #if defined(WIN32) || defined(WIN64)
 #pragma warning(default:4200)   ///<    VC编译器会报告警：使用了非标准扩展 : 结构/联合中的零大小数组
 #endif

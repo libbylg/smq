@@ -315,14 +315,12 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-
-
 
     smq_mssge_queue_t* queue = SMQ_NULL;
     switch (smq->role)
@@ -333,24 +331,20 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
     default:                return SMQ_ERR_UNSUPORTED_ROLE_2;
     }
 
-    register volatile smq_uint32 r = queue->index_reader;
-    register volatile smq_uint32 w = queue->index_reader;
+    register volatile smq_uint32 r    = queue->index_reader;
+    register volatile smq_uint32 w    = queue->index_writer;
+    register volatile smq_uint32 size = queue->size; 
 
-    if (w < r)
+
+    //  消息队列已满
+    if (SMQ_QUEUE_FULL(size, r, w))
     {
-        if ((w + 1) == r)
-        {
-            return SMQ_ERR_MSSGE_QUEUE_FULL;
-        }
+        return SMQ_ERR_MSSGE_QUEUE_FULL;
     }
-    else
-    if (w > r)
-    {
-        if (((w + 1) % queue->size) == r)
-        {
-            return SMQ_ERR_MSSGE_QUEUE_FULL;
-        }
-    }
+
+    //  将消息写入队列，并移动写点
+    queue->messages[w]  = msg;
+    queue->index_writer = ((w + 1) % size);
 
     return SMQ_OK;
 }
@@ -358,7 +352,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
@@ -372,22 +366,18 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 ti
 
     smq_mssge_queue_t* queue = smq->mssge_queues[smq->role];
     register volatile smq_uint32 r = queue->index_reader;
-    register volatile smq_uint32 w = queue->index_reader;
+    register volatile smq_uint32 w = queue->index_writer;
+    register volatile smq_uint32 size = queue->size; 
 
     //  如果队列空
-    if (r == w)
+    if (SMQ_QUEUE_EMPTY(size, r, w))
     {
         //  下面开始等待
     }
 
-    //  计算下一个消息的位置
-    smq_uint32 msg_index = ((r + 1) + queue->size) % queue->size;
-
-    //  取出消息
-    *msg = queue->messages[msg_index];
-
-    //  修改reader
-    queue->index_reader = msg_index;
+    //  取出消息，修改reader
+    *msg = queue->messages[r];
+    queue->index_reader = ((r + 1) % size);
 
     return SMQ_OK;
 }
@@ -395,10 +385,37 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 ti
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint32* count)
 {
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((NULL != count),  "关键输入参数，由外部保证有效性");
+
+    smq_t* smq = (smq_t*)inst;
+
+    smq_mssge_queue_t* queue = smq->mssge_queues[smq->role];
+
+    register volatile smq_uint32 r    = queue->index_reader;
+    register volatile smq_uint32 w    = queue->index_writer;
+    register volatile smq_uint32 size = queue->size; 
+
+    *count = (size + (w - r)) % size;
+
     return SMQ_OK;
 }
 
+
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_write(smq_inst inst, smq_msg msg, smq_void* data, smq_uint32 len)
+{
+
+}
+
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg msg, smq_msg* itr, smq_void** data, smq_uint32* len)
+{
+
+}
 
 

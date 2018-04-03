@@ -208,6 +208,8 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id
 typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
 
 
+typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 flag, smq_int32 action, smq_uint32 node, smq_uint32 data_type, smq_void* data, smq_uint32 len);
+
 
 
 /// 读取由 key 指定的全局参数的值
@@ -286,6 +288,11 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint3
 /// \param  context     [in]    Dump 上下文，该参数最终传递给回调函数 f，作为其的 context 参数
 /// \param  f           [in]    Dump 回调函数，该函数会被调用多次，每次调用其输入参数均不相同，参见 #SMQ_DUMPER_FUNC 的说明
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f);
+
+
+
+/// Dump 数据解析器
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_parse(smq_inst inst, smq_msg msg, smq_void* context, SMQ_PARSER_FUNC f);
 
 
 
@@ -379,7 +386,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
 /// \param  inst        [in]        SMQ 实例
 /// \param  msg         [in]        把 msg 消息投递到 inst 实例的另一端
 /// \return 投递成功，返回 SMQ_OK；投递失败，返回错误码。
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg msg);
 
 
 
@@ -391,7 +398,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_post(smq_inst inst, smq_msg msg)
 /// \param  msg         [out]       接收到的新消息
 /// \return 如果接收到新消息或者等待超时，均返回 SMQ_OK，但等待消息超时时，*msg 的值为 SMQ_MSG_NULL
 ///         如果接收过程中遇到错误，返回错误码。
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg);
 
 
 
@@ -401,8 +408,13 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_wait(smq_inst inst, smq_int32 ti
 /// \param  inst        [in]        SMQ 实例
 /// \param  count       [out]       存放消息数量的值
 /// \return 如果获取成功，返回 SMQ_OK，否则，返回失败错误码。
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_peek(smq_inst inst, smq_uint32* count);
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint32* count);
 
+
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_write(smq_inst inst, smq_msg msg, smq_void* data, smq_uint32 len);
+
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg msg, smq_msg* itr, smq_void** data, smq_uint32* len);
 
 
 
