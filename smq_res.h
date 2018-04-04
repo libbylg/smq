@@ -23,9 +23,9 @@ SMQ_ERR(SMQ_ERR_NO_ENOUGH_SHARE_MEMORY,             219,    "共享内存不足",     
 SMQ_ERR(SMQ_ERR_UNSUPORTED_ROLE,                    220,    "不支持的角色",                                 "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WAIT,   221,    "只读实例不支持执行 smq_msg_wait 操作",          "")
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_POST,   222,    "只读实例不支持执行 smq_msg_post 操作",          "")
-SMQ_ERR(SMQ_ERR_UNSUPORTED_ROLE_2,                  223,    "不支持的角色",                                 "")
+SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_PEEK,   223,    "只读实例不支持执行 smq_msg_peek 操作",          "")
 SMQ_ERR(SMQ_ERR_MSSGE_QUEUE_FULL,                   224,    "消息队列已满",                                 "")
-
+SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WRITE,  225,    "只读实例不支持执行 smq_msg_write 操作",         "")
 
 
 

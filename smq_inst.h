@@ -65,7 +65,7 @@ typedef struct
 typedef struct
 {
     smq_uint32  size;
-    smq_uint32  index_reader;   //< index_reader指向的数据还未读
+    smq_uint32  index_reader;   //< index_reader指向的数据已读取
     smq_uint32  index_writer;   //< index_writer指向的数据还未写
     smq_uint32  messages[0];
 }smq_mssge_queue_t;

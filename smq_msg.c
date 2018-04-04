@@ -313,7 +313,27 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
     return  SMQ_OK;
 }
 
+static smq_mssge_queue_t* smq_write_queue(smq_t* smq)
+{
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:   return smq->mssge_queues[SMQ_ROLE_FOLLOWER];
+    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[SMQ_ROLE_LEADER];
+    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
+    default:                return SMQ_NULL;
+    }
+}
 
+static smq_mssge_queue_t* smq_read_queue(smq_t* smq)
+{
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:   return smq->mssge_queues[smq->role];
+    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[smq->role];
+    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
+    default:                return SMQ_NULL;
+    }
+}
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg msg)
 {
@@ -322,13 +342,10 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg 
 
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = SMQ_NULL;
-    switch (smq->role)
+    smq_mssge_queue_t* queue = smq_write_queue(smq);
+    if (SMQ_NULL == queue)
     {
-    case SMQ_ROLE_LEADER:   queue = smq->mssge_queues[SMQ_ROLE_FOLLOWER];   break;
-    case SMQ_ROLE_FOLLOWER: queue = smq->mssge_queues[SMQ_ROLE_LEADER];     break;
-    case SMQ_ROLE_VIEWER:   return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_POST;
-    default:                return SMQ_ERR_UNSUPORTED_ROLE_2;
+        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_POST;
     }
 
     register volatile smq_uint32 r    = queue->index_reader;
@@ -359,7 +376,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int3
 
     smq_t* smq = (smq_t*)inst;
 
-    if (SMQ_ROLE_VIEWER == smq->role)
+    smq_mssge_queue_t* queue = smq_read_queue(smq);
+    if (SMQ_NULL == queue)
     {
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WAIT;
     }
@@ -392,7 +410,12 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint
 
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = smq->mssge_queues[smq->role];
+    smq_mssge_queue_t* queue = smq_read_queue(smq);
+    if (SMQ_NULL == queue)
+    {
+        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_PEEK;
+    }
+
 
     register volatile smq_uint32 r    = queue->index_reader;
     register volatile smq_uint32 w    = queue->index_writer;
@@ -408,6 +431,41 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_write(smq_inst inst, smq_msg msg, smq_void* data, smq_uint32 len)
 {
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != data), "关键输入参数，由外部保证有效性");
+
+    //  特殊情况直接处理掉
+    if (0 == len)
+    {
+        return SMQ_OK;
+    }
+
+    smq_t* smq = (smq_t*)inst;
+
+    smq_mssge_queue_t* queue = smq_write_queue(smq);
+    if (SMQ_NULL == queue)
+    {
+        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WRITE;
+    }
+
+    smq_block_t* root = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
+    smq_block_t* target = SMQ_NULL;
+
+    if (SMQ_MSG_NULL != root->next)
+    {
+        target = (smq_block_t*)SMQ_ADDRESS_OF(smq, root->next);
+    }
+
+
+    smq_char* cache = SMQ_NULL;
+    smq_uint32 len  = 0;
+    smq_uint32 cap  = 0;
+    smq_msg_data(inst, msg, (smq_void**)&cache, &len, &cap);
+    smq_uint32 cache_remain_len = (smq_uint32)(cap - len);
+
+
+
 
 }
 
