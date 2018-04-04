@@ -48,5 +48,8 @@
     <None Include="os\win.msvc\os.c.inc">
       <Filter>os\win.msvc</Filter>
     </None>
+    <None Include="os\win.msvc\smq.def">
+      <Filter>os\win.msvc</Filter>
+    </None>
   </ItemGroup>
 </Project>

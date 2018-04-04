@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="os\win.msvc\os.c.inc" />
+    <None Include="os\win.msvc\smq.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C21416C5-5793-4AF9-B839-99A10CBB1E18}</ProjectGuid>

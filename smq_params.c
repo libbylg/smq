@@ -31,7 +31,7 @@ static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_uint32 id, sm
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "关键参数由外部保证参数正确性");
+    SMQ_ASSERT((SMQ_NULL != val), "关键参数由外部保证参数正确性");
 
     if ((key < SMQ_PARAM_KEY_MIN) || (key > SMQ_PARAM_KEY_MAX))
     {
@@ -64,7 +64,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_get(smq_uint32 key, smq_va
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "关键参数由外部保证参数正确性");
+    SMQ_ASSERT((SMQ_NULL != val), "关键参数由外部保证参数正确性");
 
     //  设置之前先校验一下
     smq_errno err = smq_param_check(key, val);
@@ -105,7 +105,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_set(smq_uint32 key, smq_va
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_value_t* val)
 {
-    SMQ_ASSERT((NULL != val), "关键参数由外部保证参数正确性");
+    SMQ_ASSERT((SMQ_NULL != val), "关键参数由外部保证参数正确性");
 
     if ((key < SMQ_PARAM_KEY_MIN) || (key > SMQ_PARAM_KEY_MAX))
     {
@@ -139,7 +139,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_
         }
         return  SMQ_OK;
     case SMQ_PARAM_LOG_TARGET:
-        if (NULL == val->value_ptrs[1])
+        if (SMQ_NULL == val->value_ptrs[1])
         {
             return  SMQ_ERR_LOG_FUNCTION_NULL;
         }

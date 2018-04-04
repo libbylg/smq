@@ -106,12 +106,14 @@ static smq_void smq_layout_init(smq_t* smq)
     smq_memcpy(smq->desc->name, smq->shm.full_name, smq_strlen(smq->shm.full_name) + 1);
 
     //  初始化分配队列
+    smq->alloc_queues = (smq_alloc_queue_t**)smq_malloc(sizeof(smq_alloc_queue_t*) * smq->entry->alloc_queues_count);
     for (smq_uint32 i = 0; i < smq->entry->alloc_queues_count; i++)
     {
         smq->alloc_queues[i]     =  (smq_alloc_queue_t*)smq_cut(&pos, sizeof(smq_alloc_queue_t));
     }
 
     //  初始化消息队列
+    smq->mssge_queues = (smq_mssge_queue_t**)smq_malloc(sizeof(smq_mssge_queue_t*) * smq->entry->mssge_queues_count);
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
         smq_uint32 message_queue_size = sizeof(smq_mssge_queue_t) + sizeof(smq_uint32) * smq_params.queue_size;
@@ -123,9 +125,9 @@ static smq_void smq_layout_init(smq_t* smq)
 
     //  重新定位heap_data，重新统一到4096字节的边界
     smq->entry->heap_data   =   SMQ_OFFSETS_OF(smq, pos);
-    if (0 != (smq->entry->heap_data % 4096))
+    if (0 != (smq->entry->heap_data % SMQ_MEMORY_BLOCK_SIZE_MAX))
     {
-        smq->entry->heap_data   =   4096 * ((smq->entry->heap_data / 4096) + 1);
+        smq->entry->heap_data   =   SMQ_MEMORY_BLOCK_SIZE_MAX * ((smq->entry->heap_data / SMQ_MEMORY_BLOCK_SIZE_MAX) + 1);
         smq->heap_data          =   SMQ_ADDRESS_OF(smq, smq->entry->heap_data);
     }
 
@@ -134,23 +136,6 @@ static smq_void smq_layout_init(smq_t* smq)
 
     //  下面开始对共享内存进行存储划分
     smq_layout_alloc_queues_init(smq);
-
-    //  根据角色的不同，确定收发队列为哪个
-    switch (smq->role)
-    {
-    case SMQ_ROLE_LEADER:
-        smq->recv_queue = smq->mssge_queues[0];
-        smq->send_queue = smq->mssge_queues[1];
-        break;
-    case SMQ_ROLE_FOLLOWER:
-        smq->recv_queue = smq->mssge_queues[1];
-        smq->send_queue = smq->mssge_queues[0];
-        break;
-    default:
-        smq->recv_queue = NULL;
-        smq->send_queue = NULL;
-        break;
-    }
 }
 
 
@@ -183,6 +168,23 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
         smq_layout_init(smq);
     }
 
+    //  初始化 recv/send 队列
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:
+        smq->recv_queue = smq->mssge_queues[0];
+        smq->send_queue = smq->mssge_queues[1];
+        break;
+    case SMQ_ROLE_FOLLOWER:
+        smq->recv_queue = smq->mssge_queues[1];
+        smq->send_queue = smq->mssge_queues[0];
+        break;
+    default:
+        smq->recv_queue = SMQ_NULL;
+        smq->send_queue = SMQ_NULL;
+        break;
+    }
+
     //  初始化完成执行解锁操作
     err = smq_proc_mutex_unlock(&mutex);
     if (SMQ_OK != err)
@@ -201,8 +203,8 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst)
 {
-    SMQ_ASSERT((NULL != name), "名字不能为空");
-    SMQ_ASSERT((NULL != inst), "inst 不能为空");
+    SMQ_ASSERT((SMQ_NULL != name), "名字不能为空");
+    SMQ_ASSERT((SMQ_NULL != inst), "inst 不能为空");
 
     if ((role < SMQ_ROLE_MIN) || (role > SMQ_ROLE_MAX))
     {
@@ -212,7 +214,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
     //  创建smq实例
     smq_t* smq = (smq_t*)malloc(sizeof(smq_t));
-    if (NULL == smq)
+    if (SMQ_NULL == smq)
     {
         return SMQ_ERR_MALLOC_FAILED;
     }
@@ -236,12 +238,12 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     {
         smq_shm_close(&(smq->shm));
 
-        if (NULL == smq->alloc_queues)
+        if (SMQ_NULL == smq->alloc_queues)
         {
             smq_free(smq->alloc_queues);
         }
 
-        if (NULL == smq->mssge_queues)
+        if (SMQ_NULL == smq->mssge_queues)
         {
             smq_free(smq->mssge_queues);
         }
@@ -260,7 +262,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
 SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
 {
-    if (NULL == inst)
+    if (SMQ_NULL == inst)
     {
         return;
     }
@@ -268,12 +270,12 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
     smq_t* smq = (smq_t*)inst;
     smq_shm_close(&(smq->shm));
 
-    if (NULL != smq->alloc_queues)
+    if (SMQ_NULL != smq->alloc_queues)
     {
         smq_free(smq->alloc_queues);
     }
 
-    if (NULL != smq->mssge_queues)
+    if (SMQ_NULL != smq->mssge_queues)
     {
         smq_free(smq->mssge_queues);
     }
@@ -286,8 +288,8 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_close(smq_inst inst)
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint32* ver)
 {
-    SMQ_ASSERT((NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL != ver), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != ver), "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
 
@@ -301,14 +303,14 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_version(smq_inst inst, smq_uint3
 
 SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 range, smq_void* context, SMQ_DUMPER_FUNC f)
 {
-    SMQ_ASSERT((NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL != f),    "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != f),    "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
 
     //  dump开始
     smq_uint32 flag = 0;
-    if (0 != (*f)(context, flag++, NULL, 0))
+    if (0 != (*f)(context, flag++, SMQ_NULL, 0))
     {
         return;
     }
@@ -332,7 +334,7 @@ SMQ_EXTERN  SMQ_API smq_void   SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 ra
     }
 
     //  dump结束
-    if (0 != (*f)(context, (smq_uint32)(~0), NULL, 0))
+    if (0 != (*f)(context, (smq_uint32)(~0), SMQ_NULL, 0))
     {
         return;
     }

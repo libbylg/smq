@@ -161,7 +161,7 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_del(smq_inst inst, smq_msg m
 
 
 
-SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_cat(smq_inst inst, smq_msg msg, smq_msg sub)
+SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_merge(smq_inst inst, smq_msg msg, smq_msg sub)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
@@ -229,27 +229,43 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_next(smq_inst inst, smq_msg 
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL          != next), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != next), "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
-    smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
+    smq_block_t* root = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
 
-    //  如果msg没有子元素或者已经到达消息链的尾部（注意这两个条件的判断方式是一模一样的）
-    if (cur_block->next == *next)
-    {
-        *next = SMQ_MSG_NULL;
-        return  SMQ_OK;
-    }
-
-    //  如果是第一次迭代
-    smq_block_t* last = (smq_block_t*)(SMQ_ADDRESS_OF(inst, cur_block->next));
+    //  如果已经达到最后一个消息
     if (SMQ_MSG_NULL == *next)
     {
-        *next = last->next;
-        return  SMQ_OK;
+        return SMQ_ERR_END_OF_MSG_NO_NEXT;
     }
-   
-    *next = cur_block->next;
+
+    //  如果找最后一个消息的下一个消息
+    if (root->next == *next)
+    {
+        *next = SMQ_MSG_NULL;
+        return SMQ_OK;
+    }
+
+    //  如果next指向msg，意味着用户实际想获取msg的第一个子消息
+    if (msg == *next)
+    {
+        //  如果没有子消息
+        if (SMQ_MSG_NULL == root->next)
+        {
+            *next = SMQ_MSG_NULL;
+            return SMQ_OK;
+        }
+
+        smq_block_t* last = (smq_block_t*)SMQ_ADDRESS_OF(inst, root->next);
+
+        //  找第一个子块
+        *next = last->next;
+        return SMQ_OK;
+    }
+
+    smq_block_t* cur = (smq_block_t*)SMQ_ADDRESS_OF(inst, *next);
+    *next = cur->next;
     return  SMQ_OK;
 }
 
@@ -265,25 +281,25 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_msg_data(smq_inst inst, smq_msg 
     smq_block_t* block = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
 
     smq_uint32 count = 0;
-    if (NULL != data)
+    if (SMQ_NULL != data)
     {
         *data = block->data;
         count++;
     }
     
-    if (NULL != len)
+    if (SMQ_NULL != len)
     {
         *len  = block->data_size;
         count++;
     }
     
-    if (NULL != cap)
+    if (SMQ_NULL != cap)
     {
         *cap  = smq->alloc_queues[block->queue_index]->block_size - sizeof(smq_block_t);
         count++;
     }
 
-    SMQ_ASSERT((count > 0), "data、len、cap 三个参数均为 NULL，这种用法是错误的，通常可能是代码存在什么 bug");
+    SMQ_ASSERT((count > 0), "data、len、cap 三个参数均为 SMQ_NULL，这种用法是错误的，通常可能是代码存在什么 bug");
 
     return;
 }
@@ -338,7 +354,7 @@ static smq_mssge_queue_t* smq_read_queue(smq_t* smq)
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
 
@@ -372,7 +388,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int32 timeout, smq_msg* msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL != msg),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != msg),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
 
@@ -382,7 +398,6 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int3
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WAIT;
     }
 
-    smq_mssge_queue_t* queue = smq->mssge_queues[smq->role];
     register volatile smq_uint32 r = queue->index_reader;
     register volatile smq_uint32 w = queue->index_writer;
     register volatile smq_uint32 size = queue->size; 
@@ -406,7 +421,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int3
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint32* count)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
-    SMQ_ASSERT((NULL != count),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != count),  "关键输入参数，由外部保证有效性");
 
     smq_t* smq = (smq_t*)inst;
 
@@ -427,6 +442,20 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint
 }
 
 
+static smq_void   SMQ_CALL    smq_msg_fill(smq_t* smq, smq_msg msg, smq_uint8** data, smq_uint32* len)
+{
+    smq_uint8* filled     = SMQ_NULL;
+    smq_uint32 filled_len = 0;
+    smq_uint32 cap  = 0;
+    smq_msg_data(smq, msg, (smq_void**)&filled, &filled_len, &cap);
+    smq_uint32 cache_remain_len = (smq_uint32)(cap - filled_len);
+
+    smq_uint32 copy_len = (cache_remain_len > *len)?*len:cache_remain_len;
+    smq_memcpy(filled + cache_remain_len, *data, copy_len);
+
+    data += copy_len;
+    *len -= copy_len;
+}
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_write(smq_inst inst, smq_msg msg, smq_void* data, smq_uint32 len)
@@ -435,45 +464,82 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_write(smq_inst inst, smq_msg
     SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_NULL      != data), "关键输入参数，由外部保证有效性");
 
-    //  特殊情况直接处理掉
-    if (0 == len)
-    {
-        return SMQ_OK;
-    }
-
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = smq_write_queue(smq);
-    if (SMQ_NULL == queue)
-    {
-        return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WRITE;
-    }
-
     smq_block_t* root = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
-    smq_block_t* target = SMQ_NULL;
-
+    smq_msg target = msg;
     if (SMQ_MSG_NULL != root->next)
     {
-        target = (smq_block_t*)SMQ_ADDRESS_OF(smq, root->next);
+        target = root->next;    //  最后一个内存块
     }
 
+    //  先填充最后一块
+    smq_msg_fill(smq, target, (smq_uint8**)&data, &len);
 
-    smq_char* cache = SMQ_NULL;
-    smq_uint32 len  = 0;
-    smq_uint32 cap  = 0;
-    smq_msg_data(inst, msg, (smq_void**)&cache, &len, &cap);
-    smq_uint32 cache_remain_len = (smq_uint32)(cap - len);
+    //  如果数据还未全部写入，那么分配个数据块继续写，写完后将数据块再合并到原消息上去
+    while (len > 0)
+    {
+        smq_msg sub = SMQ_MSG_NULL;
+        smq_errno err = smq_msg_new(inst, len, &sub);
+        if (SMQ_OK != err)
+        {
+            return err;
+        }
 
-
-
-
+        smq_msg_fill(smq, sub, (smq_uint8** )&data, &len);
+        smq_msg_merge(smq, msg, sub);
+    }
+    
+    return SMQ_OK;
 }
 
 
 
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg msg, smq_msg* itr, smq_void** data, smq_uint32* len)
 {
+    SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_MSG_NULL  != msg),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != itr),  "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != data), "关键输入参数，由外部保证有效性");
+    SMQ_ASSERT((SMQ_NULL      != len),  "关键输入参数，由外部保证有效性");
 
+    smq_block_t* root = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
+
+    //  已经到达消息末尾，无法继续读取
+    if (SMQ_MSG_NULL == *itr)
+    {
+        return SMQ_ERR_END_OF_MSG_CAN_NOT_READ;
+    }
+
+    //  获取消息数据
+    smq_msg_data(inst, msg, data, len, SMQ_NULL);
+
+    //  如果是从消息首部开始读取
+    if (msg == *itr)
+    {
+        //  调整迭代指针
+        if (SMQ_MSG_NULL == root->next)
+        {
+            //  没有子消息，提前结束
+            *itr = SMQ_MSG_NULL;
+            return SMQ_OK;
+        } 
+
+        //  有子消息，从第一个消息开始
+        smq_block_t* last = (smq_block_t*)SMQ_ADDRESS_OF(inst, root->next);
+        *itr = last->next;
+        return SMQ_OK;
+    }
+
+    //  如果是最后一个消息
+    if (root->next == *itr)
+    {
+        *itr = SMQ_MSG_NULL;
+        return SMQ_OK;
+    }
+
+    *itr = root->next;
+    return SMQ_OK;
 }
 
 

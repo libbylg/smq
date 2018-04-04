@@ -35,7 +35,7 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uin
     }
 
     //  如果日志id超出范围，直接使用日志SMQ_LOG_LOWER_LIMIT的日志id输出日志，
-    smq_log_t* log = NULL;
+    smq_log_t* log = SMQ_NULL;
     if ((id < SMQ_LOG_LOWER_LIMIT) || (id > SMQ_LOG_UPPER_LIMIT))
     {
         log = &(smq_logs[SMQ_LOG_LOWER_LIMIT]);
