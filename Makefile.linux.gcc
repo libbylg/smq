@@ -1,8 +1,10 @@
+.PHONY: build
+
 PROJROOT=@{PROJROOT}
 VERION=@{VERSION}
 TOOLSET=@{TOOLSET}
 
-FNODEBUG=@{FNODEBUG}
+FDEBUG=@{FDEBUG}
 FBITS=@{FBITS}
 FJNI=@{FJNI}
 FLIBNAME=@{FLIBNAME}
@@ -22,7 +24,6 @@ PACKAGE=$(ODIR)/smq.zip
 
 
 SRCS=\
-    ${SRCS}                     \
     $(PROJROOT)/smq_errors.c    \
     $(PROJROOT)/smq_inst.c      \
     $(PROJROOT)/smq_logs.c      \
@@ -30,56 +31,74 @@ SRCS=\
     $(PROJROOT)/smq_os.c        \
     $(PROJROOT)/smq_params.c    \
     $(PROJROOT)/smq_utils.c
+ifeq    ($(FJNI),"jni")
+SRCS=$(SRCS) $(PROJROOT)/jni/smq_jni.c
+endif
 
 
-OBJS=\
-    ${OBJS}                     \
-    $(SRC:.c=.o)
+OBJS=$(SRC:.c=.o)
 
 
 INCS=\
-    ${INCS}                     \
     $(PROJROOT)                 \
     $(PROJROOT)/jni
+ifeq    ($(FJNI),"jni")
+SRCS=$(INCS) $(PROJROOT)/jni
+endif
 
 
 LIBS=\
-    ${LIBS}                     \
     -c                          \
     -lpthread
 
-
+#   Compile tool and options
 CC="gcc"
+CCFLAGS=""
+ifeq ($(FDEBUG),"d")
+CCFLAGS="-g -DDEBUG -UNDEBUG"
+endif
 
 
-CCFLAGS=\
-    ${CCFLAGS}
-
-
+#   Linker tool and options
 LD="gcc"
+LDFLAGS="–shared"
+ifeq ($(FDEBUG),"d")
+CCFLAGS="$(CCFLAGS) -g"
+endif
 
 
-LDFLAGS=\
-    ${LDFLAGS}
+#   Archive tool and options
+AR="ar"
+ARFLAG=""
 
 
 #=============================================
 go:$(ENTRY_TARGETS)
 
 
-clean:${PACKAGE} $(STATIC_LIB) $(DYNMIC_LIB) ${OBJS}
-	rm  -rf  @^
+clean:
+	rm  -rf  ${PACKAGE}  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
 
 
 build:$(STATIC_LIB) $(DYNMIC_LIB)
 	
 
 package:$(STATIC_LIB) $(DYNMIC_LIB)
-	
+	rm      -rf     $(PROJROOT)/smq-${VERSION}.zip
+	rm      -rf     ${ODIR}/pkg
+	mkdir   -p      ${ODIR}/pkg/lib
+	mkdir   -p      ${ODIR}/pkg/include
+	cp      $(STATIC_LIB)       ${ODIR}/pkg/lib     &&  \
+	cp      $(DYNMIC_LIB)       ${ODIR}/pkg/lib     &&  \
+	cp      $(PROJROOT)/smq.h   ${ODIR}/pkg/include &&  \
+	cd      ${ODIR}/pkg                             &&  \
+	zip     smq-${VERSION}.zip  *                   &&  \
+	cp      smq-${VERSION}.zip  $(PROJROOT)
+
 
 #   Create the static library
 $(STATIC_LIB):$(OBJS)
-	$(AR)   $(AR_OPTS) $(OBJS) -o  $@
+	$(AR)   $(ARFLAGS) $(OBJS) -o  $@
 
 
 #   Create the dynamic library
@@ -88,7 +107,7 @@ $(DYNMIC_LIB):$(OBJS)
 
 
 #   Create the object files
-.c.o：
+.c.o:
 	$(CC)   $(CCFLAGS) -c  $<  -o  $@
 
 
