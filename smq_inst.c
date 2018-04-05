@@ -140,6 +140,28 @@ static smq_void smq_layout_init(smq_t* smq)
 
 
 
+static smq_mssge_queue_t* smq_write_queue(smq_t* smq)
+{
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:   return smq->mssge_queues[SMQ_ROLE_FOLLOWER];
+    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[SMQ_ROLE_LEADER];
+    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
+    default:                return SMQ_NULL;
+    }
+}
+
+static smq_mssge_queue_t* smq_read_queue(smq_t* smq)
+{
+    switch (smq->role)
+    {
+    case SMQ_ROLE_LEADER:   return smq->mssge_queues[smq->role];
+    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[smq->role];
+    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
+    default:                return SMQ_NULL;
+    }
+}
+
 
 static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 {
@@ -168,22 +190,9 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
         smq_layout_init(smq);
     }
 
-    //  初始化 recv/send 队列
-    switch (smq->role)
-    {
-    case SMQ_ROLE_LEADER:
-        smq->recv_queue = smq->mssge_queues[0];
-        smq->send_queue = smq->mssge_queues[1];
-        break;
-    case SMQ_ROLE_FOLLOWER:
-        smq->recv_queue = smq->mssge_queues[1];
-        smq->send_queue = smq->mssge_queues[0];
-        break;
-    default:
-        smq->recv_queue = SMQ_NULL;
-        smq->send_queue = SMQ_NULL;
-        break;
-    }
+    smq->recv_queue = smq_read_queue(smq);
+    smq->send_queue = smq_write_queue(smq);
+
 
     //  初始化完成执行解锁操作
     err = smq_proc_mutex_unlock(&mutex);

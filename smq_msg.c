@@ -329,28 +329,6 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_fix(smq_inst inst, smq_msg m
     return  SMQ_OK;
 }
 
-static smq_mssge_queue_t* smq_write_queue(smq_t* smq)
-{
-    switch (smq->role)
-    {
-    case SMQ_ROLE_LEADER:   return smq->mssge_queues[SMQ_ROLE_FOLLOWER];
-    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[SMQ_ROLE_LEADER];
-    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
-    default:                return SMQ_NULL;
-    }
-}
-
-static smq_mssge_queue_t* smq_read_queue(smq_t* smq)
-{
-    switch (smq->role)
-    {
-    case SMQ_ROLE_LEADER:   return smq->mssge_queues[smq->role];
-    case SMQ_ROLE_FOLLOWER: return smq->mssge_queues[smq->role];
-    case SMQ_ROLE_VIEWER:   return SMQ_NULL;
-    default:                return SMQ_NULL;
-    }
-}
-
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg msg)
 {
     SMQ_ASSERT((SMQ_INST_NULL != inst), "关键输入参数，由外部保证有效性");
@@ -358,7 +336,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_post(smq_inst inst, smq_msg 
 
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = smq_write_queue(smq);
+    smq_mssge_queue_t* queue = smq->send_queue;
     if (SMQ_NULL == queue)
     {
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_POST;
@@ -392,7 +370,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_wait(smq_inst inst, smq_int3
 
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = smq_read_queue(smq);
+    smq_mssge_queue_t* queue = smq->recv_queue;
     if (SMQ_NULL == queue)
     {
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WAIT;
@@ -425,7 +403,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint
 
     smq_t* smq = (smq_t*)inst;
 
-    smq_mssge_queue_t* queue = smq_read_queue(smq);
+    smq_mssge_queue_t* queue = smq->recv_queue;
     if (SMQ_NULL == queue)
     {
         return SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_PEEK;
@@ -450,7 +428,7 @@ static smq_void   SMQ_CALL    smq_msg_fill(smq_t* smq, smq_msg msg, smq_uint8** 
     smq_msg_data(smq, msg, (smq_void**)&filled, &filled_len, &cap);
     smq_uint32 cache_remain_len = (smq_uint32)(cap - filled_len);
 
-    smq_uint32 copy_len = (cache_remain_len > *len)?*len:cache_remain_len;
+    smq_uint32 copy_len = smq_min(cache_remain_len, *len);
     smq_memcpy(filled + cache_remain_len, *data, copy_len);
 
     data += copy_len;

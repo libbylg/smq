@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #define smq_max(a,b)    (((a) > (b)) ? (a) : (b))
-#define smq_min(a,b)    (((a) > (b)) ? (a) : (b))
+#define smq_min(a,b)    (((a) < (b)) ? (a) : (b))
 
 
 #include <malloc.h>

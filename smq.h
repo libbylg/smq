@@ -25,7 +25,7 @@
 #elif defined(__clang__)
 #define SMQ_API
 #else
-#error  "Unsupported platform for 'SMQ_API'"
+#error  "(SMQ_API)Unsupported compiler or platform"
 #endif
 
 
@@ -69,7 +69,7 @@
 #define smq_char    char
 #define smq_void    void
 #else
-#error  "Unsupported os or platform"
+#error  "(smq_types)Unsupported compiler or platform"
 #endif
 
 

@@ -5,5 +5,5 @@
 #elif defined(__clang__)
 #include "os/osx.clang/os.h"
 #else
-#error "Unsupported os or platform"
+#error "(os.h)Unsupported compiler or platform"
 #endif
