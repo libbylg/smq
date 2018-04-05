@@ -1,4 +1,4 @@
-//SMQ_ERR(name,id,cn,en)
+//SMQ_ERR(nam,id,cn,en)
 //SMQ_LOG(name,id,cn,en)
 SMQ_ERR(SMQ_ERR_LOWER_LIMIT,                        200,    "(占位)",                                      "")
 SMQ_ERR(SMQ_ERR_MALLOC_FAILED,                      201,    "初始化 SMQ 实例失败，分配内存失败",              "")

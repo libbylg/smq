@@ -1,0 +1,94 @@
+PROJROOT=@{PROJROOT}
+VERION=@{VERSION}
+TOOLSET=@{TOOLSET}
+
+FNODEBUG=@{FNODEBUG}
+FBITS=@{FBITS}
+FJNI=@{FJNI}
+FLIBNAME=@{FLIBNAME}
+
+
+#=============================================
+ODIR=$(PROJROOT)/lib
+
+
+STATIC_LIB=$(ODIR)/$(FLIBNAME).lib
+
+
+DYNMIC_LIB=$(ODIR)/$(FLIBNAME).dll
+
+
+PACKAGE=$(ODIR)/smq.zip
+
+
+SRCS=\
+    ${SRCS}                     \
+    $(PROJROOT)/smq_errors.c    \
+    $(PROJROOT)/smq_inst.c      \
+    $(PROJROOT)/smq_logs.c      \
+    $(PROJROOT)/smq_msg.c       \
+    $(PROJROOT)/smq_os.c        \
+    $(PROJROOT)/smq_params.c    \
+    $(PROJROOT)/smq_utils.c
+
+
+OBJS=\
+    ${OBJS}                     \
+    $(SRC:.c=.o)
+
+
+INCS=\
+    ${INCS}                     \
+    $(PROJROOT)                 \
+    $(PROJROOT)/jni
+
+
+LIBS=\
+    ${LIBS}                     \
+    -c                          \
+    -lpthread
+
+
+CC="gcc"
+
+
+CCFLAGS=\
+    ${CCFLAGS}
+
+
+LD="gcc"
+
+
+LDFLAGS=\
+    ${LDFLAGS}
+
+
+#=============================================
+go:$(ENTRY_TARGETS)
+
+
+clean:${PACKAGE} $(STATIC_LIB) $(DYNMIC_LIB) ${OBJS}
+	rm  -rf  @^
+
+
+build:$(STATIC_LIB) $(DYNMIC_LIB)
+	
+
+package:$(STATIC_LIB) $(DYNMIC_LIB)
+	
+
+#   Create the static library
+$(STATIC_LIB):$(OBJS)
+	$(AR)   $(AR_OPTS) $(OBJS) -o  $@
+
+
+#   Create the dynamic library
+$(DYNMIC_LIB):$(OBJS)
+	$(LD)   $(LDFLAGS) $(OBJS) -o  $@
+
+
+#   Create the object files
+.c.o：
+	$(CC)   $(CCFLAGS) -c  $<  -o  $@
+
+
