@@ -36,7 +36,7 @@ SRCS=$(SRCS) $(PROJROOT)/jni/smq_jni.c
 endif
 
 
-OBJS=$(SRC:.c=.o)
+OBJS=$(SRCS:.c=.o)
 
 
 INCS=\
@@ -51,11 +51,17 @@ LIBS=\
     -c                          \
     -lpthread
 
+
 #   Compile tool and options
 CC="gcc"
 CCFLAGS=""
 ifeq ($(FDEBUG),"d")
 CCFLAGS="-g -DDEBUG -UNDEBUG"
+endif
+ifeq ($(FBITS),"32")
+CCFLAGS="$(CCFLAGS) -m32"
+else
+CCFLAGS="$(CCFLAGS) -m64"
 endif
 
 
@@ -63,25 +69,32 @@ endif
 LD="gcc"
 LDFLAGS="–shared"
 ifeq ($(FDEBUG),"d")
-CCFLAGS="$(CCFLAGS) -g"
+LDFLAGS="$(LDFLAGS) -g"
+endif
+ifeq ($(FBITS),"32")
+LDFLAGS="$(LDFLAGS) -m32"
+else
+LDFLAGS="$(LDFLAGS) -m64"
 endif
 
 
 #   Archive tool and options
 AR="ar"
-ARFLAG=""
+ARFLAGS=""
+ifeq ($(FBITS),"32")
+ARFLAGS="$(ARFLAGS) -m32"
+else
+ARFLAGS="$(ARFLAGS) -m64"
+endif
 
 
 #=============================================
-go:$(ENTRY_TARGETS)
+build:$(STATIC_LIB) $(DYNMIC_LIB)
 
 
 clean:
 	rm  -rf  ${PACKAGE}  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
 
-
-build:$(STATIC_LIB) $(DYNMIC_LIB)
-	
 
 package:$(STATIC_LIB) $(DYNMIC_LIB)
 	rm      -rf     $(PROJROOT)/smq-${VERSION}.zip
@@ -107,7 +120,9 @@ $(DYNMIC_LIB):$(OBJS)
 
 
 #   Create the object files
-.c.o:
+%.o:%.c
 	$(CC)   $(CCFLAGS) -c  $<  -o  $@
 
 
+$(PROJROOT)/smq_errors.o:$(PROJROOT)/smq_errors.c
+	$(CC)   $(CCFLAGS) -c  $<  -o  $@
