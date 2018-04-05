@@ -78,7 +78,7 @@ function generage_makefile()
     #   Build the options
     ready_options   "$@"
     RESULT=$?
-    if [ ${RESULT} - ne 0 ]; then
+    if [ ${RESULT} -ne 0 ]; then
         echo    "${RESULT}:Read options failed"
         return  ${RESULT}
     fi
@@ -96,7 +96,7 @@ function generage_makefile()
     sed 's/@{FJNI}/${FJNI}/g'           |   \
     sed 's/@{FLIBNAME}/${FLIBNAME}/g'   >   ${SELFDIR}/Makefile
     RESULT=$?
-    if [ ${RESULT} - ne 0 ]; then
+    if [ ${RESULT} -ne 0 ]; then
         echo    "${RESULT}:Generate makefile failed"
         return  ${RESULT}
     fi
@@ -115,24 +115,13 @@ function main()
         fi
     fi
 
-
-    if  [ $# -eq 0 ]; then
-        echo    "Missing parameters, type -h for help"
-        return  2
-    fi
-
-
     generage_makefile   "$@"
     RESULT=$?
     if  [ ${RESULT} -ne 0 ]; then
-        echo    "Generate makefile failed"
         return  2
     fi
 
-
-
-    echo    "Unrupported sub-command '$1', type -h for help"
-    return  1
+    return  0
 }
 
 
