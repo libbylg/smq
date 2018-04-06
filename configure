@@ -10,7 +10,7 @@ FDEBUG="d"
 FJNI=""
 FLIBNAME="smq"
 MAKE="make"
-TOOLSET="linux.gcc"
+TOOLSET="win.mingw"
 
 
 #   Show detial of helps
@@ -31,17 +31,25 @@ function show_help()
 }
 
 
-#function    determine_toolset()
-#{
-#    if [ "xWindows_NT" == "x${OS}" ]; then
-#
-#    fi
-#}
+function    load_default_options()
+{
+    if [ "xWindows_NT" == "x${OS}" ]; then
+
+    fi
+}
 
 
 #   Create all of the options
 function    ready_options()
 {
+    #   Load the default options
+    load_default_options
+    RESULT=$?
+    if [ ${RESULT} - ne 0 ]; then
+        return  ${RESULT}
+    fi
+
+
     #   Enum all of the arguments and fill the shared option-vars.
     for (( i = 1; i < $#; i++ )); do
         local arg=$(eval "\$${i}")
@@ -66,6 +74,7 @@ function    ready_options()
                 ;;
         esac
     done
+
 
     return  0
 }
@@ -99,6 +108,7 @@ function generage_makefile()
         echo    "${RESULT}:Generate makefile failed"
         return  ${RESULT}
     fi
+
 
     return  0
 }
