@@ -1,9 +1,11 @@
-#if   defined(_WIN32)
+#if   defined(_WIN32)  && defined(_MSC_VER)
 #include "os/win.msvc/os.h"
-#elif defined(__linux)
-#include "os/linux.gcc/os.h"
-#elif defined(__clang__)
+#elif defined(_WIN32)  && defined(__GNUC__)
+#include "os/win.gcc/os.h"
+#elif defined(_WIN32)  && defined(__clang__)
 #include "os/osx.clang/os.h"
+#elif defined(__linux) && defined(__GNUC__)
+#include "os/linux.gcc/os.h"
 #else
 #error "(os.h)Unsupported compiler or platform"
 #endif

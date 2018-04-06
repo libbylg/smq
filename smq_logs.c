@@ -4,7 +4,7 @@
 #include "smq_params.h"
 
 
-extern  smq_log_t smq_logs[SMQ_LOG_COUNT] = 
+smq_log_t smq_logs[SMQ_LOG_COUNT] = 
 {
 #define SMQ_ERR(name,id,cn,en)
 #define SMQ_LOG(name,id,cn,en)  {name, {sizeof(en), sizeof(cn)}, {en, cn}},
@@ -47,7 +47,7 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uin
 
     va_list vargs;
     va_start(vargs, format);
-    smq_int32 n = smq_vsprintf_s(smq_log_cache, sizeof(smq_log_cache), format, vargs);
+    smq_int32 n = smq_vsnprintf(smq_log_cache, sizeof(smq_log_cache), format, vargs);
     va_end(vargs);
 
     (*(smq_params.log_func))(smq_params.log_context, id, level, loc, log->desc[loc], log->len[loc], smq_log_cache, n);

@@ -398,10 +398,13 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg 
 ///@{
 #if     defined(__cplusplus)
 #define SMQ_STATIC_ASSERT(expr,message)     static_assert(expr,message)
-#elif   defined(_MSC_VER)
+#else
+#if   defined(_MSC_VER)
 #define SMQ_STATIC_ASSERT(expr,message)     C_ASSERT(expr)
 #else
-#define SMQ_STATIC_ASSERT(expr,message)     ((void)sizeof(char[1 - 2*!!(expr)]))
+//#define SMQ_STATIC_ASSERT(expr,message)     ((void)sizeof(char[1 - 2*!!(expr)]))
+#define SMQ_STATIC_ASSERT(expr,message)     _Static_assert(expr,message)
+#endif
 #endif
 SMQ_STATIC_ASSERT((4 == sizeof(smq_uint32)), "检查编译环境的关键数据长度一致性");
 SMQ_STATIC_ASSERT((2 == sizeof(smq_uint16)), "检查编译环境的关键数据长度一致性");

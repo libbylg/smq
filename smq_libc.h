@@ -19,8 +19,11 @@
 
 
 #include <stdio.h>
-#define smq_sprintf_s   sprintf_s
-#define smq_vsprintf_s  vsprintf_s
+#if     defined(_MSC_VER)
+#define smq_vsnprintf   vsprintf_s
+#else
+#define smq_vsnprintf   vsnprintf
+#endif
 #define smq_printf      printf
 
 
