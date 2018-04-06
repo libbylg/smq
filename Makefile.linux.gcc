@@ -20,19 +20,19 @@ STATIC_LIB=$(ODIR)/$(FLIBNAME).lib
 DYNMIC_LIB=$(ODIR)/$(FLIBNAME).dll
 
 
-PACKAGE=$(ODIR)/smq.zip
+PACKAGE=$(ODIR)/smq-$(FDEBUG)$(FBITS)$(FJNI)-$(VERSION).zip
 
 
 SRCS=\
-    $(PROJROOT)/smq_errors.c    \
-    $(PROJROOT)/smq_inst.c      \
-    $(PROJROOT)/smq_logs.c      \
-    $(PROJROOT)/smq_msg.c       \
-    $(PROJROOT)/smq_os.c        \
-    $(PROJROOT)/smq_params.c    \
-    $(PROJROOT)/smq_utils.c
-ifeq    ($(FJNI),"jni")
-SRCS=$(SRCS) $(PROJROOT)/jni/smq_jni.c
+    smq_errors.c    \
+    smq_inst.c      \
+    smq_logs.c      \
+    smq_msg.c       \
+    smq_os.c        \
+    smq_params.c    \
+    smq_utils.c
+ifeq    ($(FJNI),jni)
+    SRCS += jni/smq_jni.c
 endif
 
 
@@ -42,8 +42,8 @@ OBJS=$(SRCS:.c=.o)
 INCS=\
     $(PROJROOT)                 \
     $(PROJROOT)/jni
-ifeq    ($(FJNI),"jni")
-SRCS=$(INCS) $(PROJROOT)/jni
+ifeq    ($(FJNI),jni)
+    INCS += $(PROJROOT)/jni
 endif
 
 
@@ -53,38 +53,38 @@ LIBS=\
 
 
 #   Compile tool and options
-CC="gcc"
-CCFLAGS=""
-ifeq ($(FDEBUG),"d")
-CCFLAGS="-g -DDEBUG -UNDEBUG"
+CC=gcc
+CCFLAGS=-DSMQ_EXPORTS
+ifeq ($(FDEBUG),d)
+    CCFLAGS += -g -DDEBUG -UNDEBUG
 endif
-ifeq ($(FBITS),"32")
-CCFLAGS="$(CCFLAGS) -m32"
+ifeq ($(FBITS),32)
+    CCFLAGS += -m32
 else
-CCFLAGS="$(CCFLAGS) -m64"
+    CCFLAGS += -m64
 endif
 
 
 #   Linker tool and options
-LD="gcc"
-LDFLAGS="–shared"
-ifeq ($(FDEBUG),"d")
-LDFLAGS="$(LDFLAGS) -g"
+LD=gcc
+LDFLAGS=–shared
+ifeq ($(FDEBUG),d)
+    LDFLAGS += -g
 endif
-ifeq ($(FBITS),"32")
-LDFLAGS="$(LDFLAGS) -m32"
+ifeq ($(FBITS),32)
+    LDFLAGS += -m32
 else
-LDFLAGS="$(LDFLAGS) -m64"
+    LDFLAGS += -m64
 endif
 
 
 #   Archive tool and options
-AR="ar"
-ARFLAGS=""
-ifeq ($(FBITS),"32")
-ARFLAGS="$(ARFLAGS) -m32"
+AR=ar
+ARFLAGS=
+ifeq ($(FBITS),32)
+    ARFLAGS += -m32
 else
-ARFLAGS="$(ARFLAGS) -m64"
+    ARFLAGS += -m64
 endif
 
 
@@ -120,9 +120,11 @@ $(DYNMIC_LIB):$(OBJS)
 
 
 #   Create the object files
-%.o:%.c
+#%.o:%.c
+#	$(CC)   $(CCFLAGS) -c  $<  -o  $@
+
+.c.o:
 	$(CC)   $(CCFLAGS) -c  $<  -o  $@
 
-
-$(PROJROOT)/smq_errors.o:$(PROJROOT)/smq_errors.c
-	$(CC)   $(CCFLAGS) -c  $<  -o  $@
+#smq_errors.o:smq_errors.c
+#	$(CC)   $(CCFLAGS) -c  $<  -o  $@

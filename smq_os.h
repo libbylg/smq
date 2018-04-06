@@ -1,4 +1,4 @@
-#if   defined(WIN32) || defined(WIN64)
+#if   defined(_WIN32)
 #include "os/win.msvc/os.h"
 #elif defined(__linux)
 #include "os/linux.gcc/os.h"

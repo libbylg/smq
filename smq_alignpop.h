@@ -10,7 +10,7 @@
 #endif
 
 
-#if defined(WIN32) || defined(WIN64)
+#if   defined(_MSC_VER)
 #pragma pack(pop)
 #endif
 

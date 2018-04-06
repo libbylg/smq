@@ -14,34 +14,30 @@
 
 
 /// 定义了符号导入和导出宏
-#if   defined(WIN32) || defined(WIN64)
+#if   defined(_WIN32)
 #ifdef SMQ_EXPORTS
 #define SMQ_API __declspec(dllexport)
 #else
 #define SMQ_API __declspec(dllimport)
 #endif
-#elif defined(__linux)
-#define SMQ_API
-#elif defined(__clang__)
-#define SMQ_API
 #else
-#error  "(SMQ_API)Unsupported compiler or platform"
+#define SMQ_API
 #endif
 
 
 
 
 /// 定义了SMQ的调用协定
-#if defined(WIN32) || defined(WIN64)
+#if   defined(_WIN32)
 #define SMQ_CALL    __stdcall
 #else
-#define SMQ_CALL    __attribute__(__stdcall__)
+#define SMQ_CALL    __attribute__((__stdcall__))
 #endif
 
 
 
 /// 定义了所有的基本常量
-#if defined(WIN32) || defined(WIN64)
+///@{
 #define smq_uint32  unsigned int
 #define smq_uint16  unsigned short
 #define smq_uint8   unsigned char
@@ -50,27 +46,7 @@
 #define smq_int8    char
 #define smq_char    char
 #define smq_void    void
-#elif defined(__gcc)
-#define smq_uint32  unsigned int
-#define smq_uint16  unsigned short
-#define smq_uint8   unsigned char
-#define smq_int32   int
-#define smq_int16   short
-#define smq_int8    char
-#define smq_char    char
-#define smq_void    void
-#elif defined(__clang__)
-#define smq_uint32  unsigned int
-#define smq_uint16  unsigned short
-#define smq_uint8   unsigned char
-#define smq_int32   int
-#define smq_int16   short
-#define smq_int8    char
-#define smq_char    char
-#define smq_void    void
-#else
-#error  "(smq_types)Unsupported compiler or platform"
-#endif
+///@}
 
 
 
@@ -162,8 +138,8 @@
 
 /// 定义了通用的值类型
 ///@{
-#if defined(WIN32) || defined(WIN64)
-#pragma warning(disable:4200)
+#if   defined(_MSC_VER)
+#pragma warning(disable:4200)   ///<    VC 编译器特殊处理
 #endif
 typedef union
 {
@@ -175,8 +151,8 @@ typedef union
     smq_uint16  value_int32s[0];                ///<    int32 类型的数组
     smq_void*   value_ptrs[0];                  ///<    指针数组
 }smq_value_t;
-#if defined(WIN32) || defined(WIN64)
-#pragma warning(default:4200)
+#if   defined(_MSC_VER)
+#pragma warning(default:4200)   ///<    VC 编译器特殊处理
 #endif
 ///@}
 
@@ -420,9 +396,9 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg 
 
 /// 定义了一个适用于C语言的编译期断言宏，用于对编译环境进行一些基本的检查
 ///@{
-#if defined(__cplusplus)
+#if     defined(__cplusplus)
 #define SMQ_STATIC_ASSERT(expr,message)     static_assert(expr,message)
-#elif defined(WIN32) || defined(WIN64)
+#elif   defined(_MSC_VER)
 #define SMQ_STATIC_ASSERT(expr,message)     C_ASSERT(expr)
 #else
 #define SMQ_STATIC_ASSERT(expr,message)     ((void)sizeof(char[1 - 2*!!(expr)]))

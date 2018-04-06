@@ -4,7 +4,7 @@
 
 
 
-#if defined(WIN32) || defined(WIN64)
+#if   defined(_MSC_VER)
 #pragma pack(push, 1)
 #endif
 
