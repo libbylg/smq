@@ -18,10 +18,10 @@ FLIBNAME=@{FLIBNAME}
 ODIR=$(PROJROOT)/lib
 
 
-STATIC_LIB=$(ODIR)/$(FLIBNAME).${FSTATICSUFFIX}
+STATIC_LIB=$(ODIR)/$(FLIBNAME).$(FSTATICSUFFIX)
 
 
-DYNMIC_LIB=$(ODIR)/$(FLIBNAME).${FDYNMICSUFFIX}
+DYNMIC_LIB=$(ODIR)/$(FLIBNAME).$(FDYNMICSUFFIX)
 
 
 PACKAGE=$(ODIR)/smq-$(FDEBUG)$(FBITS)$(FJNI)-$(VERSION).zip
@@ -53,10 +53,12 @@ LIBS=-c -lpthread
 
 
 #   Compile tool and options
-CC=gcc
-CCFLAGS=-DSMQ_EXPORTS
+CC=cl.exe
+CCFLAGS=/Zi /nologo /W3 /WX- /O2 /Oi /GL /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "SMQ_EXPORTS" /D "_WINDLL" /D "_MBCS" /Gm- /EHsc /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fp"out\Win32-Release\smq.pch" /Fa"out\Win32-Release\" /Fo"out\Win32-Release\" /Fd"out\Win32-Release\vc100.pdb" /Gd /TP /errorReport:queue 
 ifeq ($(FDEBUG),d)
-    CCFLAGS += -g -DDEBUG -UNDEBUG
+    CCFLAGS +=  /D "DEBUG"
+else
+    CCFLAGS +=  /D "NDEBUG"
 endif
 ifeq ($(FBITS),32)
     CCFLAGS += -m32
@@ -66,10 +68,10 @@ endif
 
 
 #   Linker tool and options
-LD=gcc
-LDFLAGS=–shared
+LD=link.exe
+LDFLAGS=/OUT:"out\Win32-Release\smq.dll" /INCREMENTAL:NO /NOLOGO /DLL "kernel32.lib" "user32.lib" "gdi32.lib" "winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" "oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib" /DEF:"os\win.msvc\smq.def" /MANIFEST:NO /ManifestFile:"out\Win32-Release\smq.dll.intermediate.manifest" /ALLOWISOLATION /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"out\Win32-Release\smq.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /PGD:"out\Win32-Release\smq.pgd" /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /ERRORREPORT:QUEUE 
 ifeq ($(FDEBUG),d)
-    LDFLAGS += -g
+    LDFLAGS +=  /DEBUG
 endif
 ifeq ($(FBITS),32)
     LDFLAGS += -m32
