@@ -3,13 +3,17 @@
 #   The shared options and the default value
 SELFDIR=$(cd  $(dirname "$0");pwd)
 VERSION=$(cat ${SELFDIR}/VERSION)
+MAKE=""
+TOOLSET=""
+
 FBITS="64"
 FDEBUG="d"
 FJNI=""
-FLIBNAME="smq"
+FLIBNAME=""
 FOS=""
-MAKE=""
-TOOLSET=""
+FDYNMICSUFFIX=""
+FSTATICSUFFIX=""
+
 
 
 
@@ -48,6 +52,8 @@ function    load_default_options()
         MAKE="nmake"
         FLIBNAME='smq'
         FOS="win"
+        FDYNMICSUFFIX="dll"
+        FSTATICSUFFIX="lib"
         return  0
     fi
 
@@ -57,15 +63,19 @@ function    load_default_options()
         MAKE="make"
         FLIBNAME='libsmq'
         FOS="linux"
+        FDYNMICSUFFIX="so"
+        FSTATICSUFFIX="a"
         return  0  
     fi
 
 
-    if [ "xDarwin" == "x$(uname)"]; then
+    if [ "xDarwin" == "x$(uname)" ]; then
         TOOLSET='osx.clang'
         MAKE="make"
         FLIBNAME='libsmq'
         FOS="osx"
+        FDYNMICSUFFIX="dylib"
+        FSTATICSUFFIX="a"
         return  0  
     fi
 
@@ -148,15 +158,18 @@ function generage_makefile()
     #   Replace vars in the makefile-template, and create the real makefile.
     rm  -rf ${SELFDIR}/Makefile
     dos2unix    -q   ${SELFDIR}/Makefile.${TOOLSET} >& /dev/null
-    cat ${SELFDIR}/Makefile.${TOOLSET}  |   \
-    sed "s|@{PROJROOT}|${SELFDIR}|g"    |   \
-    sed "s|@{VERSION}|${VERSION}|g"     |   \
-    sed "s|@{TOOLSET}|${TOOLSET}|g"     |   \
-    sed "s|@{FDEBUG}|${FDEBUG}|g"       |   \
-    sed "s|@{FBITS}|${FBITS}|g"         |   \
-    sed "s|@{FJNI}|${FJNI}|g"           |   \
-    sed "s|@{FOS}|${FOS}|g"             |   \
-    sed "s|@{FLIBNAME}|${FLIBNAME}|g"   >   ${SELFDIR}/Makefile
+    cat ${SELFDIR}/Makefile.${TOOLSET}          |   \
+    sed "s|@{PROJROOT}|${SELFDIR}|g"            |   \
+    sed "s|@{VERSION}|${VERSION}|g"             |   \
+    sed "s|@{TOOLSET}|${TOOLSET}|g"             |   \
+    sed "s|@{MAKE}|${MAKE}|g"                   |   \
+    sed "s|@{FDEBUG}|${FDEBUG}|g"               |   \
+    sed "s|@{FBITS}|${FBITS}|g"                 |   \
+    sed "s|@{FJNI}|${FJNI}|g"                   |   \
+    sed "s|@{FOS}|${FOS}|g"                     |   \
+    sed "s|@{FLIBNAME}|${FLIBNAME}|g"           |   \
+    sed "s|@{FDYNMICSUFFIX}|${FDYNMICSUFFIX}|g" |   \
+    sed "s|@{FSTATICSUFFIX}|${FSTATICSUFFIX}|g" >   ${SELFDIR}/Makefile
     RESULT=$?
     if [ ${RESULT} -ne 0 ]; then
         echo    "${RESULT}:Generate makefile failed"
@@ -164,6 +177,7 @@ function generage_makefile()
     fi
 
 
+    echo    "Generate make file success: ${SELFDIR}/Makefile (${SELFDIR}/Makefile.${TOOLSET})"
     return  0
 }
 

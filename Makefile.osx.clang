@@ -3,9 +3,11 @@
 PROJROOT=@{PROJROOT}
 VERION=@{VERSION}
 TOOLSET=@{TOOLSET}
+MAKE=@{MAKE}
 
 FDEBUG=@{FDEBUG}
 FBITS=@{FBITS}
+FOS=@{FOS}
 FJNI=@{FJNI}
 FLIBNAME=@{FLIBNAME}
 
@@ -49,10 +51,10 @@ LIBS=-c -lpthread
 
 
 #   Compile tool and options
-CC=gcc
+CC=clang
 CCFLAGS=-DSMQ_EXPORTS
 ifeq ($(FDEBUG),d)
-    CCFLAGS += -g -DDEBUG -UNDEBUG
+    CCFLAGS += -g -DDEBUG -UNDEBUG -Winvalid-source-encoding
 endif
 ifeq ($(FBITS),32)
     CCFLAGS += -m32
@@ -62,7 +64,7 @@ endif
 
 
 #   Linker tool and options
-LD=gcc
+LD=clang
 LDFLAGS=–shared
 ifeq ($(FDEBUG),d)
     LDFLAGS += -g
