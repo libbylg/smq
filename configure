@@ -1,6 +1,4 @@
-#!/usr/bin/bash
-
-
+#!/usr/bin/env bash
 
 #   The shared options and the default value
 SELFDIR=$(cd  $(dirname "$0");pwd)
@@ -9,10 +7,14 @@ FBITS="64"
 FDEBUG="d"
 FJNI=""
 FLIBNAME="smq"
-MAKE="make"
-TOOLSET="win.mingw"
+FOS=""
+MAKE=""
+TOOLSET=""
 
 
+
+
+################################################################
 #   Show detial of helps
 function show_help()
 {
@@ -25,27 +27,65 @@ function show_help()
     echo    "   --nodebug       Do we need the symbles for debug or not."
     echo    "   --jni           To tell the script to build with the JNI supported."
     echo    "   --toolset=<TOOLSET-NAME>    To special the which toolset whill be used to compile."
+    echo    "                   Currently, we support: 'win.msvc', 'win.mingw', 'win.clang', 'linux.gcc', 'osx.clang'"
     echo    ""
     echo    "Examples:"
+    echo    "   ./configuration"
+    echo    "   ./configuration  -nodebug --jni --toolset=win.mingw"
+    echo    "   ./configuration  --toolset=linux.gcc"
     echo    ""
 }
 
 
+
+
+################################################################
+#   Setting up the default value of the options for different Operation-System
 function    load_default_options()
 {
     if [ "xWindows_NT" == "x${OS}" ]; then
-
+        TOOLSET='win.msvc'
+        MAKE="nmake"
+        FLIBNAME='smq'
+        FOS="win"
+        return  0
     fi
+
+
+    if [ "xlinux" == "x$(uname)" ]; then
+        TOOLSET='linux.gcc'
+        MAKE="make"
+        FLIBNAME='libsmq'
+        FOS="linux"
+        return  0  
+    fi
+
+
+    if [ "xDarwin" == "x$(uname)"]; then
+        TOOLSET='osx.clang'
+        MAKE="make"
+        FLIBNAME='libsmq'
+        FOS="osx"
+        return  0  
+    fi
+
+
+    echo "Unsupported os"
+    return  5
 }
 
 
+
+
+################################################################
 #   Create all of the options
+#   $@  The parameters is same with the script.
 function    ready_options()
 {
     #   Load the default options
     load_default_options
     RESULT=$?
-    if [ ${RESULT} - ne 0 ]; then
+    if [ ${RESULT} -ne 0 ]; then
         return  ${RESULT}
     fi
 
@@ -76,11 +116,24 @@ function    ready_options()
     done
 
 
+    #   Check some special infos
+    if [ "xjni" == "x${FJNI}" ]; then
+        if [ ! -d "${JAVA_HOME}" ]; then
+            echo    "--jni need the env of \${JAVA_HOME}, but we can not access \${JAVA_HOME}"
+            return  6
+        fi
+    fi
+
+
     return  0
 }
 
 
 
+
+################################################################
+#   To generate the make file by the special parameters and the OS
+#   $@  The parameters is same with the script.
 function generage_makefile()
 {
     #   Build the options
@@ -102,6 +155,7 @@ function generage_makefile()
     sed "s|@{FDEBUG}|${FDEBUG}|g"       |   \
     sed "s|@{FBITS}|${FBITS}|g"         |   \
     sed "s|@{FJNI}|${FJNI}|g"           |   \
+    sed "s|@{FOS}|${FOS}|g"             |   \
     sed "s|@{FLIBNAME}|${FLIBNAME}|g"   >   ${SELFDIR}/Makefile
     RESULT=$?
     if [ ${RESULT} -ne 0 ]; then
@@ -114,6 +168,9 @@ function generage_makefile()
 }
 
 
+
+
+################################################################
 #   The main entry function
 function main()
 {
@@ -135,6 +192,8 @@ function main()
 
 
 
+
+################################################################
 main    "$@"
 exit     $?
 

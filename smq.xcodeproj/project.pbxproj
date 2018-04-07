@@ -7,71 +7,65 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E183E0020710FED00252AC0 /* smq_errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DDF20710FED00252AC0 /* smq_errors.h */; };
-		4E183E0120710FED00252AC0 /* smq_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE020710FED00252AC0 /* smq_utils.c */; };
-		4E183E0220710FED00252AC0 /* smq_inst.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE120710FED00252AC0 /* smq_inst.c */; };
-		4E183E0320710FED00252AC0 /* smq_logs.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE220710FED00252AC0 /* smq_logs.c */; };
-		4E183E0420710FED00252AC0 /* smq_res.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE320710FED00252AC0 /* smq_res.h */; };
-		4E183E0520710FED00252AC0 /* smq_alignpush.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE420710FED00252AC0 /* smq_alignpush.h */; };
-		4E183E0620710FED00252AC0 /* smq_params.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE520710FED00252AC0 /* smq_params.h */; };
-		4E183E0720710FED00252AC0 /* smq_limit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE620710FED00252AC0 /* smq_limit.h */; };
-		4E183E0820710FED00252AC0 /* smq_os.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DE720710FED00252AC0 /* smq_os.c */; };
-		4E183E0920710FED00252AC0 /* smq_alignpop.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE820710FED00252AC0 /* smq_alignpop.h */; };
-		4E183E0A20710FED00252AC0 /* smq_msg.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DE920710FED00252AC0 /* smq_msg.h */; };
-		4E183E0B20710FED00252AC0 /* smq_libc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEA20710FED00252AC0 /* smq_libc.h */; };
-		4E183E0C20710FED00252AC0 /* smq_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEB20710FED00252AC0 /* smq_utils.h */; };
-		4E183E0D20710FED00252AC0 /* smq_errors.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DEC20710FED00252AC0 /* smq_errors.c */; };
-		4E183E0E20710FED00252AC0 /* smq_inst.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DED20710FED00252AC0 /* smq_inst.h */; };
-		4E183E0F20710FED00252AC0 /* smq.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DEE20710FED00252AC0 /* smq.h */; };
-		4E183E1020710FED00252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF120710FED00252AC0 /* os.h */; };
-		4E183E1120710FED00252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DF220710FED00252AC0 /* os.c.inc */; };
-		4E183E1220710FED00252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF420710FED00252AC0 /* os.h */; };
-		4E183E1320710FED00252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DF620710FED00252AC0 /* os.c.inc */; };
-		4E183E1420710FED00252AC0 /* smq_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF720710FED00252AC0 /* smq_os.h */; };
-		4E183E1520710FED00252AC0 /* smq_jni.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DF920710FED00252AC0 /* smq_jni.h */; };
-		4E183E1620710FED00252AC0 /* smq_jni.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFA20710FED00252AC0 /* smq_jni.c */; };
-		4E183E1720710FED00252AC0 /* smq_logs.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DFB20710FED00252AC0 /* smq_logs.h */; };
-		4E183E1820710FED00252AC0 /* smq_asserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183DFC20710FED00252AC0 /* smq_asserts.h */; };
-		4E183E1920710FED00252AC0 /* smq_params.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFD20710FED00252AC0 /* smq_params.c */; };
-		4E183E1A20710FED00252AC0 /* smq_libc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFE20710FED00252AC0 /* smq_libc.c */; };
-		4E183E1B20710FED00252AC0 /* smq_msg.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E183DFF20710FED00252AC0 /* smq_msg.c */; };
-		4E183E1F2071114500252AC0 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E183E1D2071114500252AC0 /* os.h */; };
-		4E183E202071114500252AC0 /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4E183E1E2071114500252AC0 /* os.c.inc */; };
+		4EF87575207838D3008A230F /* smq_inst.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87531207838C8008A230F /* smq_inst.h */; };
+		4EF87576207838D3008A230F /* smq_limit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87532207838C8008A230F /* smq_limit.h */; };
+		4EF87577207838D3008A230F /* smq_errors.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87533207838C8008A230F /* smq_errors.c */; };
+		4EF87578207838D3008A230F /* smq_logs.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87535207838C9008A230F /* smq_logs.h */; };
+		4EF87579207838D3008A230F /* smq_asserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87538207838C9008A230F /* smq_asserts.h */; };
+		4EF8757A207838D3008A230F /* smq_jni.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8753C207838CA008A230F /* smq_jni.h */; };
+		4EF8757B207838D3008A230F /* smq_jni.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8753D207838CA008A230F /* smq_jni.c */; };
+		4EF8757C207838D3008A230F /* smq_logs.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8753E207838CA008A230F /* smq_logs.c */; };
+		4EF8757D207838D3008A230F /* smq_alignpop.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87540207838CB008A230F /* smq_alignpop.h */; };
+		4EF8757E207838D3008A230F /* smq_res.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87541207838CB008A230F /* smq_res.h */; };
+		4EF8757F207838D3008A230F /* smq_params.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87542207838CB008A230F /* smq_params.h */; };
+		4EF87580207838D3008A230F /* smq.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87543207838CB008A230F /* smq.h */; };
+		4EF87581207838D3008A230F /* smq_errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87544207838CC008A230F /* smq_errors.h */; };
+		4EF87582207838D3008A230F /* smq_alignpush.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87545207838CC008A230F /* smq_alignpush.h */; };
+		4EF87583207838D3008A230F /* smq_libc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87546207838CC008A230F /* smq_libc.h */; };
+		4EF87584207838D3008A230F /* smq_os.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87547207838CD008A230F /* smq_os.c */; };
+		4EF87585207838D3008A230F /* smq_params.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87548207838CD008A230F /* smq_params.c */; };
+		4EF8758A207838D3008A230F /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87552207838CE008A230F /* os.h */; };
+		4EF8758B207838D3008A230F /* os.c.inc in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87553207838CE008A230F /* os.c.inc */; };
+		4EF8758E207838D3008A230F /* smq_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87558207838CE008A230F /* smq_utils.c */; };
+		4EF8758F207838D3008A230F /* smq_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87559207838CE008A230F /* smq_utils.h */; };
+		4EF87590207838D3008A230F /* smq_msg.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8755B207838CF008A230F /* smq_msg.c */; };
+		4EF87594207838D3008A230F /* smq_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF87570207838D1008A230F /* smq_os.h */; };
+		4EF87595207838D3008A230F /* smq_inst.c in Sources */ = {isa = PBXBuildFile; fileRef = 4EF87574207838D3008A230F /* smq_inst.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4E183DD120710D9D00252AC0 /* libsmq.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsmq.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E183DDF20710FED00252AC0 /* smq_errors.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_errors.h; sourceTree = "<group>"; };
-		4E183DE020710FED00252AC0 /* smq_utils.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_utils.c; sourceTree = "<group>"; };
-		4E183DE120710FED00252AC0 /* smq_inst.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_inst.c; sourceTree = "<group>"; };
-		4E183DE220710FED00252AC0 /* smq_logs.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_logs.c; sourceTree = "<group>"; };
-		4E183DE320710FED00252AC0 /* smq_res.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = smq_res.h; sourceTree = "<group>"; };
-		4E183DE420710FED00252AC0 /* smq_alignpush.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_alignpush.h; sourceTree = "<group>"; };
-		4E183DE520710FED00252AC0 /* smq_params.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_params.h; sourceTree = "<group>"; };
-		4E183DE620710FED00252AC0 /* smq_limit.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_limit.h; sourceTree = "<group>"; };
-		4E183DE720710FED00252AC0 /* smq_os.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_os.c; sourceTree = "<group>"; };
-		4E183DE820710FED00252AC0 /* smq_alignpop.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_alignpop.h; sourceTree = "<group>"; };
-		4E183DE920710FED00252AC0 /* smq_msg.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_msg.h; sourceTree = "<group>"; };
-		4E183DEA20710FED00252AC0 /* smq_libc.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_libc.h; sourceTree = "<group>"; };
-		4E183DEB20710FED00252AC0 /* smq_utils.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_utils.h; sourceTree = "<group>"; };
-		4E183DEC20710FED00252AC0 /* smq_errors.c */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.c; path = smq_errors.c; sourceTree = "<group>"; };
-		4E183DED20710FED00252AC0 /* smq_inst.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq_inst.h; sourceTree = "<group>"; };
-		4E183DEE20710FED00252AC0 /* smq.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; path = smq.h; sourceTree = "<group>"; };
-		4E183DF120710FED00252AC0 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
-		4E183DF220710FED00252AC0 /* os.c.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
-		4E183DF420710FED00252AC0 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
-		4E183DF520710FED00252AC0 /* smq.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smq.def; sourceTree = "<group>"; };
-		4E183DF620710FED00252AC0 /* os.c.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
-		4E183DF720710FED00252AC0 /* smq_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_os.h; sourceTree = "<group>"; };
-		4E183DF920710FED00252AC0 /* smq_jni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_jni.h; sourceTree = "<group>"; };
-		4E183DFA20710FED00252AC0 /* smq_jni.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_jni.c; sourceTree = "<group>"; };
-		4E183DFB20710FED00252AC0 /* smq_logs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_logs.h; sourceTree = "<group>"; };
-		4E183DFC20710FED00252AC0 /* smq_asserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_asserts.h; sourceTree = "<group>"; };
-		4E183DFD20710FED00252AC0 /* smq_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_params.c; sourceTree = "<group>"; };
-		4E183DFE20710FED00252AC0 /* smq_libc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_libc.c; sourceTree = "<group>"; };
-		4E183DFF20710FED00252AC0 /* smq_msg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_msg.c; sourceTree = "<group>"; };
-		4E183E1D2071114500252AC0 /* os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
-		4E183E1E2071114500252AC0 /* os.c.inc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
+		4EF8752F207838C8008A230F /* Makefile.linux.gcc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.linux.gcc; sourceTree = "<group>"; };
+		4EF87530207838C8008A230F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4EF87531207838C8008A230F /* smq_inst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_inst.h; sourceTree = "<group>"; };
+		4EF87532207838C8008A230F /* smq_limit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_limit.h; sourceTree = "<group>"; };
+		4EF87533207838C8008A230F /* smq_errors.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_errors.c; sourceTree = "<group>"; };
+		4EF87535207838C9008A230F /* smq_logs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_logs.h; sourceTree = "<group>"; };
+		4EF87536207838C9008A230F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		4EF87537207838C9008A230F /* configure */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure; sourceTree = "<group>"; };
+		4EF87538207838C9008A230F /* smq_asserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_asserts.h; sourceTree = "<group>"; };
+		4EF8753C207838CA008A230F /* smq_jni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_jni.h; sourceTree = "<group>"; };
+		4EF8753D207838CA008A230F /* smq_jni.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_jni.c; sourceTree = "<group>"; };
+		4EF8753E207838CA008A230F /* smq_logs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_logs.c; sourceTree = "<group>"; };
+		4EF87540207838CB008A230F /* smq_alignpop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_alignpop.h; sourceTree = "<group>"; };
+		4EF87541207838CB008A230F /* smq_res.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_res.h; sourceTree = "<group>"; };
+		4EF87542207838CB008A230F /* smq_params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_params.h; sourceTree = "<group>"; };
+		4EF87543207838CB008A230F /* smq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq.h; sourceTree = "<group>"; };
+		4EF87544207838CC008A230F /* smq_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_errors.h; sourceTree = "<group>"; };
+		4EF87545207838CC008A230F /* smq_alignpush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_alignpush.h; sourceTree = "<group>"; };
+		4EF87546207838CC008A230F /* smq_libc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_libc.h; sourceTree = "<group>"; };
+		4EF87547207838CD008A230F /* smq_os.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_os.c; sourceTree = "<group>"; };
+		4EF87548207838CD008A230F /* smq_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_params.c; sourceTree = "<group>"; };
+		4EF87552207838CE008A230F /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		4EF87553207838CE008A230F /* os.c.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = os.c.inc; sourceTree = "<group>"; };
+		4EF87558207838CE008A230F /* smq_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_utils.c; sourceTree = "<group>"; };
+		4EF87559207838CE008A230F /* smq_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_utils.h; sourceTree = "<group>"; };
+		4EF8755B207838CF008A230F /* smq_msg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_msg.c; sourceTree = "<group>"; };
+		4EF8755C207838D0008A230F /* Makefile.win.msvc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.win.msvc; sourceTree = "<group>"; };
+		4EF87570207838D1008A230F /* smq_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smq_os.h; sourceTree = "<group>"; };
+		4EF87571207838D1008A230F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4EF87573207838D2008A230F /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
+		4EF87574207838D3008A230F /* smq_inst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = smq_inst.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +82,35 @@
 		4E183DC820710D9D00252AC0 = {
 			isa = PBXGroup;
 			children = (
-				4E183DDE20710FED00252AC0 /* src */,
+				4EF87536207838C9008A230F /* CMakeLists.txt */,
+				4EF87537207838C9008A230F /* configure */,
+				4EF8753B207838CA008A230F /* jni */,
+				4EF87530207838C8008A230F /* LICENSE */,
+				4EF8752F207838C8008A230F /* Makefile.linux.gcc */,
+				4EF8755C207838D0008A230F /* Makefile.win.msvc */,
+				4EF87549207838CE008A230F /* os */,
+				4EF87571207838D1008A230F /* README.md */,
+				4EF87540207838CB008A230F /* smq_alignpop.h */,
+				4EF87545207838CC008A230F /* smq_alignpush.h */,
+				4EF87538207838C9008A230F /* smq_asserts.h */,
+				4EF87533207838C8008A230F /* smq_errors.c */,
+				4EF87544207838CC008A230F /* smq_errors.h */,
+				4EF87574207838D3008A230F /* smq_inst.c */,
+				4EF87531207838C8008A230F /* smq_inst.h */,
+				4EF87546207838CC008A230F /* smq_libc.h */,
+				4EF87532207838C8008A230F /* smq_limit.h */,
+				4EF8753E207838CA008A230F /* smq_logs.c */,
+				4EF87535207838C9008A230F /* smq_logs.h */,
+				4EF8755B207838CF008A230F /* smq_msg.c */,
+				4EF87547207838CD008A230F /* smq_os.c */,
+				4EF87570207838D1008A230F /* smq_os.h */,
+				4EF87548207838CD008A230F /* smq_params.c */,
+				4EF87542207838CB008A230F /* smq_params.h */,
+				4EF87541207838CB008A230F /* smq_res.h */,
+				4EF87558207838CE008A230F /* smq_utils.c */,
+				4EF87559207838CE008A230F /* smq_utils.h */,
+				4EF87543207838CB008A230F /* smq.h */,
+				4EF87573207838D2008A230F /* VERSION */,
 				4E183DD220710D9D00252AC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,80 +123,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4E183DDE20710FED00252AC0 /* src */ = {
+		4EF8753B207838CA008A230F /* jni */ = {
 			isa = PBXGroup;
 			children = (
-				4E183DF820710FED00252AC0 /* jni */,
-				4E183DEF20710FED00252AC0 /* os */,
-				4E183DE820710FED00252AC0 /* smq_alignpop.h */,
-				4E183DE420710FED00252AC0 /* smq_alignpush.h */,
-				4E183DFC20710FED00252AC0 /* smq_asserts.h */,
-				4E183DEC20710FED00252AC0 /* smq_errors.c */,
-				4E183DDF20710FED00252AC0 /* smq_errors.h */,
-				4E183DE120710FED00252AC0 /* smq_inst.c */,
-				4E183DED20710FED00252AC0 /* smq_inst.h */,
-				4E183DFE20710FED00252AC0 /* smq_libc.c */,
-				4E183DEA20710FED00252AC0 /* smq_libc.h */,
-				4E183DE620710FED00252AC0 /* smq_limit.h */,
-				4E183DE220710FED00252AC0 /* smq_logs.c */,
-				4E183DFB20710FED00252AC0 /* smq_logs.h */,
-				4E183DFF20710FED00252AC0 /* smq_msg.c */,
-				4E183DE920710FED00252AC0 /* smq_msg.h */,
-				4E183DE720710FED00252AC0 /* smq_os.c */,
-				4E183DF720710FED00252AC0 /* smq_os.h */,
-				4E183DFD20710FED00252AC0 /* smq_params.c */,
-				4E183DE520710FED00252AC0 /* smq_params.h */,
-				4E183DE320710FED00252AC0 /* smq_res.h */,
-				4E183DE020710FED00252AC0 /* smq_utils.c */,
-				4E183DEB20710FED00252AC0 /* smq_utils.h */,
-				4E183DEE20710FED00252AC0 /* smq.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		4E183DEF20710FED00252AC0 /* os */ = {
-			isa = PBXGroup;
-			children = (
-				4E183E1C207110B300252AC0 /* osx.clang */,
-				4E183DF020710FED00252AC0 /* linux.gcc */,
-				4E183DF320710FED00252AC0 /* win.msvc */,
-			);
-			path = os;
-			sourceTree = "<group>";
-		};
-		4E183DF020710FED00252AC0 /* linux.gcc */ = {
-			isa = PBXGroup;
-			children = (
-				4E183DF120710FED00252AC0 /* os.h */,
-				4E183DF220710FED00252AC0 /* os.c.inc */,
-			);
-			path = linux.gcc;
-			sourceTree = "<group>";
-		};
-		4E183DF320710FED00252AC0 /* win.msvc */ = {
-			isa = PBXGroup;
-			children = (
-				4E183DF420710FED00252AC0 /* os.h */,
-				4E183DF520710FED00252AC0 /* smq.def */,
-				4E183DF620710FED00252AC0 /* os.c.inc */,
-			);
-			path = win.msvc;
-			sourceTree = "<group>";
-		};
-		4E183DF820710FED00252AC0 /* jni */ = {
-			isa = PBXGroup;
-			children = (
-				4E183DF920710FED00252AC0 /* smq_jni.h */,
-				4E183DFA20710FED00252AC0 /* smq_jni.c */,
+				4EF8753C207838CA008A230F /* smq_jni.h */,
+				4EF8753D207838CA008A230F /* smq_jni.c */,
 			);
 			path = jni;
 			sourceTree = "<group>";
 		};
-		4E183E1C207110B300252AC0 /* osx.clang */ = {
+		4EF87549207838CE008A230F /* os */ = {
 			isa = PBXGroup;
 			children = (
-				4E183E1D2071114500252AC0 /* os.h */,
-				4E183E1E2071114500252AC0 /* os.c.inc */,
+				4EF87551207838CE008A230F /* osx.clang */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
+		4EF87551207838CE008A230F /* osx.clang */ = {
+			isa = PBXGroup;
+			children = (
+				4EF87552207838CE008A230F /* os.h */,
+				4EF87553207838CE008A230F /* os.c.inc */,
 			);
 			path = osx.clang;
 			sourceTree = "<group>";
@@ -186,24 +156,21 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E183E0F20710FED00252AC0 /* smq.h in Headers */,
-				4E183E0020710FED00252AC0 /* smq_errors.h in Headers */,
-				4E183E0420710FED00252AC0 /* smq_res.h in Headers */,
-				4E183E0B20710FED00252AC0 /* smq_libc.h in Headers */,
-				4E183E1020710FED00252AC0 /* os.h in Headers */,
-				4E183E1720710FED00252AC0 /* smq_logs.h in Headers */,
-				4E183E0C20710FED00252AC0 /* smq_utils.h in Headers */,
-				4E183E1220710FED00252AC0 /* os.h in Headers */,
-				4E183E0620710FED00252AC0 /* smq_params.h in Headers */,
-				4E183E0A20710FED00252AC0 /* smq_msg.h in Headers */,
-				4E183E0720710FED00252AC0 /* smq_limit.h in Headers */,
-				4E183E1820710FED00252AC0 /* smq_asserts.h in Headers */,
-				4E183E0920710FED00252AC0 /* smq_alignpop.h in Headers */,
-				4E183E0E20710FED00252AC0 /* smq_inst.h in Headers */,
-				4E183E1420710FED00252AC0 /* smq_os.h in Headers */,
-				4E183E1520710FED00252AC0 /* smq_jni.h in Headers */,
-				4E183E1F2071114500252AC0 /* os.h in Headers */,
-				4E183E0520710FED00252AC0 /* smq_alignpush.h in Headers */,
+				4EF87580207838D3008A230F /* smq.h in Headers */,
+				4EF8757E207838D3008A230F /* smq_res.h in Headers */,
+				4EF8758F207838D3008A230F /* smq_utils.h in Headers */,
+				4EF87579207838D3008A230F /* smq_asserts.h in Headers */,
+				4EF87582207838D3008A230F /* smq_alignpush.h in Headers */,
+				4EF87581207838D3008A230F /* smq_errors.h in Headers */,
+				4EF87576207838D3008A230F /* smq_limit.h in Headers */,
+				4EF87583207838D3008A230F /* smq_libc.h in Headers */,
+				4EF87578207838D3008A230F /* smq_logs.h in Headers */,
+				4EF8757A207838D3008A230F /* smq_jni.h in Headers */,
+				4EF8757D207838D3008A230F /* smq_alignpop.h in Headers */,
+				4EF87594207838D3008A230F /* smq_os.h in Headers */,
+				4EF8757F207838D3008A230F /* smq_params.h in Headers */,
+				4EF8758A207838D3008A230F /* os.h in Headers */,
+				4EF87575207838D3008A230F /* smq_inst.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,18 +231,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E183E0320710FED00252AC0 /* smq_logs.c in Sources */,
-				4E183E1120710FED00252AC0 /* os.c.inc in Sources */,
-				4E183E0120710FED00252AC0 /* smq_utils.c in Sources */,
-				4E183E202071114500252AC0 /* os.c.inc in Sources */,
-				4E183E1A20710FED00252AC0 /* smq_libc.c in Sources */,
-				4E183E1620710FED00252AC0 /* smq_jni.c in Sources */,
-				4E183E1320710FED00252AC0 /* os.c.inc in Sources */,
-				4E183E1B20710FED00252AC0 /* smq_msg.c in Sources */,
-				4E183E0220710FED00252AC0 /* smq_inst.c in Sources */,
-				4E183E1920710FED00252AC0 /* smq_params.c in Sources */,
-				4E183E0D20710FED00252AC0 /* smq_errors.c in Sources */,
-				4E183E0820710FED00252AC0 /* smq_os.c in Sources */,
+				4EF87585207838D3008A230F /* smq_params.c in Sources */,
+				4EF87595207838D3008A230F /* smq_inst.c in Sources */,
+				4EF8757C207838D3008A230F /* smq_logs.c in Sources */,
+				4EF8758B207838D3008A230F /* os.c.inc in Sources */,
+				4EF87577207838D3008A230F /* smq_errors.c in Sources */,
+				4EF87590207838D3008A230F /* smq_msg.c in Sources */,
+				4EF8757B207838D3008A230F /* smq_jni.c in Sources */,
+				4EF87584207838D3008A230F /* smq_os.c in Sources */,
+				4EF8758E207838D3008A230F /* smq_utils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
