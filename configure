@@ -31,7 +31,7 @@ function show_help()
     echo    "   --nodebug       Do we need the symbles for debug or not."
     echo    "   --jni           To tell the script to build with the JNI supported."
     echo    "   --toolset=<TOOLSET-NAME>    To special the which toolset whill be used to compile."
-    echo    "                   Currently, we support: 'win.msvc', 'win.mingw', 'win.clang', 'linux.gcc', 'osx.clang'"
+    echo    "                   Currently, we support: 'msvc', 'mingw', 'clang', 'gcc', 'clang'"
     echo    ""
     echo    "Examples:"
     echo    "   ./configuration"
@@ -48,7 +48,7 @@ function show_help()
 function    load_default_options()
 {
     if [ "xWindows_NT" == "x${OS}" ]; then
-        TOOLSET='win.msvc'
+        TOOLSET='msvc'
         MAKE="nmake"
         FLIBNAME='smq'
         FOS="win"
@@ -59,7 +59,7 @@ function    load_default_options()
 
 
     if [ "xlinux" == "x$(uname)" ]; then
-        TOOLSET='linux.gcc'
+        TOOLSET='gcc'
         MAKE="make"
         FLIBNAME='libsmq'
         FOS="linux"
@@ -70,7 +70,7 @@ function    load_default_options()
 
 
     if [ "xDarwin" == "x$(uname)" ]; then
-        TOOLSET='osx.clang'
+        TOOLSET='clang'
         MAKE="make"
         FLIBNAME='libsmq'
         FOS="osx"
@@ -156,9 +156,14 @@ function generage_makefile()
 
 
     #   Replace vars in the makefile-template, and create the real makefile.
+    local tmpl=${SELFDIR}/Makefile.${FOS}.${TOOLSET}
+    if [ ! -f "${tmpl}" ]; then
+        tmpl=${SELFDIR}/Makefile.${TOOLSET}
+    fi
+
     rm  -rf ${SELFDIR}/Makefile
-    dos2unix    -q   ${SELFDIR}/Makefile.${TOOLSET} >& /dev/null
-    cat ${SELFDIR}/Makefile.${TOOLSET}          |   \
+    dos2unix    -q   "${tmpl}" >& /dev/null
+    cat ${tmpl}                                 |   \
     sed "s|@{PROJROOT}|${SELFDIR}|g"            |   \
     sed "s|@{VERSION}|${VERSION}|g"             |   \
     sed "s|@{TOOLSET}|${TOOLSET}|g"             |   \
@@ -172,12 +177,12 @@ function generage_makefile()
     sed "s|@{FSTATICSUFFIX}|${FSTATICSUFFIX}|g" >   ${SELFDIR}/Makefile
     RESULT=$?
     if [ ${RESULT} -ne 0 ]; then
-        echo    "${RESULT}:Generate makefile failed"
+        echo    "${RESULT}:Generate makefile failed: ${SELFDIR}/Makefile (${tmpl})"
         return  ${RESULT}
     fi
 
 
-    echo    "Generate make file success: ${SELFDIR}/Makefile (${SELFDIR}/Makefile.${TOOLSET})"
+    echo    "Generate make file success: ${SELFDIR}/Makefile (${tmpl})"
     return  0
 }
 
