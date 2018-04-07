@@ -9,9 +9,6 @@
 #define smq_free        free
 
 
-//#include <malloc.h>
-
-
 #include <string.h>
 #define smq_memcpy      memcpy
 #define smq_memset      memset
