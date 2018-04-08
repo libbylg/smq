@@ -81,8 +81,8 @@ LDFLAGS=$(LDFLAGS) -m64
 
 
 #   Archive tool and options
-AR=ar
-ARFLAGS=
+AR=Lib.exe
+ARFLAGS=/OUT:"$(STATIC_LIB)" /NOLOGO
 !if "$(FBITS)" == "32"
 ARFLAGS=$(ARFLAGS) -m32
 !else
@@ -95,20 +95,20 @@ build:$(STATIC_LIB) $(DYNMIC_LIB)
 
 
 clean:
-	rm  -rf  $(PACKAGE)  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
+	DEL /Q /F $(PACKAGE)  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
 
 
 package:$(STATIC_LIB) $(DYNMIC_LIB)
-	rm      -rf     $(PROJROOT)/smq-$(VERSION).zip
-	rm      -rf     $(ODIR)/pkg
-	mkdir   -p      $(ODIR)/pkg/lib
-	mkdir   -p      $(ODIR)/pkg/include
-	cp      $(STATIC_LIB)       $(ODIR)/pkg/lib     &&  \
-	cp      $(DYNMIC_LIB)       $(ODIR)/pkg/lib     &&  \
-	cp      $(PROJROOT)/smq.h   $(ODIR)/pkg/include &&  \
-	cd      $(ODIR)/pkg                             &&  \
+	DEL /Q /F $(PROJROOT)/smq-$(VERSION).zip
+	DEL /Q /F $(ODIR)/pkg
+	MKDIR   $(ODIR)/pkg/lib
+	MKDIR   $(ODIR)/pkg/include
+	COPY    $(STATIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	COPY    $(DYNMIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	COPY    $(PROJROOT)/smq.h   $(ODIR)/pkg/include &&  \
+	COPY    $(ODIR)/pkg                             &&  \
 	zip     smq-$(VERSION).zip  *                   &&  \
-	cp      smq-$(VERSION).zip  $(PROJROOT)
+	COPY    smq-$(VERSION).zip  $(PROJROOT)
 
 
 #   Create the static library

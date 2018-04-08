@@ -16,7 +16,7 @@ FLIBNAME=@{FLIBNAME}
 
 #=============================================
 ODIR=$(PROJROOT)/lib
-
+TDIR=$(PROJROOT)/out
 
 STATIC_LIB=$(ODIR)/$(FLIBNAME).$(FSTATICSUFFIX)
 
@@ -36,25 +36,42 @@ SRCS=\
     smq_params.c    \
     smq_utils.c
 !IF    "$(FJNI)" == "jni"
-SRCS+=jni\smq_jni.c
+SRCS=$(SRCS) "jni\smq_jni.c"
 !ENDIF
 
 
-OBJS=$(SRCS:.c=.o)
+OBJS=$(SRCS:.c=.obj)
 
 
-INCS=-I.
+INCS=/I"."
 !IF    "$(FJNI)" == "jni"
-INCS+=-Ijni
+INCS=$(INCS) /I"jni"
 !ENDIF
 
 
-LIBS=-c -lpthread
+LIBS=\
+	"kernel32.lib" 	\
+	"user32.lib" 	\
+	"gdi32.lib" 	\
+	"winspool.lib" 	\
+	"comdlg32.lib" 	\
+	"advapi32.lib" 	\
+	"shell32.lib" 	\
+	"ole32.lib" 	\
+	"oleaut32.lib" 	\
+	"uuid.lib" 		\
+	"odbc32.lib" 	\
+	"odbccp32.lib"
 
 
 #   Compile tool and options
 CC=cl.exe
-CCFLAGS=/Zi /nologo /W3 /WX- /O2 /Oi /GL /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "SMQ_EXPORTS" /D "_WINDLL" /D "_MBCS" /Gm- /EHsc /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fp"out\Win32-Release\smq.pch" /Fa"out\Win32-Release\" /Fo"out\Win32-Release\" /Fd"out\Win32-Release\vc100.pdb" /Gd /TP /errorReport:queue 
+CCFLAGS=\
+	/Zi /nologo /W3 /WX- /O2 /Oi /GL 						\
+	/D "WIN32" /D "_WINDOWS" /D "_USRDLL" 					\
+	/D "SMQ_EXPORTS" /D "_WINDLL" /D "_MBCS" 				\
+	/Gm- /EHsc /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope \
+	/Gd /TP /errorReport:queue
 !if "$(FDEBUG)" == "d"
 CCFLAGS=$(CCFLAGS)  /D "DEBUG"
 !else
@@ -69,7 +86,13 @@ CCFLAGS=$(CCFLAGS) -m64
 
 #   Linker tool and options
 LD=link.exe
-LDFLAGS=/OUT:"out\Win32-Release\smq.dll" /INCREMENTAL:NO /NOLOGO /DLL "kernel32.lib" "user32.lib" "gdi32.lib" "winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" "oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib" /DEF:"os\win.msvc\smq.def" /MANIFEST:NO /ManifestFile:"out\Win32-Release\smq.dll.intermediate.manifest" /ALLOWISOLATION /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"out\Win32-Release\smq.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /PGD:"out\Win32-Release\smq.pgd" /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /ERRORREPORT:QUEUE 
+LDFLAGS=\
+	/OUT:"out\Win32-Release\smq.dll" /INCREMENTAL:NO 		\
+	/NOLOGO /DLL  /DEF:"os\win.msvc\smq.def" /MANIFEST:NO 	\
+	/ALLOWISOLATION uiAccess='false'" 						\
+	/PDB:"$(TDIR)\smq.pdb" /SUBSYSTEM:WINDOWS 				\
+	/OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT \
+	/MACHINE:X86 /ERRORREPORT:QUEUE
 !if "$(FDEBUG)" == "d"
 LDFLAGS=$(LDFLAGS)  /DEBUG
 !endif
@@ -81,8 +104,8 @@ LDFLAGS=$(LDFLAGS) -m64
 
 
 #   Archive tool and options
-AR=ar
-ARFLAGS=
+AR=Lib.exe
+ARFLAGS=/OUT:"$(STATIC_LIB)" /NOLOGO
 !if "$(FBITS)" == "32"
 ARFLAGS=$(ARFLAGS) -m32
 !else
@@ -95,20 +118,20 @@ build:$(STATIC_LIB) $(DYNMIC_LIB)
 
 
 clean:
-	rm  -rf  $(PACKAGE)  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
+	DEL /Q /F $(PACKAGE)  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
 
 
 package:$(STATIC_LIB) $(DYNMIC_LIB)
-	rm      -rf     $(PROJROOT)/smq-$(VERSION).zip
-	rm      -rf     $(ODIR)/pkg
-	mkdir   -p      $(ODIR)/pkg/lib
-	mkdir   -p      $(ODIR)/pkg/include
-	cp      $(STATIC_LIB)       $(ODIR)/pkg/lib     &&  \
-	cp      $(DYNMIC_LIB)       $(ODIR)/pkg/lib     &&  \
-	cp      $(PROJROOT)/smq.h   $(ODIR)/pkg/include &&  \
-	cd      $(ODIR)/pkg                             &&  \
+	DEL /Q /F $(PROJROOT)/smq-$(VERSION).zip
+	DEL /Q /F $(ODIR)/pkg
+	MKDIR   $(ODIR)/pkg/lib
+	MKDIR   $(ODIR)/pkg/include
+	COPY    $(STATIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	COPY    $(DYNMIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	COPY    $(PROJROOT)/smq.h   $(ODIR)/pkg/include &&  \
+	COPY    $(ODIR)/pkg                             &&  \
 	zip     smq-$(VERSION).zip  *                   &&  \
-	cp      smq-$(VERSION).zip  $(PROJROOT)
+	COPY    smq-$(VERSION).zip  $(PROJROOT)
 
 
 #   Create the static library
@@ -121,6 +144,6 @@ $(DYNMIC_LIB):$(OBJS)
 	$(LD)   $(LDFLAGS) $(LIBS) $(OBJS) -o  $@
 
 
-%.o:%.c
-	$(CC)   $(CCFLAGS) $(INCS) -c  $<  -o  $@
+.c.obj:
+	$(CC)   $(CCFLAGS) $(INCS) /c  $<
 

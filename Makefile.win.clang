@@ -93,20 +93,20 @@ build:$(STATIC_LIB) $(DYNMIC_LIB)
 
 
 clean:
-	rm  -rf  ${PACKAGE}  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
+	rm  -rf  $(PACKAGE)  $(STATIC_LIB)  $(DYNMIC_LIB)  $(OBJS)  $(ODIR)
 
 
 package:$(STATIC_LIB) $(DYNMIC_LIB)
-	rm      -rf     $(PROJROOT)/smq-${VERSION}.zip
-	rm      -rf     ${ODIR}/pkg
-	mkdir   -p      ${ODIR}/pkg/lib
-	mkdir   -p      ${ODIR}/pkg/include
-	cp      $(STATIC_LIB)       ${ODIR}/pkg/lib     &&  \
-	cp      $(DYNMIC_LIB)       ${ODIR}/pkg/lib     &&  \
-	cp      $(PROJROOT)/smq.h   ${ODIR}/pkg/include &&  \
-	cd      ${ODIR}/pkg                             &&  \
-	zip     smq-${VERSION}.zip  *                   &&  \
-	cp      smq-${VERSION}.zip  $(PROJROOT)
+	rm      -rf     $(PROJROOT)/smq-$(VERSION).zip
+	rm      -rf     $(ODIR)/pkg
+	mkdir   -p      $(ODIR)/pkg/lib
+	mkdir   -p      $(ODIR)/pkg/include
+	cp      $(STATIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	cp      $(DYNMIC_LIB)       $(ODIR)/pkg/lib     &&  \
+	cp      $(PROJROOT)/smq.h   $(ODIR)/pkg/include &&  \
+	cd      $(ODIR)/pkg                             &&  \
+	zip     smq-$(VERSION).zip  *                   &&  \
+	cp      smq-$(VERSION).zip  $(PROJROOT)
 
 
 #   Create the static library
