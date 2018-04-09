@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+*.map
 
 # Kernel Module Compile Results
 *.mod*
@@ -63,3 +64,7 @@ ipch
 out
 .idea
 Makefile
+cmake-build-debug
+.vscode
+CMakeCache.txt
+cmake_install.cmake
