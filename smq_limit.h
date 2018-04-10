@@ -39,21 +39,11 @@
 
 
 
-
-/// 定义了系统所能支持的内存布局版本的范围
-///@{
-#define SMQ_SUPPORTED_LAYOUT_VERSION_MIN        (0x0001)    ///<    当前系统所能支持的最小版本号
-#define SMQ_SUPPORTED_LAYOUT_VERSION_MAX        (0x0001)    ///<    当前系统所能支持的最小版本号
-///@}
-
-
-
-
 /// 定义了当地语言支持
 ///@{
-#define SMQ_LOCALE_MIN                          (0)
-#define SMQ_LOCALE_DEF                          (1)
-#define SMQ_LOCALE_MAX                          (1)
+#define SMQ_LOCALE_MIN                          (SMQ_LOCALE_ZH_CN)
+#define SMQ_LOCALE_DEF                          (SMQ_LOCALE_ZH_CN)
+#define SMQ_LOCALE_MAX                          (SMQ_LOCALE_EN_US)
 #define SMQ_LOCALE_COUNT                        ((SMQ_LOCALE_MAX - SMQ_LOCALE_MIN) + 1)
 ///@}
 

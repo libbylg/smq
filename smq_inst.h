@@ -58,7 +58,7 @@ typedef struct
 {
     smq_uint32  block_size;
     smq_uint32  block_count;
-    smq_uint32  idle_block_last;
+    smq_uint32  block_last;
 }smq_alloc_queue_t;
 
 

@@ -24,5 +24,8 @@
 #define smq_printf      printf
 
 
+#include <stdarg.h>
+
+
 #endif
 

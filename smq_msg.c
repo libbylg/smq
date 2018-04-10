@@ -26,7 +26,7 @@ static smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
 
 static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 {
-    if (SMQ_MSG_NULL == queue->idle_block_last)
+    if (SMQ_MSG_NULL == queue->block_last)
     {
         return SMQ_MSG_NULL;
     }
@@ -34,12 +34,12 @@ static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
     smq_msg msg = SMQ_MSG_NULL;
 
     //  如果队列不为空
-    smq_block_t* last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
+    smq_block_t* last  = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->block_last);
     smq_block_t* first = (smq_block_t*)SMQ_ADDRESS_OF(smq, last->next);
     if (last == first)
     {
-        msg = queue->idle_block_last;
-        queue->idle_block_last = SMQ_MSG_NULL;
+        msg = queue->block_last;
+        queue->block_last = SMQ_MSG_NULL;
         last->next = SMQ_MSG_NULL;
     }else
     {
@@ -60,12 +60,12 @@ static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
     smq_alloc_queue_t* queue = (smq_alloc_queue_t*)smq->alloc_queues[cur_block->queue_index];
 
     //  找到本队列的最后一个块，然后将当前要回收的块连接上去
-    smq_block_t* queue_last = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->idle_block_last);
+    smq_block_t* queue_last = (smq_block_t*)SMQ_ADDRESS_OF(smq, queue->block_last);
     cur_block->next  = queue_last->next;
     queue_last->next = msg;
 
     //  修改当前队列的最后一个块的指针
-    queue->idle_block_last = msg;
+    queue->block_last = msg;
     return SMQ_OK;
 }
 

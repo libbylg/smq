@@ -17,13 +17,8 @@ smq_log_t smq_logs[SMQ_LOG_COUNT] =
 static  SMQ_TLS smq_char    smq_log_cache[SMQ_LOG_CACHE_LEN_MAX];
 
 
-SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uint32 id, smq_char* format, ...)
+SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 level, smq_uint32 id, smq_char* format, ...)
 {
-    if ((loc < SMQ_LOCALE_MIN) || (loc > SMQ_LOCALE_MAX))
-    {
-        loc = SMQ_LOCALE_DEF;
-    }
-
     if (level < SMQ_LOG_LEVEL_MIN)
     {
         level = SMQ_LOG_LEVEL_MIN;
@@ -50,5 +45,6 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 loc, smq_uint32 level, smq_uin
     smq_int32 n = smq_vsnprintf(smq_log_cache, sizeof(smq_log_cache), format, vargs);
     va_end(vargs);
 
+    smq_uint32 loc = smq_params.locale;
     (*(smq_params.log_func))(smq_params.log_context, id, level, loc, log->desc[loc], log->len[loc], smq_log_cache, n);
 }

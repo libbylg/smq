@@ -29,8 +29,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_error(smq_errno err, smq_uint32 
         return SMQ_ERR_UNDEFINED_LOC;
     }
 
-    smq_int32 index = err - SMQ_ERR_UPPER_LIMIT;
-    smq_error_t* error = &(smq_errors[index]);
+    smq_error_t* error = &(smq_errors[err - SMQ_ERR_UPPER_LIMIT]);
 
     smq_uint32 copy_len = smq_min(error->len[loc], sizeof(smq_value_t));
     smq_memcpy(desc->value_str, error->desc[loc], copy_len);

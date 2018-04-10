@@ -33,6 +33,7 @@ static smq_void smq_layout_map(smq_t* smq)
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
         smq->mssge_queues[i]    =   (smq_mssge_queue_t*)smq_cut(&pos, sizeof(smq_mssge_queue_t));
+        smq_cut(&pos, (smq->mssge_queues[i]->size * sizeof(smq_uint32)));
     }
 
     smq->heap_data  =   SMQ_ADDRESS_OF(smq, smq->entry->heap_data);
@@ -43,7 +44,9 @@ static smq_void smq_layout_map(smq_t* smq)
 
 static smq_void smq_layout_alloc_queues_init(smq_t* smq)
 {
-    smq_uint32  each_size   =   smq->entry->heap_len;
+    //  共享内存被等分为固定的等大小的几块，这里算出买个块的大小
+    smq_uint32  each_size   =   smq->entry->heap_len / SMQ_ALLOC_QUEUES_COUNT;
+    SMQ_ASSERT(0 == (each_size % SMQ_ALLOC_BLOCK_SIZE_MAX), "堆的总长度应该总是 SMQ_ALLOC_BLOCK_SIZE_MAX 的整数倍");
 
     smq_uint8* pos = smq->heap_data;
     for (smq_uint32 q = 0; q < smq->entry->alloc_queues_count; q++)
@@ -76,7 +79,7 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
 
         //  队列的指针总是指向最后一个内存块，而最后一块内存总是指向第一块内存
         //  这样形成一个环状，无论是向对位添加内存块还是从队首获取内存块都非常方便
-        queue->idle_block_last = SMQ_OFFSETS_OF(smq, last);
+        queue->block_last = SMQ_OFFSETS_OF(smq, last);
         last->next = SMQ_OFFSETS_OF(smq, first);
     }
 }

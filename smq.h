@@ -92,8 +92,8 @@
 
 /// 定义了语言相关的几个宏
 ///@{
-#define SMQ_LOCALE_ENUS             (0)         ///<    英文
-#define SMQ_LOCALE_ZHCN             (1)         ///<    中文
+#define SMQ_LOCALE_ZH_CN            (0)         ///<    中文
+#define SMQ_LOCALE_EN_US            (1)         ///<    英文
 ///@}
 
 
