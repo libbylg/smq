@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 project(smq)
 
 
@@ -34,6 +34,11 @@ if (DEBUG)
 else (DEBUG)
     LIST(APPEND CCDEFS -DNDEBUG)
 endif (DEBUG)
+
+#   Sprcial the language to c++ for VC
+if (defined MSVC)
+set_source_files_properties(${SRCS} PROPERTIES LANGUAGE CXX)
+endif(defined MSVC)
 
 
 #   Defined the targets
