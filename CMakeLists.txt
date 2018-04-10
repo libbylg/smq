@@ -4,7 +4,6 @@ project(smq)
 
 #   Define some global options
 option(JNI "Need JNI support" OFF)
-option(BITS64 "Generate 32-bits or 64-bits target" OFF)
 option(DEBUG "Generate symbols for debug" OFF)
 
 
@@ -26,8 +25,6 @@ if (JNI)
     LIST(APPEND INCS jni)
 endif (JNI)
 
-if (BITS64)
-endif (BITS64)
 
 if (DEBUG)
     LIST(APPEND CCDEFS -DDEBUG)
@@ -36,9 +33,10 @@ else (DEBUG)
 endif (DEBUG)
 
 #   Sprcial the language to c++ for VC
-if (defined MSVC)
+if (MSVC)
 set_source_files_properties(${SRCS} PROPERTIES LANGUAGE CXX)
-endif(defined MSVC)
+LIST(APPEND SRCS os/win.msvc/smq.def)
+endif(MSVC)
 
 
 #   Defined the targets
