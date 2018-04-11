@@ -28,6 +28,7 @@ SMQ_ERR(SMQ_ERR_MSSGE_QUEUE_FULL,                   224,    "消息队列已满",     
 SMQ_ERR(SMQ_ERR_READONLY_INST_UNSUPPORT_MSG_WRITE,  225,    "只读实例不支持执行 smq_msg_write 操作",         "")
 SMQ_ERR(SMQ_ERR_END_OF_MSG_CAN_NOT_READ,            226,    "已经到达消息末尾，无法继续读取",                 "")
 SMQ_ERR(SMQ_ERR_END_OF_MSG_NO_NEXT,                 227,    "已经到达消息末尾，不存在下一个节点",             "")
+SMQ_ERR(SMQ_ERR_UNSUPPORTED_LAYOUT_VERSION,         228,    "不支持该版本的共享内存布局",                    "")
 
 
 SMQ_LOG(SMQ_LOG_LOWER_LIMIT,                        1000,   "",                                            "")

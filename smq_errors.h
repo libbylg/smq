@@ -13,12 +13,12 @@ enum    smq_error_naming
 #undef  SMQ_LOG
     SMQ_ERR_UPPER_LIMIT,
 
-    SMQ_ERR_COUNT = (SMQ_ERR_UPPER_LIMIT - SMQ_ERR_LOWER_LIMIT)
+    SMQ_ERR_COUNT = (SMQ_ERR_UPPER_LIMIT - SMQ_ERR_LOWER_LIMIT),
 };
 
 typedef struct
 {
-    smq_int32   id;
+    smq_int16   id;
     smq_uint16  len[SMQ_LOCALE_COUNT];
     smq_char*   desc[SMQ_LOCALE_COUNT];
 }smq_error_t;

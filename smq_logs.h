@@ -16,17 +16,17 @@ enum    smq_log_naming
 #undef  SMQ_LOG
     SMQ_LOG_UPPER_LIMIT,
 
-    SMQ_LOG_COUNT = (SMQ_LOG_UPPER_LIMIT - SMQ_LOG_LOWER_LIMIT)
+    SMQ_LOG_COUNT = (SMQ_LOG_UPPER_LIMIT - SMQ_LOG_LOWER_LIMIT),
 };
 
 typedef struct
 {
-    smq_int32   id;
+    smq_int16   id;
     smq_uint16  len[SMQ_LOCALE_COUNT];
     smq_char*   desc[SMQ_LOCALE_COUNT];
 }smq_log_t;
 
-extern  smq_log_t smq_logs[SMQ_LOG_UPPER_LIMIT - SMQ_LOG_LOWER_LIMIT];
+extern  smq_log_t smq_logs[SMQ_LOG_COUNT];
 
 
 

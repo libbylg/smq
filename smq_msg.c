@@ -24,7 +24,7 @@ static smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
 
 
 
-static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
+inline  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 {
     if (SMQ_MSG_NULL == queue->block_last)
     {
@@ -41,7 +41,8 @@ static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
         msg = queue->block_last;
         queue->block_last = SMQ_MSG_NULL;
         last->next = SMQ_MSG_NULL;
-    }else
+    }
+    else
     {
         msg = last->next;
         last->next = first->next;
@@ -52,7 +53,7 @@ static  smq_msg  smq_queue_pop_front(smq_t* smq, smq_alloc_queue_t* queue)
 
 
 
-static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
+inline  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
 {
     smq_block_t* cur_block = (smq_block_t*)SMQ_ADDRESS_OF(smq, msg);
 
@@ -73,7 +74,7 @@ static  smq_msg  smq_queue_push_back(smq_t* smq, smq_msg msg)
 
 
 /// 推进迭代器，但是返回推进之前的消息
-static smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
+inline smq_msg smq_itr_advance(smq_t* smq, smq_msg* itr)
 {
     smq_msg ret = *itr;
     *itr = ((smq_block_t*)SMQ_ADDRESS_OF(smq, *itr))->next;
@@ -420,7 +421,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_peek(smq_inst inst, smq_uint
 }
 
 
-static smq_void   SMQ_CALL    smq_msg_fill(smq_t* smq, smq_msg msg, smq_uint8** data, smq_uint32* len)
+inline smq_void   SMQ_CALL    smq_msg_fill(smq_t* smq, smq_msg msg, smq_uint8** data, smq_uint32* len)
 {
     smq_uint8* filled     = SMQ_NULL;
     smq_uint32 filled_len = 0;

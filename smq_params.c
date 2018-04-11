@@ -147,7 +147,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_
     case SMQ_PARAM_VERSIONS:
         return  SMQ_ERR_PARAM_UNSUPPORTED_SET_KEY;
     default:
-        return SMQ_ERR_PARAM_UNSUPPORTED_GET_KEY;
+        return SMQ_ERR_PARAM_UNSUPPORTED_KEY;
     }
 }
 

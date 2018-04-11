@@ -57,9 +57,9 @@
 #define SMQ_NULL    NULL
 #else 
 #ifdef __cplusplus
-#define SMQ_NULL	(0)
+#define SMQ_NULL    (0)
 #else
-#define SMQ_NULL	((void *)0)
+#define SMQ_NULL    ((void *)0)
 #endif
 #endif
 ///@}
