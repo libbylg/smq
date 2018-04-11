@@ -6,7 +6,7 @@
 #include "smq_logs.h"
 
 
-static smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
+inline smq_int32    smq_alloc_queue_index(smq_t* smq, smq_uint32 size)
 {
     smq_uint32 expect_size = size + sizeof(smq_block_t);
 

@@ -51,7 +51,7 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
     smq_uint8* pos = smq->heap_data;
     for (smq_uint32 q = 0; q < smq->entry->alloc_queues_count; q++)
     {
-        smq_alloc_queue_t* queue = (smq_alloc_queue_t*)(smq->alloc_queues[q]);
+        smq_alloc_queue_t* queue = smq->alloc_queues[q];
         queue->block_size   =   SMQ_MEMORY_BLOCK_SIZE_MAX >> (smq->entry->alloc_queues_count - (q + 1));
         queue->block_count  =   each_size / queue->block_size;
         
@@ -225,7 +225,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
 
     //  ´´½¨smqÊµÀý
-    smq_t* smq = (smq_t*)malloc(sizeof(smq_t));
+    smq_t* smq = (smq_t*)smq_malloc(sizeof(smq_t));
     if (SMQ_NULL == smq)
     {
         return SMQ_ERR_MALLOC_FAILED;
