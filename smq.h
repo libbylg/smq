@@ -69,7 +69,7 @@
 /// 定义了接口中用到的几个重要类型，以及这些类型相关的几个基本常量
 #define smq_errno               smq_int32       ///<    错误码类型
 #define smq_msg                 smq_uint32      ///<    消息类型
-#define smq_inst                smq_void*       ///<    smq实例类型
+#define smq_inst                smq_void*       ///<    SMQ 实例类型
 #define SMQ_OK                  (0)             ///<    表示成功的错误码
 #define SMQ_MSG_NULL            (0)             ///<    无效消息
 #define SMQ_INST_NULL           SMQ_NULL        ///<    定义了无效实例对象
@@ -77,20 +77,20 @@
 
 
 
-/// 下面定义了获取和设置参数相关的信息
+/// 下面定义了获取和设置参数相关的信息，主要用于 #smq_param_xxx 三个函数
 /// @{
-#define SMQ_PARAM_LOG_LEVEL         (0)         ///<    (get/set smq_uint32)日志级别
-#define SMQ_PARAM_LOG_TARGET        (1)         ///<    (---/set smq_ptr[2])日志回调函数
-#define SMQ_PARAM_MEMORY_SIZE       (2)         ///<    (get/set smq_uint32)共享内存大小
-#define SMQ_PARAM_QUEUE_SIZE        (3)         ///<    (get/set smq_uint32)消息队列大小
-#define SMQ_PARAM_VERSIONS          (4)         ///<    (get/--- smq_uint32[2])当前所支持的共享内存的版本号范围
-#define SMQ_PARAM_LOCALE            (5)         ///<    (get/set smq_uint32)本地语言信息
+#define SMQ_PARAM_LOG_LEVEL         (0)         ///<    (get/set smq_uint32)日志级别，允许的日志级别参见 #SMQ_LOG_LEVEL_XXX 系列常量，缺省日志级别是 #SMQ_LOG_LEVEL_INFO
+#define SMQ_PARAM_LOG_TARGET        (1)         ///<    (---/set smq_ptr[2])日志回调函数，输入参数为两个指针，第一个为上下回调上下文参数，第二个为回调函数，函数原型为 #SMQ_LOGGER_FUNC
+#define SMQ_PARAM_MEMORY_SIZE       (2)         ///<    (get/set smq_uint32)共享内存大小，单位是 M，取值范围参见 #SMQ_MEMORY_SIZE_XXX 系列常量
+#define SMQ_PARAM_QUEUE_SIZE        (3)         ///<    (get/set smq_uint32)消息队列大小，该参数决定了允许缓存的消息队列的个数，取值范围及缺省值参见 #SMQ_MESSAGE_QUEUE_SIZE_XXX 系列常量
+#define SMQ_PARAM_VERSIONS          (4)         ///<    (get/--- smq_uint32[2])当前所支持的共享内存的版本号范围，该参数为内部常量，不支持设置
+#define SMQ_PARAM_LOCALE            (5)         ///<    (get/set smq_uint32)本地语言信息，参见 #SMQ_LOCALE_XXX 系列常量
 /// @}
 
 
 
 
-/// 定义了语言相关的几个宏
+/// 定义了语言相关的几个宏，用于 #smq_param_xxx 系列函数，当输入参数的 key 为 #SMQ_PARAM_LOCALE 时起作用。
 ///@{
 #define SMQ_LOCALE_ZH_CN            (0)         ///<    中文
 #define SMQ_LOCALE_EN_US            (1)         ///<    英文
@@ -99,11 +99,11 @@
 
 
 
-/// 角色分类
+/// 角色分类，用于 #smq_open 函数
 ///@{
-#define SMQ_ROLE_LEADER             (0)         ///<    主控对象
-#define SMQ_ROLE_FOLLOWER           (1)         ///<    从控对象
-#define SMQ_ROLE_VIEWER             (2)         ///<    观察者对象
+#define SMQ_ROLE_LEADER             (0)         ///<    主控对象，可以对打开的 SMQ 实例执行修改
+#define SMQ_ROLE_FOLLOWER           (1)         ///<    从控对象，可以对打开的 SMQ 实例执行修改
+#define SMQ_ROLE_VIEWER             (2)         ///<    观察者对象，使用这种角色得开或者创建的 SMQ 实例是只读的，任何一个 SMQ 实例，只能有一个主和一个从对象控制，但是可以有多个观察者对象
 ///@}
 
 
@@ -115,19 +115,19 @@
 #define SMQ_LOG_LEVEL_INFO          (1)         ///<    信息级别
 #define SMQ_LOG_LEVEL_WARN          (2)         ///<    警告级别
 #define SMQ_LOG_LEVEL_ERROR         (3)         ///<    错误级别
-#define SMQ_LOG_LEVEL_OFF           (4)         ///<    关闭日志
+#define SMQ_LOG_LEVEL_OFF           (4)         ///<    关闭日志，日志级别可以用于 #smq_param_xxx 系列函数，但是不能用于写日志
 ///@}
 
 
 
 /// 定义了几个基本常量
 ///@{
-#define SMQ_MAPPING_NAME_LEN_MAX    (100)       ///<    共享内存映射名称的最大长度(不含\0)
+#define SMQ_MAPPING_NAME_LEN_MAX    (100)       ///<    共享内存映射名称的最大长度(不含\0)，用于 #smq_open 函数
 ///@}
 
 
 
-/// 定义了dump数据的范围
+/// 定义了 dump 数据的范围，用于 #smq_dump 和 #smq_parser 的回调函数
 ///@{
 #define SMQ_DUMP_RANGE_HEAP_HEAD    (0x0001)    ///<    Dump 共享内存头部
 #define SMQ_DUMP_RANGE_HEAP_DATA    (0x0002)    ///<    Dump 共享内存数据区
@@ -145,10 +145,10 @@ typedef union
 {
     smq_char    value_str[256];                 ///<    字符串类型的值
     smq_uint32  value_uint32;                   ///<    uint32 类型的值
-    smq_uint16  value_int32;                    ///<    int32 类型的值
+    smq_uint32  value_int32;                    ///<    int32 类型的值
     smq_void*   value_ptr;                      ///<    指针类型的值
     smq_uint32  value_uint32s[0];               ///<    uint32 类型的数组
-    smq_uint16  value_int32s[0];                ///<    int32 类型的数组
+    smq_uint32  value_int32s[0];                ///<    int32 类型的数组
     smq_void*   value_ptrs[0];                  ///<    指针数组
 }smq_value_t;
 #if   defined(_MSC_VER)
@@ -169,12 +169,11 @@ typedef union
 /// \param  desc_len    [in]    desc 的长度，不包括\0.
 /// \param  dynamic     [in]    日志的动态信息，一般是日志上下文的参数，参数的是 key1=vaule1,key2=vaule2,... 形式的多个 key-value 对，但并不保证 value 部分不包括字符'='或者','.
 /// \param  dynamic_len [in]    dynamic 的长度，不包括\0.
-typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
+typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_int32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
 
 
 
-
-/// Dump共享内存详情
+/// Dump SMQ 实例中共享内存的数据
 ///
 /// \param  context     [in]    Dump 上下文，该参数来源自调用 #smq_dump 时的同名输入参数
 /// \param  flag        [in]    用于标记 Dump 的阶段，0 表示 Dump 开始，0xFFFFFFFF 表示 Dump 结束，其他值表示 Dump 的数据输出阶段。当处于 Dump 开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
@@ -184,6 +183,18 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_uint32 id
 typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
 
 
+
+
+//  对 Dump 出来的数据进行解析
+//
+//  \param  context     [in]    解析上下文参数，来自于 #smq_parse 的同名输入参数
+//  \param  flag        [in]    用于标记 Dump 的阶段，0 表示解析开始，0xFFFFFFFF 表示解析结束，其他值表示解析的数据输出阶段。当处于解析开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
+//  \param  action      [in]    解析采用了 Access 模式，该参数用于决定当前的解析动作，参见 #SMQ_ACTION_XXX 系列宏
+//  \param  data_name   [in]    数据的内部名称
+//  \param  data_type   [in]    数据的类型
+//  \param  data        [in]    数据的内容
+//  \param  len         [in]    数据的长度
+//  \return 返回 0 表示执行需要继续执行后面的解析操作，否则，将终止后续的操作。
 typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 flag, smq_int32 action, smq_uint32 node, smq_uint32 data_type, smq_void* data, smq_uint32 len);
 
 
