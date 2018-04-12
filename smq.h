@@ -36,6 +36,7 @@
 
 
 
+
 /// 定义了所有的基本常量
 ///@{
 #define smq_uint32  unsigned int
@@ -63,6 +64,7 @@
 #endif
 #endif
 ///@}
+
 
 
 
@@ -120,6 +122,7 @@
 
 
 
+
 /// 定义了几个基本常量
 ///@{
 #define SMQ_MAPPING_NAME_LEN_MAX    (100)       ///<    共享内存映射名称的最大长度(不含\0)，用于 #smq_open 函数
@@ -173,6 +176,7 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_int32 id,
 
 
 
+
 /// Dump SMQ 实例中共享内存的数据
 ///
 /// \param  context     [in]    Dump 上下文，该参数来源自调用 #smq_dump 时的同名输入参数
@@ -190,12 +194,13 @@ typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 fl
 //  \param  context     [in]    解析上下文参数，来自于 #smq_parse 的同名输入参数
 //  \param  flag        [in]    用于标记 Dump 的阶段，0 表示解析开始，0xFFFFFFFF 表示解析结束，其他值表示解析的数据输出阶段。当处于解析开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
 //  \param  action      [in]    解析采用了 Access 模式，该参数用于决定当前的解析动作，参见 #SMQ_ACTION_XXX 系列宏
-//  \param  data_name   [in]    数据的内部名称
+//  \param  data_name   [in]    数据的内部名称，以\0结束
 //  \param  data_type   [in]    数据的类型
 //  \param  data        [in]    数据的内容
 //  \param  len         [in]    数据的长度
 //  \return 返回 0 表示执行需要继续执行后面的解析操作，否则，将终止后续的操作。
-typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 flag, smq_int32 action, smq_uint32 node, smq_uint32 data_type, smq_void* data, smq_uint32 len);
+typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 flag, smq_int32 action, smq_char* data_name, smq_uint32 data_type, smq_void* data, smq_uint32 len);
+
 
 
 
