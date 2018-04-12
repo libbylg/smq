@@ -139,6 +139,34 @@
 
 
 
+/// 解析动作，出现在解析回调函数的参数中，参见 #SMQ_PARSER_FUNC
+/// 
+///@{
+#define SMQ_PARSE_ACTION_ENTER    (0)           ///<    对于层次性结构，子结构解析开始
+#define SMQ_PARSE_ACTION_LEAVE    (1)           ///<    对于层次性结构，子结构解析结束
+#define SMQ_PARSE_ACTION_ATOMIC   (2)           ///<    原子字段
+///@}
+
+
+
+
+/// 解析类型，用于 #SMQ_PARSER_FUNC 函数，用于表示数据类型
+///
+///@{
+#define SMQ_PARSE_TYPE_VOID         (0)     ///<    无效类型
+#define SMQ_PARSE_TYPE_CHAR         (1)     ///<    字符类型
+#define SMQ_PARSE_TYPE_INT          (2)     ///<    带符号位的整数，整数的长度，由 data_len 参数确定
+#define SMQ_PARSE_TYPE_UINT         (3)     ///<    不带符号位的整数，整数的长度，由 data_len 参数确定
+#define SMQ_PARSE_TYPE_STRING       (4)     ///<    以 \0 结束的 C 字符串
+#define SMQ_PARSE_TYPE_BUF          (5)     ///<    二进制缓冲区
+#define SMQ_PARSE_TYPE_PTR          (6)     ///<    指针
+#define SMQ_PARSE_TYPE_LIST         (7)     ///<    序列类型
+#define SMQ_PARSE_TYPE_OBJECT       (8)     ///<    对象类型
+///@}
+
+
+
+
 /// 定义了通用的值类型
 ///@{
 #if   defined(_MSC_VER)
@@ -150,9 +178,9 @@ typedef union
     smq_uint32  value_uint32;                   ///<    uint32 类型的值
     smq_uint32  value_int32;                    ///<    int32 类型的值
     smq_void*   value_ptr;                      ///<    指针类型的值
-    smq_uint32  value_uint32s[0];               ///<    uint32 类型的数组
-    smq_uint32  value_int32s[0];                ///<    int32 类型的数组
-    smq_void*   value_ptrs[0];                  ///<    指针数组
+    smq_uint32  value_uint32s[0];               ///<    uint32 类型的数组，总长度不能超过 sizeof(smq_value_t)
+    smq_uint32  value_int32s[0];                ///<    int32 类型的数组，总长度不能超过 sizeof(smq_value_t)
+    smq_void*   value_ptrs[0];                  ///<    指针数组，总长度不能超过 sizeof(smq_value_t)
 }smq_value_t;
 #if   defined(_MSC_VER)
 #pragma warning(default:4200)   ///<    VC 编译器特殊处理
@@ -193,9 +221,9 @@ typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 fl
 //
 //  \param  context     [in]    解析上下文参数，来自于 #smq_parse 的同名输入参数
 //  \param  flag        [in]    用于标记 Dump 的阶段，0 表示解析开始，0xFFFFFFFF 表示解析结束，其他值表示解析的数据输出阶段。当处于解析开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
-//  \param  action      [in]    解析采用了 Access 模式，该参数用于决定当前的解析动作，参见 #SMQ_ACTION_XXX 系列宏
+//  \param  action      [in]    解析采用了 Access 模式，该参数用于决定当前的解析动作，参见 #SMQ_PARSE_ACTION_XXX 系列常量定义
 //  \param  data_name   [in]    数据的内部名称，以\0结束
-//  \param  data_type   [in]    数据的类型
+//  \param  data_type   [in]    数据的类型，参见 #SMQ_PARSE_TYPE_XXX 系列常量定义
 //  \param  data        [in]    数据的内容
 //  \param  len         [in]    数据的长度
 //  \return 返回 0 表示执行需要继续执行后面的解析操作，否则，将终止后续的操作。
