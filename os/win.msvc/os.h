@@ -41,6 +41,12 @@ SMQ_EXTERN  smq_errno   smq_proc_mutex_lock(smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_errno   smq_proc_mutex_unlock(smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_void    smq_proc_mutex_close(smq_proc_mutex_t* mutex);
 
-SMQ_EXTERN  smq_uint32  smq_proc_getpid();
+
+SMQ_EXTERN  smq_uint32  smq_procetpid();
+
+
+#define     SMQ_INVALID_TID (0)
+typedef     DWORD       smq_tid_t;
+SMQ_EXTERN  smq_tid_t   smq_get_tid();
 
 #endif//__os_H_

@@ -482,7 +482,16 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_msg_read(smq_inst inst, smq_msg 
     SMQ_ASSERT((SMQ_NULL      != data), "关键输入参数，由外部保证有效性");
     SMQ_ASSERT((SMQ_NULL      != len),  "关键输入参数，由外部保证有效性");
 
+    smq_t* smq = (smq_t*)inst;
+
+    if (SMQ_INVALID_TID == smq->recv_tid)
+    {
+        smq->recv_tid = smq_get_tid();
+    }
+
     smq_block_t* root = (smq_block_t*)SMQ_ADDRESS_OF(inst, msg);
+    
+    
 
     //  已经到达消息末尾，无法继续读取
     if (SMQ_MSG_NULL == *itr)

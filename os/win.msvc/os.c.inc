@@ -63,3 +63,7 @@ SMQ_EXTERN  smq_uint32  smq_proc_getpid()
     return  11;
 }
 
+SMQ_EXTERN  smq_tid_t   smq_get_tid()
+{
+    return GetCurrentThreadId();   
+}

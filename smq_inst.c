@@ -232,6 +232,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
     }
     smq_memset(smq, 0, sizeof(smq_t));
     smq->role = role;
+    smq->recv_tid = SMQ_INVALID_TID;
 
 
     //  创建共享内存对象
