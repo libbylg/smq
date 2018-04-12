@@ -20,10 +20,17 @@ static smq_uint8*   smq_cut(smq_uint8** pos, smq_uint32 size)
 
 
 
-static smq_void smq_layout_map(smq_t* smq)
+static smq_errno smq_layout_map(smq_t* smq)
 {
     smq_uint8*  pos     =   smq->shm.addr;
     smq->entry          =   (smq_entry_t*)smq_cut(&pos, sizeof(smq_entry_t));
+
+    //  检查版本号是否在支持的范围内
+    if ((smq->entry->version < SMQ_VERSION_MIN) || (smq->entry->version > SMQ_VERSION_MAX))
+    {
+        return SMQ_ERR_UNSUPPORTED_LAYOUT_VERSION;
+    }
+
     smq->desc           =   (smq_desc_t*)smq_cut(&pos, sizeof(smq_desc_t));
 
     for (smq_uint32 i = 0; i < smq->entry->alloc_queues_count; i++)
@@ -38,6 +45,8 @@ static smq_void smq_layout_map(smq_t* smq)
     }
 
     smq->heap_data  =   SMQ_ADDRESS_OF(smq, smq->entry->heap_data);
+
+    return SMQ_OK;
 }
 
 
@@ -88,7 +97,7 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
 
 
 
-static smq_void smq_layout_init(smq_t* smq)
+static smq_errno smq_layout_init(smq_t* smq)
 {
     smq_uint8*  pos     =   smq->shm.addr;
 
@@ -140,6 +149,8 @@ static smq_void smq_layout_init(smq_t* smq)
 
     //  下面开始对共享内存进行存储划分
     smq_layout_alloc_queues_init(smq);
+
+    return SMQ_OK;
 }
 
 
@@ -187,12 +198,18 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
     //  通过校验和确定一下共享内存是否完成了初始化
     if (0 == smq_checksum(smq->shm.addr, sizeof(smq_entry_t)))
     {
-        smq_layout_map(smq);
+        err = smq_layout_map(smq);
     }
     else
     {
-        smq_layout_init(smq);
+        err = smq_layout_init(smq);
     }
+    
+    if (SMQ_OK != err)
+    {
+        return err;
+    }
+
 
     smq->recv_queue = smq_read_queue(smq);
     smq->send_queue = smq_write_queue(smq);
