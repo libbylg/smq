@@ -6,6 +6,7 @@
 #include "smq_asserts.h"
 #include "smq_utils.h"
 #include "smq_logs.h"
+#include "smq_os.h"
 
 
 
@@ -99,7 +100,7 @@ static smq_void smq_layout_init(smq_t* smq)
     smq->entry->options             =   ((SMQ_BYTE_ENDIAN_BIG == SMQ_BYTE_ENDIAN)?SMQ_OPTION_BYTE_ENDIAN:0x0000);
     smq->entry->alloc_queues_count  =   SMQ_ALLOC_QUEUES_COUNT;
     smq->entry->mssge_queues_count  =   SMQ_MSSGE_QUEUES_COUNT;
-    smq->entry->mark                =   smq_proc_getpid();
+    smq->entry->mark                =   smq_get_pid();
     smq->entry->heap_len            =   smq->shm.real_size;
 
     //  初始化desc
@@ -216,13 +217,34 @@ static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
 SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 role, smq_inst* inst)
 {
     SMQ_ASSERT((SMQ_NULL != name), "名字不能为空");
-    SMQ_ASSERT((SMQ_NULL != inst), "inst 不能为空");
+
+    //  名字长度不能太长
+    smq_char* p = name;
+    for (; p != '\0'; p++)
+    {
+        if (   ((*p >= 'A') && (*p <= 'Z'))
+            || ((*p >= 'a') && (*p <= 'z'))
+            || ((*p >= '0') && (*p <= '9'))
+            || (*p == '-')
+            || (*p == '_'))
+        {
+            continue;
+        }
+
+        return SMQ_ERR_INVALID_NAME;
+    }
+
+    //  名字不能太长
+    if ((p - name) > SMQ_MAPPING_NAME_LEN_MAX)
+    {
+        return SMQ_ERR_MAPPING_NAME_TOO_LONG;
+    }
+
 
     if ((role < SMQ_ROLE_MIN) || (role > SMQ_ROLE_MAX))
     {
         return SMQ_ERR_UNSUPORTED_ROLE;
     }
-
 
     //  创建smq实例
     smq_t* smq = (smq_t*)smq_malloc(sizeof(smq_t));
@@ -237,7 +259,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
     //  创建共享内存对象
     int shm_size = smq_params.memory_size * 1024 * 1024;
-    smq_errno err = smq_shm_open(name, shm_size, &(smq->shm));
+    smq_errno err = smq_shm_open(name, (p - name), shm_size, &(smq->shm));
     if (SMQ_OK != err)
     {
         smq_free(smq);

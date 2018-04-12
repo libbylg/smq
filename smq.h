@@ -172,7 +172,7 @@ typedef union
 /// \param  desc_len    [in]    desc 的长度，不包括\0.
 /// \param  dynamic     [in]    日志的动态信息，一般是日志上下文的参数，参数的是 key1=vaule1,key2=vaule2,... 形式的多个 key-value 对，但并不保证 value 部分不包括字符'='或者','.
 /// \param  dynamic_len [in]    dynamic 的长度，不包括\0.
-typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_int32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
+typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_int32 id, smq_uint32 level, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len);
 
 
 

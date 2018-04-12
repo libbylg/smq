@@ -25,7 +25,7 @@ typedef struct
     HANDLE      handle;     ///<    共享内存对象的内核句柄
 }smq_shm_t;
 
-SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 size, smq_shm_t* shm);
+SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size, smq_shm_t* shm);
 SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 
@@ -42,7 +42,7 @@ SMQ_EXTERN  smq_errno   smq_proc_mutex_unlock(smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_void    smq_proc_mutex_close(smq_proc_mutex_t* mutex);
 
 
-SMQ_EXTERN  smq_uint32  smq_procetpid();
+SMQ_EXTERN  smq_uint32  smq_get_pid();
 
 
 #define     SMQ_INVALID_TID (0)

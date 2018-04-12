@@ -46,5 +46,5 @@ SMQ_EXTERN  smq_void    smq_log_writer(smq_uint32 level, smq_uint32 id, smq_char
     va_end(vargs);
 
     smq_uint32 loc = smq_params.locale;
-    (*(smq_params.log_func))(smq_params.log_context, id, level, loc, log->desc[loc], log->len[loc], smq_log_cache, n);
+    (*(smq_params.log_func))(smq_params.log_context, id, level, log->desc[loc], log->len[loc], smq_log_cache, n);
 }
