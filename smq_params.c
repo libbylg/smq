@@ -4,7 +4,7 @@
 #include "smq_asserts.h"
 #include "smq_errors.h"
 
-static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_int32 id, smq_uint32 level, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
+static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_int32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);
 
 smq_params_t    smq_params = 
 {
@@ -15,7 +15,7 @@ smq_params_t    smq_params =
     SMQ_MESSAGE_QUEUE_SIZE_DEF,
 };
 
-static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_int32 id, smq_uint32 level, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len)
+static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_int32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* dynamic, smq_uint32 dynamic_len)
 {
     static smq_char* level_name[(SMQ_LOG_LEVEL_MAX - SMQ_LOG_LEVEL_MIN) + 1] = 
     {
