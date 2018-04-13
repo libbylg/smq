@@ -33,11 +33,13 @@ static smq_errno smq_layout_map(smq_t* smq)
 
     smq->desc           =   (smq_desc_t*)smq_cut(&pos, sizeof(smq_desc_t));
 
+    smq->alloc_queues =  (smq_alloc_queue_t**)smq_malloc(sizeof(smq_alloc_queue_t*) * smq->entry->alloc_queues_count);
     for (smq_uint32 i = 0; i < smq->entry->alloc_queues_count; i++)
     {
         smq->alloc_queues[i]    =   (smq_alloc_queue_t*)smq_cut(&pos, sizeof(smq_alloc_queue_t));
     }
 
+    smq->mssge_queues = (smq_mssge_queue_t**)smq_malloc(sizeof(smq_mssge_queue_t*) * smq->entry->mssge_queues_count);
     for (smq_uint32 i = 0; i < smq->entry->mssge_queues_count; i++)
     {
         smq->mssge_queues[i]    =   (smq_mssge_queue_t*)smq_cut(&pos, sizeof(smq_mssge_queue_t));
@@ -276,7 +278,8 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
     //  创建共享内存对象
     int shm_size = smq_params.memory_size * 1024 * 1024;
-    smq_errno err = smq_shm_open(name, (p - name), shm_size, &(smq->shm));
+    SMQ_BOOL writable = ((SMQ_ROLE_LEADER == role)||(SMQ_ROLE_FOLLOWER == role))?SMQ_TRUE:SMQ_FALSE;
+    smq_errno err = smq_shm_open(name, (p - name), shm_size, writable, &(smq->shm));
     if (SMQ_OK != err)
     {
         smq_free(smq);

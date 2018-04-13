@@ -34,7 +34,6 @@ SMQ_ERR(SMQ_ERR_INVALID_NAME,                       230,    "Ãû×ÖÎÞÐ§£¬Ãû×Öº¬ÓÐ²
 SMQ_ERR(SMQ_ERR_CREATE_MAPPING_FAIELD,              231,    "´´½¨»òÕß´ò¿ª¹²ÏíÄÚ´æÎÄ¼þÊ§°Ü",                   "")
 
 
-
 SMQ_LOG(SMQ_LOG_LOWER_LIMIT,                        1000,   "",                                            "")
 SMQ_LOG(SMQ_LOG_INIT_UNLOCK_FAILED,                 1001,   "³õÊ¼»¯Íê³ÉÖ®ºó£¬½âËøÈ«¾ÖËøÊ§°Ü",                  "")
 SMQ_LOG(SMQ_LOG_READONLY_INST_UNSUPPORT_MSG_DEL,    1002,   "µ±Ç°½ÇÉ«²»Ö§³ÖÉ¾³ýÏûÏ¢²Ù×÷",                    "")

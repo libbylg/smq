@@ -17,7 +17,7 @@
 #define SMQ_TRUE    (1)
 #define SMQ_FALSE   (0)
 
-#define SMQ_MAPPING_PREFIX  "Global\"
+#define SMQ_MAPPING_PREFIX  "Global\\"
 
 typedef struct
 {
@@ -27,9 +27,8 @@ typedef struct
     SMQ_BOOL    is_exist;   ///<    是否打开的已经存在的对象
     smq_char    base_name[SMQ_MAPPING_NAME_LEN_MAX];        ///<    共享内存对象的基本名称
     smq_char    full_name[SMQ_FULL_MAPPING_NAME_LEN_MAX];   ///<    共享内存对象的全名
-
-    /// 下面为平台特定的字段
     HANDLE      handle;     ///<    共享内存对象的内核句柄
+    smq_uint32  os_error;
 }smq_shm_t;
 
 SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size,  SMQ_BOOL writable, smq_shm_t* shm);
