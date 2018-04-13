@@ -12,12 +12,19 @@
 
 #define SMQ_TLS __declspec(thread)
 
+
+#define SMQ_BOOL    BOOL
+#define SMQ_TRUE    (1)
+#define SMQ_FALSE   (0)
+
+#define SMQ_MAPPING_PREFIX  "Global\"
+
 typedef struct
 {
     /// 下面为所有OS都应该具备的字段
     smq_uint8*  addr;       ///<    共享内存映射到本进程的地址
     smq_uint32  real_size;  ///<    共享内存的真实大小
-    smq_uint32  is_exist;   ///<    是否打开的已经存在的对象
+    SMQ_BOOL    is_exist;   ///<    是否打开的已经存在的对象
     smq_char    base_name[SMQ_MAPPING_NAME_LEN_MAX];        ///<    共享内存对象的基本名称
     smq_char    full_name[SMQ_FULL_MAPPING_NAME_LEN_MAX];   ///<    共享内存对象的全名
 
@@ -25,7 +32,7 @@ typedef struct
     HANDLE      handle;     ///<    共享内存对象的内核句柄
 }smq_shm_t;
 
-SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size, smq_shm_t* shm);
+SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size,  SMQ_BOOL writable, smq_shm_t* shm);
 SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 
