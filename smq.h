@@ -208,11 +208,11 @@ typedef smq_void    (SMQ_CALL *SMQ_LOGGER_FUNC)(smq_void* context, smq_int32 id,
 /// Dump SMQ 实例中共享内存的数据
 ///
 /// \param  context     [in]    Dump 上下文，该参数来源自调用 #smq_dump 时的同名输入参数
-/// \param  flag        [in]    用于标记 Dump 的阶段，0 表示 Dump 开始，0xFFFFFFFF 表示 Dump 结束，其他值表示 Dump 的数据输出阶段。当处于 Dump 开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
+/// \param  range       [in]    用于指明 Dump 的数据当前的范围，参见 #SMQ_DUMP_RANGE_XXX 系列常量
 /// \param  data        [in]    Dump 的数据缓冲区指针。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 NULL.
 /// \param  len         [in]    该参数用于指明 data 参数中的数据区域的长度。当 flag 指明当前处于 Dump 开始或者结束阶段时，该参数值为 0.
 /// \return 返回 0 表示执行需要继续执行后面的 Dump 操作，否则，将终止后续的操作。
-typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 flag, smq_void* data, smq_uint32 len);
+typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 range, smq_void* data, smq_uint32 len);
 
 
 
@@ -220,14 +220,14 @@ typedef smq_int32   (SMQ_CALL *SMQ_DUMPER_FUNC)(smq_void* context, smq_uint32 fl
 //  对 Dump 出来的数据进行解析
 //
 //  \param  context     [in]    解析上下文参数，来自于 #smq_parse 的同名输入参数
-//  \param  flag        [in]    用于标记 Dump 的阶段，0 表示解析开始，0xFFFFFFFF 表示解析结束，其他值表示解析的数据输出阶段。当处于解析开始和结束阶段时，输入参数 data 和 len 分别为 NULL 和 0.
+//  \param  range       [in]    用于指明 Dump 的数据当前的范围，参见 #SMQ_DUMP_RANGE_XXX 系列常量
 //  \param  action      [in]    解析采用了 Access 模式，该参数用于决定当前的解析动作，参见 #SMQ_PARSE_ACTION_XXX 系列常量定义
 //  \param  data_name   [in]    数据的内部名称，以\0结束
 //  \param  data_type   [in]    数据的类型，参见 #SMQ_PARSE_TYPE_XXX 系列常量定义
 //  \param  data        [in]    数据的内容
 //  \param  len         [in]    数据的长度
 //  \return 返回 0 表示执行需要继续执行后面的解析操作，否则，将终止后续的操作。
-typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 flag, smq_int32 action, smq_char* data_name, smq_uint32 data_type, smq_void* data, smq_uint32 len);
+typedef smq_int32   (SMQ_CALL *SMQ_PARSER_FUNC)(smq_void* context, smq_uint32 range, smq_int32 action, smq_char* data_name, smq_uint32 data_type, smq_void* data, smq_uint32 len);
 
 
 
@@ -312,7 +312,13 @@ SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_dump(smq_inst inst, smq_uint32 r
 
 
 /// Dump 数据解析器
-SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_parse(smq_inst inst, smq_msg msg, smq_void* context, SMQ_PARSER_FUNC f);
+///
+/// \paran  range       [in]    待解析的数据的范围，一般直接来自于 Dump 回调函数
+/// \param  data        [in]    待解析的数据，一般直接来自于 Dump 回调函数
+/// \param  len         [in]    数据的长度，一般直接来自于 Dump 回调函数
+/// \param  context     [in]    解析上下文，该参数会传递给回调参数 f 函数中去
+/// \param  f           [in]    解析回调函数
+SMQ_EXTERN  SMQ_API smq_void    SMQ_CALL    smq_parse(smq_uint32 range, smq_void* data, smq_uint32 len, smq_void* context, SMQ_PARSER_FUNC f);
 
 
 
