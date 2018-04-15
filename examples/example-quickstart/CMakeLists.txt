@@ -4,6 +4,6 @@ PROJECT(quickstart)
 ADD_EXECUTABLE(quickstart-client quickstart-client-main.c)
 ADD_EXECUTABLE(quickstart-server quickstart-server-main.c)
 
-INCLUDE_DIRECTORIES(. )
+INCLUDE_DIRECTORIES(. ../../)
 ADD_DEFINITIONS(-DDEBUG)
 
