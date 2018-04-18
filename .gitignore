@@ -68,3 +68,7 @@ cmake-build-debug
 .vscode
 CMakeCache.txt
 cmake_install.cmake
+
+doc
+*.tmp
+CMakeFiles
