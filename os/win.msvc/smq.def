@@ -16,4 +16,5 @@ EXPORTS
     smq_msg_fix
     smq_msg_write
     smq_msg_read
+    smq_msg_post
 
