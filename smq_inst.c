@@ -3,7 +3,6 @@
 #include "smq_libc.h"
 #include "smq_errors.h"
 #include "smq_params.h"
-#include "smq_asserts.h"
 #include "smq_utils.h"
 #include "smq_logs.h"
 #include "smq_os.h"

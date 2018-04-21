@@ -27,5 +27,13 @@
 #include <stdarg.h>
 
 
+#include <assert.h>
+/// 定义了通用的断言宏
+#if defined(DEBUG)
+#define SMQ_ASSERT(expr,m)  assert(expr)
+#else
+#define SMQ_ASSERT(expr,m)
+#endif
+
 #endif
 

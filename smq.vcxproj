@@ -34,7 +34,6 @@
     <ClInclude Include="smq.h" />
     <ClInclude Include="smq_alignpop.h" />
     <ClInclude Include="smq_alignpush.h" />
-    <ClInclude Include="smq_asserts.h" />
     <ClInclude Include="smq_errors.h" />
     <ClInclude Include="smq_inst.h" />
     <ClInclude Include="smq_libc.h" />

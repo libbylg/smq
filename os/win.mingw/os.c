@@ -1,7 +1,6 @@
 #include "smq_os.h"
 
 
-#include "smq_asserts.h"
 
 
 BOOL APIENTRY DllMain( HMODULE hModule,

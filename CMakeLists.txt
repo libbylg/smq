@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
-project(smq)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+PROJECT(smq)
 
 
 #   Define some global options
-option(JNI "Need JNI support" OFF)
-option(DEBUG "Generate symbols for debug" OFF)
+OPTION(JNI "Need JNI support" OFF)
+OPTION(DEBUG "Generate symbols for debug" OFF)
 
 
 #   Define some vars, they will be used leter
@@ -20,34 +20,40 @@ SET(CCDEFS -DSMQ_EXPORTS)
 
 
 #   Change the vars by the global-options
-if (JNI)
+IF    (JNI)
     LIST(APPEND SRCS jni/smq_jni.c)
     LIST(APPEND INCS jni)
-endif (JNI)
+ENDIF (JNI)
 
 
-if (DEBUG)
+#   Need the debug symbols or not 
+IF    (DEBUG)
     LIST(APPEND CCDEFS -DDEBUG)
-else (DEBUG)
+ELSE  (DEBUG)
     LIST(APPEND CCDEFS -DNDEBUG)
-endif (DEBUG)
+ENDIF (DEBUG)
+
 
 #   Sprcial the language to c++ for VC
-if (MSVC)
-set_source_files_properties(${SRCS} PROPERTIES LANGUAGE CXX)
-LIST(APPEND SRCS os/win.msvc/smq.def)
-endif(MSVC)
+IF   (MSVC)
+    SET_SOURCE_FILES_PROPERTIES(${SRCS} PROPERTIES LANGUAGE CXX)
+    LIST(APPEND SRCS os/win.msvc/smq.def)
+ENDIF(MSVC)
 
 
 #   Defined the targets
-add_library(smq-shared SHARED ${SRCS})
-add_library(smq-static STATIC ${SRCS})
+ADD_LIBRARY(smq-shared SHARED ${SRCS})
+ADD_LIBRARY(smq-static STATIC ${SRCS})
 
 
 #   Special the include dirs and defines
-include_directories(${INCS})
-add_definitions(${CCDEFS})
+INCLUDE_DIRECTORIES(${INCS})
+ADD_DEFINITIONS(${CCDEFS})
 
 
-
+#   Set the output dirs
+SET_TARGET_PROPERTIES(smq-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+SET_TARGET_PROPERTIES(smq-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+SET_TARGET_PROPERTIES(smq-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+SET_TARGET_PROPERTIES(smq-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 

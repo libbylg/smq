@@ -1,7 +1,6 @@
 #include "smq_params.h"
 #include "smq_limit.h"
 #include "smq_libc.h"
-#include "smq_asserts.h"
 #include "smq_errors.h"
 
 static smq_void   SMQ_CALL smq_log_func_def(smq_void* context, smq_int32 id, smq_uint32 level, smq_uint32 loc, smq_char* desc, smq_uint32 desc_len, smq_char* synamic, smq_uint32 synamic_len);

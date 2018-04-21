@@ -1,6 +1,5 @@
 #include "smq_os.h"
 #include "smq_libc.h"
-#include "smq_asserts.h"
 #include "smq_inst.h"
 #include "smq_errors.h"
 #include "smq_logs.h"
