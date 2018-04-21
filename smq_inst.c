@@ -69,7 +69,7 @@ static smq_void smq_layout_alloc_queues_init(smq_t* smq)
         //  最后一个队列需要为Header预留一部分存储区
         if ((q + 1) == smq->entry->alloc_queues_count)
         {
-            SMQ_ASSERT((each_size >= smq->entry->heap_data), "最后一个队列的总内存必须大于，HeapHeader的长度（smq->entry->heap_data就是HeapHeader的长度）")
+            SMQ_ASSERT((each_size >= smq->entry->heap_data), "最后一个队列的总内存必须大于，HeapHeader的长度（smq->entry->heap_data就是HeapHeader的长度）");
             queue->block_count = (each_size - smq->entry->heap_data) / queue->block_size;
         }
 
