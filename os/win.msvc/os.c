@@ -28,11 +28,11 @@ SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_ui
     shm->full_name[(sizeof(SMQ_MAPPING_PREFIX) - 1) + name_len] = '\0';
 
     /// 创建成功后，shm->addr必须不为NULL，以便于smq_shm_close能够正确地执行释放操作
-    HANDLE handle = CreateFileMapping(INVALID_HANDLE_VALUE, \
-                                      NULL,                 \
-                                      (writable?PAGE_READWRITE:PAGE_READONLY), \
-                                      0,                    \
-                                      size,                 \
+    HANDLE handle = CreateFileMapping(INVALID_HANDLE_VALUE,
+                                      NULL,
+                                      (writable?PAGE_READWRITE:PAGE_READONLY),
+                                      0,
+                                      size,
                                       shm->full_name);
     DWORD last_error = GetLastError();
     if (NULL == handle)
@@ -81,7 +81,10 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm)
         return;
     }
 
-
+    if (NULL != shm->handle)
+    {
+        CloseHandle(shm->handle);
+    }
 }
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_proc_mutex_t* mutex)

@@ -85,9 +85,14 @@ smq_errno commands_scan(smq_inst inst)
 int main(char* args[])
 {
     //  change the log level to debug
-    smq_value_t level;
-    level.value_uint32 = SMQ_LOG_LEVEL_DEBUG;
-    smq_param_set(SMQ_PARAM_LOG_LEVEL, &level);
+    smq_value_t param;
+    param.value_uint32 = SMQ_LOG_LEVEL_DEBUG;
+    smq_param_set(SMQ_PARAM_LOG_LEVEL, &param);
+
+
+    //  change the local to Chinese
+    param.value_uint32 = SMQ_LOCALE_ZH_CN;
+    smq_param_set(SMQ_PARAM_LOCALE, &param);
 
 
     //  create or open SMQ instance

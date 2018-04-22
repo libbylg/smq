@@ -114,25 +114,25 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_param_check(smq_uint32 key, smq_
     switch (key)
     {
     case SMQ_PARAM_LOG_LEVEL:
-        if ((val->value_uint32 < SMQ_LOG_LEVEL_MIN) || (val->value_uint32 < SMQ_LOG_LEVEL_MAX))
+        if ((val->value_uint32 < SMQ_LOG_LEVEL_MIN) || (val->value_uint32 > SMQ_LOG_LEVEL_MAX))
         {
             return  SMQ_ERR_LOG_LEVEL_OUT_OF_RANGE;
         }
         return  SMQ_OK;
     case SMQ_PARAM_MEMORY_SIZE:
-        if ((val->value_uint32 < SMQ_MEMORY_SIZE_MIN) || (val->value_uint32 < SMQ_MEMORY_SIZE_MAX))
+        if ((val->value_uint32 < SMQ_MEMORY_SIZE_MIN) || (val->value_uint32 > SMQ_MEMORY_SIZE_MAX))
         {
             return  SMQ_ERR_MEMORY_SIZE_OUT_OF_RANGE;
         }
         return  SMQ_OK;
     case SMQ_PARAM_QUEUE_SIZE:
-        if ((val->value_uint32 < SMQ_MESSAGE_QUEUE_SIZE_MIN) || (val->value_uint32 < SMQ_MESSAGE_QUEUE_SIZE_MAX))
+        if ((val->value_uint32 < SMQ_MESSAGE_QUEUE_SIZE_MIN) || (val->value_uint32 > SMQ_MESSAGE_QUEUE_SIZE_MAX))
         {
             return  SMQ_ERR_MESSAGE_QUEUE_SIZE_OUT_OF_RANGE;
         }
         return  SMQ_OK;
     case SMQ_PARAM_LOCALE:
-        if ((val->value_uint32 < SMQ_LOCALE_MIN) || (val->value_uint32 < SMQ_LOCALE_MAX))
+        if ((val->value_uint32 < SMQ_LOCALE_MIN) || (val->value_uint32 > SMQ_LOCALE_MAX))
         {
             return  SMQ_ERR_LOCALE_OUT_OF_RANGE;
         }

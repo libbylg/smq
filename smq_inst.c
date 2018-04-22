@@ -238,7 +238,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
     //  名字长度不能太长
     smq_char* p = name;
-    for (; p != '\0'; p++)
+    for (; *p != '\0'; p++)
     {
         if (   ((*p >= 'A') && (*p <= 'Z'))
             || ((*p >= 'a') && (*p <= 'z'))
