@@ -41,14 +41,14 @@ IF   (MSVC)
 ENDIF(MSVC)
 
 
-#   Defined the targets
-ADD_LIBRARY(smq        SHARED ${SRCS})
-ADD_LIBRARY(smq-static STATIC ${SRCS})
-
-
 #   Special the include dirs and defines
 INCLUDE_DIRECTORIES(${INCS})
 ADD_DEFINITIONS(${CCDEFS})
+
+
+#   Defined the targets
+ADD_LIBRARY(smq        SHARED ${SRCS})
+ADD_LIBRARY(smq-static STATIC ${SRCS})
 
 
 #   Set the output dirs
