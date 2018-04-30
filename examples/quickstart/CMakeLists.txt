@@ -20,18 +20,18 @@ ADD_DEFINITIONS(-DDEBUG)
 
 
 #   Define the targets
-ADD_EXECUTABLE(quickstart-client quickstart-client-main.c)
-ADD_EXECUTABLE(quickstart-server quickstart-server-main.c)
+ADD_EXECUTABLE(examples-quickstart-client quickstart-client-main.c)
+ADD_EXECUTABLE(examples-quickstart-server quickstart-server-main.c)
 
 
 #   Which libs to link
-TARGET_LINK_LIBRARIES(quickstart-client smq)
-TARGET_LINK_LIBRARIES(quickstart-server smq)
+TARGET_LINK_LIBRARIES(examples-quickstart-client smq)
+TARGET_LINK_LIBRARIES(examples-quickstart-server smq)
 
 
 
 #   Set the output dirs
-SET_TARGET_PROPERTIES(quickstart-client PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../out/)
-SET_TARGET_PROPERTIES(quickstart-server PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../out/)
+SET_TARGET_PROPERTIES(examples-quickstart-client PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../out/)
+SET_TARGET_PROPERTIES(examples-quickstart-server PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../out/)
 
 

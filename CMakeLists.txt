@@ -2,6 +2,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 PROJECT(smq)
 
 
+# Include the sub directorys to build
+ADD_SUBDIRECTORY(examples)
+
+
 #   Define some global options
 OPTION(JNI "Need JNI support" OFF)
 OPTION(DEBUG "Generate symbols for debug" OFF)
@@ -14,7 +18,19 @@ SET(SRCS smq_errors.c
         smq_msg.c
         smq_os.c
         smq_params.c
-        smq_utils.c)
+        smq_utils.c
+        )
+#        smq_alignpop.h
+#        smq_alignpush.h
+#        smq_errors.h
+#        smq_inst.h
+#        smq_libc.h
+#        smq_limit.h
+#        smq_logs.h
+#        smq_os.h
+#        smq_params.h
+#        smq_res.h
+#        smq_utils.h)
 SET(INCS .)
 SET(CCDEFS -DSMQ_EXPORTS)
 
@@ -26,7 +42,7 @@ IF    (JNI)
 ENDIF (JNI)
 
 
-#   Need the debug symbols or not 
+#   Need the debug symbols or not
 IF    (DEBUG)
     LIST(APPEND CCDEFS -DDEBUG)
 ELSE  (DEBUG)
@@ -60,4 +76,3 @@ SET_TARGET_PROPERTIES(smq        PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${P
 SET_TARGET_PROPERTIES(smq        PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/out)
 SET_TARGET_PROPERTIES(smq-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG   ${PROJECT_SOURCE_DIR}/out)
 SET_TARGET_PROPERTIES(smq-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/out)
-
