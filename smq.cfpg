@@ -1,7 +1,0 @@
-<Projects version="2.0">
-	<Project active="1">smq.cfp</Project>
-	<File active="0">src\smq.h</File>
-	<File active="1">src\smq_params.c</File>
-	<File active="0">src\smq_errors.h</File>
-	<File active="0">src\smq_errors.c</File>
-</Projects>
