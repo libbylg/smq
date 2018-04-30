@@ -41,10 +41,18 @@ SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_ui
         return  SMQ_ERR_CREATE_MAPPING_FAIELD;
     }
 
+
+    //  如果该内存映射文件已经存在，那么映射文件大小应该为0
+    smq_uint32 mapping_size = size;
+    if (ERROR_ALREADY_EXISTS == last_error)
+    {
+        mapping_size = 0;
+    }
+
+
     //  将对象映射到进程内存地址空间
-    DWORD dwDesiredAccess = FILE_MAP_READ;
-    dwDesiredAccess = (writable?FILE_MAP_WRITE:0);
-    LPVOID addr = MapViewOfFile(handle, dwDesiredAccess, 0, 0, 0);
+    DWORD dwDesiredAccess = FILE_MAP_READ | (writable?FILE_MAP_WRITE:0);
+    LPVOID addr = MapViewOfFile(handle, dwDesiredAccess, 0, 0, mapping_size);
     if (NULL == addr)
     {
         shm->os_error = (smq_uint32)GetLastError();
@@ -54,7 +62,7 @@ SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_ui
 
     //  查询共享内存真实大小
     MEMORY_BASIC_INFORMATION info = {0};
-    if (VirtualQuery(addr, &info, sizeof(info) != sizeof(MEMORY_BASIC_INFORMATION)))
+    if (VirtualQuery(addr, &info, sizeof(info)) != sizeof(info))
     {
         shm->os_error = (smq_uint32)GetLastError();
         CloseHandle(handle);
