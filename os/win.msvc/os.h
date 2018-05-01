@@ -42,7 +42,7 @@ typedef struct
     smq_char    full_name[256];
 }smq_proc_mutex_t;
 
-SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_proc_mutex_t* mutex);
+SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_uint32 name_len, smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_errno   smq_proc_mutex_lock(smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_errno   smq_proc_mutex_unlock(smq_proc_mutex_t* mutex);
 SMQ_EXTERN  smq_void    smq_proc_mutex_close(smq_proc_mutex_t* mutex);

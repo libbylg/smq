@@ -97,21 +97,53 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm)
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_proc_mutex_t* mutex)
 {
+    HANDLE h = CreateMutex(NULL, FALSE, name);
+    if (NULL == h)
+    {
+        return SMQ_ERR_CREATE_OR_OPEN_MUTEX_FAILED;
+    }
+
+    mutex->handle = h;
+
     return  SMQ_OK;
 }
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_lock(smq_proc_mutex_t* mutex)
 {
+    //  等着占用锁
+    DWORD r = WaitForSingleObject(mutex->handle, INFINITE);
+    if (WAIT_OBJECT_0 != r)
+    {
+        return  SMQ_ERR_LOCK_FAILED;
+    }
+
     return  SMQ_OK;
 }
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_unlock(smq_proc_mutex_t* mutex)
 {
+    BOOL r = ReleaseMutex(mutex->handle);
+    if (FALSE == r)
+    {
+        return SMQ_ERR_UNLOCK_FAILED;
+    }
+
     return  SMQ_OK;
 }
 
 SMQ_EXTERN  smq_void    smq_proc_mutex_close(smq_proc_mutex_t* mutex)
 {
+    if (NULL == mutex)
+    {
+        return;
+    }
+
+    if (NULL == mutex->handle)
+    {
+        return;
+    }
+
+    CloseHandle(mutex->handle);
     return;
 }
 

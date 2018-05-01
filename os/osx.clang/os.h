@@ -3,7 +3,7 @@
 //  smq
 //
 //  Created by luolijun on 2018/4/1.
-//  Copyright 漏 2018骞� luolijun. All rights reserved.
+//  Copyright 漏 2018骞?? luolijun. All rights reserved.
 //
 
 #ifndef os_h
@@ -44,7 +44,7 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 typedef struct
 {
-    //HANDLE      handle;
+    HANDLE      handle;
     smq_char    full_name[256];
 }smq_proc_mutex_t;
 

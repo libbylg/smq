@@ -32,6 +32,10 @@ SMQ_ERR(SMQ_ERR_UNSUPPORTED_LAYOUT_VERSION,         228,    "²»Ö§³Ö¸Ã°æ±¾µÄ¹²ÏíÄ
 SMQ_ERR(SMQ_ERR_MAPPING_NAME_TOO_LONG,              229,    "¹²ÏíÄÚ´æÃû³ÆÌ«³¤",                             "")
 SMQ_ERR(SMQ_ERR_INVALID_NAME,                       230,    "Ãû×ÖÎÞÐ§£¬Ãû×Öº¬ÓÐ²»Ö§³ÖµÄ×Ö·û",                 "")
 SMQ_ERR(SMQ_ERR_CREATE_MAPPING_FAIELD,              231,    "´´½¨»òÕß´ò¿ª¹²ÏíÄÚ´æÎÄ¼þÊ§°Ü",                   "")
+SMQ_ERR(SMQ_ERR_CREATE_OR_OPEN_MUTEX_FAILED,        232,    "´´½¨»òÕß´ò¿ª»¥³âÁ¿¶ÔÏóÊ§°Ü",                     "")
+SMQ_ERR(SMQ_ERR_LOCK_FAILED,                        233,    "µÈ´ý¼ÓËøÊ§°Ü",                                 "")
+SMQ_ERR(SMQ_ERR_UNLOCK_FAILED,                      234,    "½âËøÊ§°Ü",                                     "")
+
 
 
 SMQ_LOG(SMQ_LOG_LOWER_LIMIT,                        1000,   "",                                            "")

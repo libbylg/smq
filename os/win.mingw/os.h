@@ -33,7 +33,6 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 typedef struct
 {
     HANDLE      handle;
-    smq_char    full_name[256];
 }smq_proc_mutex_t;
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_proc_mutex_t* mutex);
