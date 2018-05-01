@@ -6,6 +6,9 @@
 #include "os/win.clang/os.c"
 #elif defined(__linux) && defined(__GNUC__)
 #include "os/linux.gcc/os.c"
+#elif defined(__APPLE__) && defined(__clang__)
+#include "os/osx.clang/os.c"
 #else
-#error "(os.c.inc)Unsupported compiler or platform"
+#error "(os.c)Unsupported compiler or platform"
 #endif
+
