@@ -72,3 +72,9 @@ cmake_install.cmake
 doc
 *.tmp
 CMakeFiles
+
+
+*.vcxproj
+*.filters
+*.sln
+*.user
