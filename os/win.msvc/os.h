@@ -8,16 +8,21 @@
 #include "smq.h"
 #include "smq_limit.h"
 
+
 #define SMQ_BYTE_ENDIAN     SMQ_BYTE_ENDIAN_SMALL
 
-#define SMQ_TLS __declspec(thread)
+#define SMQ_TLS             __declspec(thread)
 
 
-#define SMQ_BOOL    BOOL
-#define SMQ_TRUE    (1)
-#define SMQ_FALSE   (0)
+#define SMQ_BOOL            BOOL
+#define SMQ_TRUE            (1)
+#define SMQ_FALSE           (0)
 
-#define SMQ_MAPPING_PREFIX  "Global\\"
+
+#define SMQ_PREFIX_GLOBAL   "Global\\"
+#define SMQ_SUFFIX_MAPPING  ".mapping"
+#define SMQ_SUFFIX_MUTEX    ".mutex"
+
 
 typedef struct
 {
@@ -25,10 +30,10 @@ typedef struct
     smq_uint8*  addr;       ///<    共享内存映射到本进程的地址
     smq_uint32  real_size;  ///<    共享内存的真实大小
     SMQ_BOOL    is_exist;   ///<    是否打开的已经存在的对象
+    HANDLE      handle;     ///<    共享内存对象的内核句柄
+    smq_uint32  os_error;   ///<    操作系统反馈的错误码，如果出错可以通过该字段获得系统错误码
     smq_char    base_name[SMQ_MAPPING_NAME_LEN_MAX];        ///<    共享内存对象的基本名称
     smq_char    full_name[SMQ_FULL_MAPPING_NAME_LEN_MAX];   ///<    共享内存对象的全名
-    HANDLE      handle;     ///<    共享内存对象的内核句柄
-    smq_uint32  os_error;
 }smq_shm_t;
 
 SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size,  SMQ_BOOL writable, smq_shm_t* shm);
@@ -38,8 +43,9 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm);
 
 typedef struct
 {
-    HANDLE      handle;
-    smq_char    full_name[256];
+    HANDLE      handle;         ///<    互斥量的句柄
+    smq_uint32  os_error;       ///<    操作系统反馈的错误码，如果出错可以通过该字段获得系统错误码
+    smq_char    full_name[256]; ///<    完整的文件名
 }smq_proc_mutex_t;
 
 SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_uint32 name_len, smq_proc_mutex_t* mutex);

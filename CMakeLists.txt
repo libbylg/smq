@@ -11,6 +11,23 @@ OPTION(JNI "Need JNI support" OFF)
 OPTION(DEBUG "Generate symbols for debug" OFF)
 
 
+#   All headers
+SET(HRDS smq_alignpop.h
+        smq_alignpush.h
+        smq_errors.h
+        smq_inst.h
+        smq_libc.h
+        smq_limit.h
+        smq_logs.h
+        smq_os.h
+        smq_params.h
+        smq_res.h
+        smq_utils.h
+	smq.h)
+SET_SOURCE_FILES_PROPERTIES(${HRDS} PROPERTIES HEADER_FILE_ONLY YES)
+
+
+
 #   Define some vars, they will be used leter
 SET(SRCS smq_errors.c
         smq_inst.c
@@ -19,20 +36,11 @@ SET(SRCS smq_errors.c
         smq_os.c
         smq_params.c
         smq_utils.c
+        ${HRDS}
         )
-#        smq_alignpop.h
-#        smq_alignpush.h
-#        smq_errors.h
-#        smq_inst.h
-#        smq_libc.h
-#        smq_limit.h
-#        smq_logs.h
-#        smq_os.h
-#        smq_params.h
-#        smq_res.h
-#        smq_utils.h)
 SET(INCS .)
 SET(CCDEFS -DSMQ_EXPORTS)
+
 
 
 #   Change the vars by the global-options

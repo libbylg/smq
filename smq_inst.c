@@ -179,11 +179,11 @@ static smq_mssge_queue_t* smq_read_queue(smq_t* smq)
 }
 
 
-static smq_errno   SMQ_CALL    smq_layout_load(smq_t* smq)
+static smq_errno   SMQ_CALL    smq_layout_load(smq_char* name, smq_uint32 name_len, smq_t* smq)
 {
     //  创建进程间互斥锁
     smq_proc_mutex_t mutex = {0};
-    smq_errno err = smq_proc_mutex_open(smq->shm.base_name, &mutex);
+    smq_errno err = smq_proc_mutex_open(name, name_len, &mutex);
     if (SMQ_OK != err)
     {
         return err;
@@ -287,7 +287,7 @@ SMQ_EXTERN  SMQ_API smq_errno   SMQ_CALL    smq_open(smq_char* name, smq_uint32 
 
 
     //  初始化共享内存布局
-    err = smq_layout_load(smq);
+    err = smq_layout_load(name, p - name, smq);
     if (SMQ_OK != err)
     {
         smq_shm_close(&(smq->shm));

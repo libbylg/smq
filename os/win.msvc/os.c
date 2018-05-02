@@ -20,12 +20,23 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 
 
 
+inline      smq_char*   smq_str_append(smq_char* name, smq_uint32* len, smq_char* app, smq_uint32 app_len)
+{
+    smq_memcpy(name + *len, app, app_len);
+    *len += app_len;
+    return  name;
+}
+
+
+
 SMQ_EXTERN  smq_errno   smq_shm_open(smq_char* name, smq_uint32 name_len, smq_uint32 size, SMQ_BOOL writable, smq_shm_t* shm)
 {
     //  生成映射文件全名
-    smq_memcpy(shm->full_name, SMQ_MAPPING_PREFIX, sizeof(SMQ_MAPPING_PREFIX) - 1);
-    smq_memcpy(shm->full_name + (sizeof(SMQ_MAPPING_PREFIX) - 1), name, name_len);
-    shm->full_name[(sizeof(SMQ_MAPPING_PREFIX) - 1) + name_len] = '\0';
+    smq_uint32 len = 0;
+    smq_str_append(shm->full_name, &len, SMQ_PREFIX_GLOBAL,  sizeof(SMQ_PREFIX_GLOBAL) - 1);
+    smq_str_append(shm->full_name, &len, name,               name_len);
+    smq_str_append(shm->full_name, &len, SMQ_SUFFIX_MAPPING, sizeof(SMQ_SUFFIX_MAPPING) - 1);
+    shm->full_name[len] = '\0';
 
     /// 创建成功后，shm->addr必须不为NULL，以便于smq_shm_close能够正确地执行释放操作
     HANDLE handle = CreateFileMapping(INVALID_HANDLE_VALUE,
@@ -95,15 +106,22 @@ SMQ_EXTERN  smq_void    smq_shm_close(smq_shm_t* shm)
     }
 }
 
-SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_proc_mutex_t* mutex)
+SMQ_EXTERN  smq_errno   smq_proc_mutex_open(smq_char* name, smq_uint32 name_len, smq_proc_mutex_t* mutex)
 {
-    HANDLE h = CreateMutex(NULL, FALSE, name);
-    if (NULL == h)
+    //  生成映射文件全名
+    smq_uint32 len = 0;
+    smq_str_append(mutex->full_name, &len, SMQ_PREFIX_GLOBAL,  sizeof(SMQ_PREFIX_GLOBAL) - 1);
+    smq_str_append(mutex->full_name, &len, name,               name_len);
+    smq_str_append(mutex->full_name, &len, SMQ_SUFFIX_MAPPING, sizeof(SMQ_SUFFIX_MAPPING) - 1);
+    mutex->full_name[len] = '\0';
+
+
+    //  创建命名互斥体
+    mutex->handle = CreateMutex(NULL, FALSE, mutex->full_name);
+    if (NULL == mutex->handle)
     {
         return SMQ_ERR_CREATE_OR_OPEN_MUTEX_FAILED;
     }
-
-    mutex->handle = h;
 
     return  SMQ_OK;
 }
